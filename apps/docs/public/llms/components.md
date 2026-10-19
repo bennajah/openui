@@ -12,13 +12,13 @@ OpenUI components are source files, not a runtime library. Each one:
 - has **no OpenUI runtime dependency** and no third-party runtime dependency;
 - ships a plain class-joining helper instead of `clsx` or `tailwind-merge`
   (variants are disjoint, so class conflicts do not arise);
-- defaults to `type="button"` so a button inside a form never submits by
-  accident.
+- forwards every native attribute to the underlying element.
+
+The beta ships eight components, each implemented natively for React, Svelte,
+Astro, and Vue: `button`, `input`, `textarea`, `select`, `checkbox`, `radio`,
+`label`, and `field`.
 
 ## Button
-
-The beta ships one reference component, `button`, implemented natively for all
-four supported frameworks.
 
 ### Props
 
@@ -64,26 +64,157 @@ the underlying `<button>`.
 </Button>
 ```
 
+## Form controls
+
+`input`, `textarea`, `select`, `checkbox`, and `radio` wrap their native
+elements, so browser behavior and accessibility stay intact. They share one
+field treatment: a 40px control height (`h-10`), a `zinc` border, a focus ring
+with offset, and a red border in the invalid state.
+
+### Shared props
+
+| Prop      | Type      | Default | Description                                               |
+| --------- | --------- | ------- | --------------------------------------------------------- |
+| `invalid` | `boolean` | `false` | Adds an error treatment and, where valid, `aria-invalid`. |
+
+Native attributes (`value`, `defaultValue`, `name`, `disabled`, `required`,
+`placeholder`, `onChange`, …) are forwarded unchanged.
+
+### Input
+
+A native `<input>` with the shared field treatment. `type` is not set, so the
+browser default (text) applies and any explicit `type` still works.
+
+```tsx
+<Input type="email" name="email" placeholder="you@example.com" required />
+<Input invalid aria-describedby="email-error" />
+```
+
+### Textarea
+
+A native `<textarea>` with `rows` defaulting to `4` and a minimum height.
+
+| Extra prop | Type     | Default | Description                 |
+| ---------- | -------- | ------- | --------------------------- |
+| `rows`     | `number` | `4`     | Initial visible line count. |
+
+```tsx
+<Textarea name="bio" rows={6} placeholder="Tell us about yourself" />
+```
+
+### Select
+
+A native `<select>` with `appearance-none` and a decorative chevron. Pass
+`<option>` elements as children; the component positions the chevron for you.
+
+```tsx
+<Select name="role" defaultValue="dev">
+  <option value="dev">Developer</option>
+  <option value="ops">Operations</option>
+</Select>
+```
+
+### Checkbox and Radio
+
+Native `<input type="checkbox">` and `<input type="radio">` styled with Tailwind
+accents. Group radios by giving them the same `name`. Both accept an `invalid`
+prop that adds an error outline — Radio uses a `data-invalid` attribute rather
+than `aria-invalid`, because `aria-invalid` is not valid on `role="radio"`.
+
+```tsx
+<Checkbox name="terms" value="accepted" />
+<Radio name="plan" value="pro" />
+<Radio name="plan" value="team" />
+```
+
+### Label
+
+A native `<label>` with form typography. Associate it with a control with
+`htmlFor` (React) / `for` (Svelte, Astro, Vue), or wrap the control directly.
+
+```tsx
+<Label htmlFor="email">Email</Label>
+```
+
+## Field
+
+`Field` composes a label, a control, and an optional hint or error message, and
+computes the wiring a control needs: a generated `id`, `aria-describedby` for
+the hint and error text, and `aria-invalid` when there is an error.
+
+| Prop    | Type     | Default   | Description                                  |
+| ------- | -------- | --------- | -------------------------------------------- |
+| `label` | `string` | `""`      | Visible label text.                          |
+| `hint`  | `string` | `""`      | Helper text, linked with `aria-describedby`. |
+| `error` | `string` | `""`      | Error text; also marks the control invalid.  |
+| `id`    | `string` | generated | Control id. Generated when omitted.          |
+
+The component hands the wiring to the control as a **`controlProps`** object.
+Spread it onto any control so the control and the messages stay linked:
+
+```tsx
+<Field label="Email" hint="We never share it." error={message}>
+  {({ controlProps }) => <Input type="email" {...controlProps} />}
+</Field>
+```
+
+```svelte
+<Field label="Email" hint="We never share it." error={message}>
+  {#snippet control({ controlProps })}
+    <Input type="email" {...controlProps} />
+  {/snippet}
+</Field>
+```
+
+```vue
+<Field label="Email" hint="We never share it." :error="message">
+  <template #default="{ controlProps }">
+    <Input type="email" v-bind="controlProps" />
+  </template>
+</Field>
+```
+
+In Astro, render the control inside the default slot and pass the same `id` and
+`aria-describedby` you give the Field. The component also exposes
+`data-control-id`, `data-described-by`, and `data-invalid` on its wrapper:
+
+```astro
+<Field label="Email" id="email" hint="We never share it." error={message}>
+  <Input id="email" type="email" aria-describedby={message ? "email-error" : "email-hint"} />
+</Field>
+```
+
 ## Usage by framework
 
 ### React
 
 ```tsx
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Field } from "@/components/ui/field";
 
 <Button variant="danger" size="lg" onClick={remove}>
   Delete project
 </Button>;
+
+<Field label="Email" error={message}>
+  {({ controlProps }) => <Input type="email" {...controlProps} />}
+</Field>;
 ```
+
+Import paths follow your `openui.json` aliases. The default `{ui}` alias is
+`@/components/ui` for React.
 
 ### Svelte
 
 ```svelte
 <script>
   import Button from "$lib/components/ui/button.svelte";
+  import Input from "$lib/components/ui/input.svelte";
 </script>
 
 <Button variant="outline" size="sm" onclick={save}>Save</Button>
+<Input type="email" name="email" invalid={hasError} />
 ```
 
 Svelte content is passed as a snippet:
@@ -101,9 +232,11 @@ Svelte content is passed as a snippet:
 ```astro
 ---
 import Button from "../components/ui/button.astro";
+import Input from "../components/ui/input.astro";
 ---
 
 <Button variant="secondary" type="submit">Save</Button>
+<Input type="email" name="email" placeholder="you@example.com" />
 ```
 
 Astro content goes into the default slot.
@@ -113,10 +246,12 @@ Astro content goes into the default slot.
 ```vue
 <script setup>
 import Button from "@/components/ui/button.vue";
+import Input from "@/components/ui/input.vue";
 </script>
 
 <template>
   <Button variant="ghost" @click="close">Close</Button>
+  <Input type="email" name="email" invalid />
 </template>
 ```
 

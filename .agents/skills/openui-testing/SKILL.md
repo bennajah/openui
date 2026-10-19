@@ -64,7 +64,7 @@ const registry = createRegistry(root);
 
 - `makeTempDir()` creates a directory under the OS temp directory.
 - `createProject(overrides)` writes a valid `openui.json`.
-- `createRegistry(root)` writes a minimal local registry with one Button per
+- `createRegistry(root)` writes a minimal local registry with one item per
   framework, including a React JSX sibling.
 - Never write inside the repository from a test.
 - Never assert on absolute temp paths; assert on relative destinations or
@@ -90,9 +90,9 @@ formatting changes fail.
 ## Real-registry integration
 
 `packages/cli/test/registry.test.ts` builds the repository registry in a temp
-directory and installs the real Button into React, Svelte, Astro, and Vue (plus
-the React JSX variant). This is the test that catches manifest/target drift.
-Keep it using the real `registry/openui-registry.json` and real component
+directory and installs the real components into React, Svelte, Astro, and Vue
+(plus the React JSX variant). This is the test that catches manifest/target
+drift. Keep it using the real `registry/openui-registry.json` and real component
 sources; do not replace it with fixtures.
 
 ## Generated artifacts

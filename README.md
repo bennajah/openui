@@ -11,7 +11,7 @@ project.
 
 ```bash
 bunx @openui/cli init
-bunx @openui/cli add button
+bunx @openui/cli add button input field
 ```
 
 > **Beta.** The CLI runs on Bun and packages ship TypeScript sources directly.
@@ -35,7 +35,7 @@ openui init
 
 # Preview, then install
 openui add button --dry-run
-openui add button
+openui add button input textarea select checkbox radio label field
 ```
 
 `init` detects React, Svelte, Astro, or Vue from dependencies and framework
@@ -50,15 +50,26 @@ Installed components go to `aliases.ui` from `openui.json` (default
 
 ```tsx
 import { Button } from "@/components/ui/button";
+import { Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
-export function SaveBar() {
-  return <Button type="submit">Save changes</Button>;
+export function SignInForm() {
+  return (
+    <form>
+      <Field label="Email" hint="We never share it.">
+        {({ controlProps }) => <Input type="email" {...controlProps} />}
+      </Field>
+      <Button type="submit">Save changes</Button>
+    </form>
+  );
 }
 ```
 
-The Button supports `variant` (`primary`, `secondary`, `outline`, `ghost`,
-`danger`, `link`), `size` (`sm`, `md`, `lg`, `icon`), `fullWidth`, and native
-`type`. Each framework has an idiomatic equivalent of the same API.
+The beta ships eight components: `button`, `input`, `textarea`, `select`,
+`checkbox`, `radio`, `label`, and `field`. The Button supports `variant`
+(`primary`, `secondary`, `outline`, `ghost`, `danger`, `link`), `size` (`sm`,
+`md`, `lg`, `icon`), `fullWidth`, and native `type`. Each framework has an
+idiomatic equivalent of the same API.
 
 ## Commands
 
@@ -175,8 +186,8 @@ bun run build            # full production build
 
 Tests use Bun's built-in runner. CLI tests create isolated projects under the OS
 temporary directory and never write inside the repository. The registry
-integration test builds the real registry and installs the real Button into all
-four frameworks.
+integration test builds the real registry and installs the real components into
+all four frameworks.
 
 ### Formatter and linter
 
@@ -268,8 +279,8 @@ for the full checklist.
 - `oxlint` does not lint `.svelte`, `.astro`, or `.vue` files (compiler tests
   cover them).
 - Tailwind class prefixes are configured but not rewritten in component sources.
-- Only the Button component ships in the beta; the registry and CLI are built to
-  support more.
+- The beta ships eight components (`button`, `input`, `textarea`, `select`,
+  `checkbox`, `radio`, `label`, `field`); the registry and CLI support more.
 - The registry is committed and served statically from the docs deployment.
 
 ## License
