@@ -4,6 +4,7 @@
 // The beta ships TypeScript sources directly and runs them with Bun. A
 // compiled Node-compatible `dist` build is planned before the first stable
 // npm release (see README "Current limitations").
-// The bare import loads the CLI, which runs on import — intentional.
-// oxlint-disable-next-line import/no-unassigned-import
-import "../src/index.ts";
+import process from "node:process";
+import { main } from "../src/run.ts";
+
+process.exitCode = await main(process.argv.slice(2));
