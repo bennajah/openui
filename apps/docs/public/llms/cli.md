@@ -49,7 +49,7 @@ Installs one or more components, including registry dependencies.
 
 ```bash
 openui add button
-openui add input textarea select checkbox radio label field
+openui add input textarea select checkbox radio label field theme
 openui add button --dry-run
 openui add button --overwrite
 ```

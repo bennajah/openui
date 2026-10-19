@@ -11,7 +11,7 @@ and Vue. Components are plain framework code styled with Tailwind CSS v4; the
 - [Getting started](https://openui.dev/docs/getting-started): Install OpenUI, initialize a project, and add your first component.
 - [Configuration](https://openui.dev/docs/configuration): Every field in openui.json, how discovery works, and how CLI flags interact with the file.
 - [CLI](https://openui.dev/docs/cli): Commands, flags, exit codes, and the safety model behind file writes.
-- [Components](https://openui.dev/docs/components): The Button, form control, and Field APIs, accessibility behavior, and framework-specific usage.
+- [Components](https://openui.dev/docs/components): The Button, form control, Field, and Theme APIs, accessibility behavior, and framework-specific usage.
 - [Registry](https://openui.dev/docs/registry): How the OpenUI registry is laid out, generated, served, and validated.
 - [Theming](https://openui.dev/docs/theming): Style OpenUI components with Tailwind CSS v4 utilities, dark mode, and local overrides.
 - [Contributing](https://openui.dev/docs/contributing): Repository layout, local workflow, verification, changesets, and known beta limitations.

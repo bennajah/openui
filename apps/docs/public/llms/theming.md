@@ -58,7 +58,27 @@ variant in your global CSS:
 @custom-variant dark (&:where(.dark, .dark *));
 ```
 
-Then toggle a `dark` class on `<html>`.
+Then toggle a `dark` class on `<html>`. The `theme` component does exactly
+this: install it with `openui add theme` and it ships the state API plus a
+`ThemeToggle` button that cycles light, dark, and system. See
+[Components → Theme](https://openui.dev/docs/components#theme) for the full API. The short
+version:
+
+```bash
+openui add theme
+```
+
+```tsx
+import { initTheme, THEME_INIT_SCRIPT } from "@/components/ui/theme";
+
+// in <head>, before your app renders
+<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />;
+
+initTheme();
+```
+
+The choice persists under the `openui-theme` key and `system` follows the OS
+setting live.
 
 ## Brand tokens
 

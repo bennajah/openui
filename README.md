@@ -35,7 +35,7 @@ openui init
 
 # Preview, then install
 openui add button --dry-run
-openui add button input textarea select checkbox radio label field
+openui add button input textarea select checkbox radio label field theme
 ```
 
 `init` detects React, Svelte, Astro, or Vue from dependencies and framework
@@ -65,11 +65,12 @@ export function SignInForm() {
 }
 ```
 
-The beta ships eight components: `button`, `input`, `textarea`, `select`,
-`checkbox`, `radio`, `label`, and `field`. The Button supports `variant`
-(`primary`, `secondary`, `outline`, `ghost`, `danger`, `link`), `size` (`sm`,
-`md`, `lg`, `icon`), `fullWidth`, and native `type`. Each framework has an
-idiomatic equivalent of the same API.
+The beta ships nine components: `button`, `input`, `textarea`, `select`,
+`checkbox`, `radio`, `label`, `field`, and `theme`. The Button supports
+`variant` (`primary`, `secondary`, `outline`, `ghost`, `danger`, `link`),
+`size` (`sm`, `md`, `lg`, `icon`), `fullWidth`, and native `type`. `theme`
+ships the dark-mode state, a no-flash init script, and a toggle button. Each
+framework has an idiomatic equivalent of the same API.
 
 ## Commands
 
@@ -279,8 +280,9 @@ for the full checklist.
 - `oxlint` does not lint `.svelte`, `.astro`, or `.vue` files (compiler tests
   cover them).
 - Tailwind class prefixes are configured but not rewritten in component sources.
-- The beta ships eight components (`button`, `input`, `textarea`, `select`,
-  `checkbox`, `radio`, `label`, `field`); the registry and CLI support more.
+- The beta ships nine components (`button`, `input`, `textarea`, `select`,
+  `checkbox`, `radio`, `label`, `field`, `theme`); the registry and CLI support
+  more.
 - The registry is committed and served statically from the docs deployment.
 
 ## License

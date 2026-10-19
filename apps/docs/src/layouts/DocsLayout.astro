@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import "../styles/global.css";
+import ThemeToggle from "@openui/astro/theme-toggle.astro";
+import { THEME_INIT_SCRIPT } from "@openui/astro/theme";
 
 interface Props {
   title?: string;
@@ -35,6 +37,8 @@ const pageDescription =
     <meta name="description" content={pageDescription} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{pageTitle}</title>
+    <!-- Applies the stored theme before first paint so there is no flash. -->
+    <script is:inline set:html={THEME_INIT_SCRIPT}></script>
   </head>
   <body class="min-h-screen">
     <header
@@ -59,6 +63,7 @@ const pageDescription =
           rel="noreferrer"
           >GitHub</a
         >
+        <ThemeToggle />
       </div>
     </header>
 
