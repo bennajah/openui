@@ -22,6 +22,12 @@
   ],
   "overrides": [
     {
+      "files": ["packages/react/**"],
+      "rules": {
+        "react/react-in-jsx-scope": "off"
+      }
+    },
+    {
       "files": ["packages/cli/**"],
       "rules": {
         "no-console": "off"
@@ -36,7 +42,13 @@
     {
       "files": ["**/*.test.ts", "**/*.test.tsx"],
       "rules": {
-        "eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }]
+        "eslint/no-unused-vars": [
+          "error",
+          {
+            "varsIgnorePattern": "^_",
+            "argsIgnorePattern": "^_"
+          }
+        ]
       }
     }
   ]

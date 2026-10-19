@@ -1,0 +1,87 @@
+{
+  "$schema": "./schema.json",
+  "name": "openui",
+  "version": "0.1.0-beta.0",
+  "homepage": "https://openui.dev",
+  "output": "registry",
+  "components": [
+    {
+      "name": "button",
+      "title": "Button",
+      "description": "A framework-native button with disjoint variants and sizes, built on Tailwind CSS utilities.",
+      "meta": {
+        "variant": [
+          { "name": "primary", "description": "High-emphasis action. The default." },
+          { "name": "secondary", "description": "Lower-emphasis action on a subtle surface." },
+          { "name": "outline", "description": "Bordered action for secondary contexts." },
+          { "name": "ghost", "description": "Borderless action, usually in toolbars." },
+          { "name": "danger", "description": "Destructive or irreversible action." },
+          { "name": "link", "description": "Inline text action that looks like a link." }
+        ],
+        "size": [
+          { "name": "sm", "description": "Compact 32px control." },
+          { "name": "md", "description": "Default 40px control." },
+          { "name": "lg", "description": "Prominent 48px control." },
+          { "name": "icon", "description": "Square 40px control for a single icon." }
+        ],
+        "props": [
+          {
+            "name": "variant",
+            "type": "'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link'",
+            "default": "'primary'",
+            "description": "Visual emphasis of the button."
+          },
+          {
+            "name": "size",
+            "type": "'sm' | 'md' | 'lg' | 'icon'",
+            "default": "'md'",
+            "description": "Control height and horizontal padding."
+          },
+          {
+            "name": "fullWidth",
+            "type": "boolean",
+            "default": "false",
+            "description": "Stretch the button to the width of its container."
+          },
+          {
+            "name": "type",
+            "type": "'button' | 'submit' | 'reset'",
+            "default": "'button'",
+            "description": "Native button type. Defaults to button so forms do not submit accidentally."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/button.tsx",
+            "target": "{ui}/button.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/button.svelte",
+            "target": "{ui}/button.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/button.astro",
+            "target": "{ui}/button.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/button.vue",
+            "target": "{ui}/button.vue",
+            "type": "component"
+          }
+        ]
+      }
+    }
+  ]
+}

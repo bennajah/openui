@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openui.dev/schema.json",
+  "framework": "auto",
+  "typescript": true,
+  "tailwind": {
+    "css": "apps/docs/src/styles/global.css",
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "ui": "@/components/ui"
+  },
+  "registry": {
+    "url": "./registry"
+  }
+}
