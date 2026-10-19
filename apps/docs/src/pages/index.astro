@@ -1,18 +1,119 @@
 ---
-// Placeholder until the documentation site lands (see roadmap).
-const title = "OpenUI";
+import DocsLayout from "../layouts/DocsLayout.astro";
+
+const features = [
+  {
+    title: "Source, not a dependency",
+    body: "Components are copied into your project. No runtime package, no provider, no version lock-in.",
+  },
+  {
+    title: "One API, four frameworks",
+    body: "Button ships as native React, Svelte, Astro, and Vue code with matching props and variants.",
+  },
+  {
+    title: "Tailwind CSS v4",
+    body: "Plain utility classes. Theme with CSS variables, dark mode, or direct edits — no build plugin.",
+  },
+  {
+    title: "Safe by default",
+    body: "The CLI validates config, registry items, and install paths before writing. Existing files are never clobbered.",
+  },
+];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{title}</h1>
-      <p>Documentation is being built.</p>
-    </main>
-  </body>
-</html>
+<DocsLayout
+  title="Framework-native components, installed as source"
+  description="OpenUI installs native React, Svelte, Astro, and Vue components directly into your project with zero runtime dependencies."
+>
+  <section class="border-b border-zinc-200 pb-10 dark:border-zinc-800">
+    <p class="mb-3 text-sm font-medium text-zinc-500">OpenUI beta</p>
+    <h1
+      class="max-w-3xl text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl dark:text-white"
+    >
+      Framework-native components, installed as source.
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+      Write less glue. OpenUI gives React, Svelte, Astro, and Vue the same component API, then
+      writes the code into your repository. No runtime, no wrappers, no lock-in.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a
+        class="inline-flex h-10 items-center rounded-md bg-zinc-900 px-4 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+        href="/docs/getting-started">Get started</a
+      >
+      <a
+        class="inline-flex h-10 items-center rounded-md border border-zinc-300 px-4 text-sm font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-900"
+        href="/docs/components">Browse components</a
+      >
+      <a
+        class="inline-flex h-10 items-center rounded-md px-4 text-sm font-medium text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+        href="/llms.txt">Read llms.txt</a
+      >
+    </div>
+
+    <div
+      class="mt-8 max-w-xl rounded-xl border border-zinc-200 bg-zinc-950 p-4 font-mono text-sm text-zinc-100 dark:border-zinc-800"
+    >
+      <p class="text-zinc-500"># install the CLI, then the component</p>
+      <p>bun add -g @openui/cli</p>
+      <p>openui init --framework react</p>
+      <p>openui add button</p>
+    </div>
+  </section>
+
+  <section class="grid gap-6 py-10 sm:grid-cols-2">
+    {
+      features.map((feature) => (
+        <div class="rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+          <h2 class="font-semibold text-zinc-950 dark:text-white">{feature.title}</h2>
+          <p class="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">{feature.body}</p>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="border-t border-zinc-200 py-10 dark:border-zinc-800">
+    <h2 class="text-xl font-semibold tracking-tight text-zinc-950 dark:text-white">
+      The same button, natively
+    </h2>
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <div class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+        <p class="mb-2 text-xs font-semibold tracking-wider text-zinc-500 uppercase">React</p>
+        <pre
+          class="overflow-x-auto rounded-lg bg-zinc-950 p-3 text-xs text-zinc-100"><code>{`import { Button } from "@/components/ui/button";
+
+<Button variant="danger" size="sm">Delete</Button>`}</code></pre>
+      </div>
+      <div class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+        <p class="mb-2 text-xs font-semibold tracking-wider text-zinc-500 uppercase">Svelte</p>
+        <pre
+          class="overflow-x-auto rounded-lg bg-zinc-950 p-3 text-xs text-zinc-100"><code>{`<script>
+  import Button from "$lib/components/ui/button.svelte";
+</script>
+
+<Button variant="danger" size="sm">Delete</Button>`}</code></pre>
+      </div>
+      <div class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+        <p class="mb-2 text-xs font-semibold tracking-wider text-zinc-500 uppercase">Astro</p>
+        <pre
+          class="overflow-x-auto rounded-lg bg-zinc-950 p-3 text-xs text-zinc-100"><code>{`---
+import Button from "../components/ui/button.astro";
+---
+
+<Button variant="danger" size="sm">Delete</Button>`}</code></pre>
+      </div>
+      <div class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+        <p class="mb-2 text-xs font-semibold tracking-wider text-zinc-500 uppercase">Vue</p>
+        <pre
+          class="overflow-x-auto rounded-lg bg-zinc-950 p-3 text-xs text-zinc-100"><code>{`<script setup>
+import Button from "@/components/ui/button.vue";
+</script>
+
+<template>
+  <Button variant="danger" size="sm">Delete</Button>
+</template>`}</code></pre>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

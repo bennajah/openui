@@ -1,0 +1,34 @@
+# OpenUI
+
+> Framework-native UI components installed as source. No runtime dependencies.
+
+OpenUI writes components directly into your project for React, Svelte, Astro,
+and Vue. Components are plain framework code styled with Tailwind CSS v4; the
+`openui` CLI handles configuration, installation, and registry validation.
+
+## Documentation
+
+- [Getting started](https://openui.dev/docs/getting-started): Install OpenUI, initialize a project, and add your first component.
+- [Configuration](https://openui.dev/docs/configuration): Every field in openui.json, how discovery works, and how CLI flags interact with the file.
+- [CLI](https://openui.dev/docs/cli): Commands, flags, exit codes, and the safety model behind file writes.
+- [Components](https://openui.dev/docs/components): The Button API, accessibility behavior, and framework-specific usage.
+- [Registry](https://openui.dev/docs/registry): How the OpenUI registry is laid out, generated, served, and validated.
+- [Theming](https://openui.dev/docs/theming): Style OpenUI components with Tailwind CSS v4 utilities, dark mode, and local overrides.
+- [Contributing](https://openui.dev/docs/contributing): Repository layout, local workflow, verification, changesets, and known beta limitations.
+
+## Frameworks
+
+- [React](https://openui.dev/docs/frameworks/react): Install and use OpenUI components in React, including TypeScript and JavaScript variants.
+- [Svelte](https://openui.dev/docs/frameworks/svelte): Install and use OpenUI components in Svelte 5 projects.
+- [Astro](https://openui.dev/docs/frameworks/astro): Install and use OpenUI components in Astro projects.
+- [Vue](https://openui.dev/docs/frameworks/vue): Install and use OpenUI components in Vue 3 projects.
+
+## Machine-readable
+
+- [Full documentation](https://openui.dev/llms-full.txt): Every page in one file.
+- [JSON Schema](https://openui.dev/schema.json): Schema for `openui.json`.
+- [Registry index](https://openui.dev/registry/index.json): Components and item locations.
+
+## Optional
+
+- [Contributing](https://openui.dev/docs/contributing): Repository workflow and beta limitations.

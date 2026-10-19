@@ -3,6 +3,13 @@
   "compilerOptions": {
     "types": ["bun", "astro/client"]
   },
-  "include": [".astro/types/**/*.ts", "src/**/*.ts", "src/**/*.astro"],
+  "include": [
+    ".astro/types/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.astro",
+    "test/**/*.ts",
+    "../../scripts/lib/docs.ts"
+  ],
   "exclude": ["dist"]
 }

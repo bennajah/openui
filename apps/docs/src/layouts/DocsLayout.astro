@@ -1,0 +1,153 @@
+---
+import { getCollection } from "astro:content";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentSlug?: string;
+}
+
+const { title, description, currentSlug } = Astro.props;
+
+const entries = await getCollection("docs");
+const sorted = entries.toSorted((a, b) => {
+  const aFramework = a.id.startsWith("frameworks/");
+  const bFramework = b.id.startsWith("frameworks/");
+  if (aFramework !== bFramework) return aFramework ? 1 : -1;
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return a.id.localeCompare(b.id);
+});
+
+const main = sorted.filter((entry) => !entry.id.startsWith("frameworks/"));
+const frameworks = sorted.filter((entry) => entry.id.startsWith("frameworks/"));
+
+const pageTitle = title === undefined ? "OpenUI" : `${title} · OpenUI`;
+const pageDescription =
+  description ?? "Framework-native UI components installed as source.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="min-h-screen">
+    <header
+      class="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90"
+    >
+      <div class="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-6">
+        <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+          <span
+            class="grid size-6 place-items-center rounded-md bg-zinc-900 text-[11px] font-bold text-white dark:bg-white dark:text-zinc-900"
+            >O</span
+          >
+          OpenUI
+        </a>
+        <nav class="flex items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+          <a class="hover:text-zinc-950 dark:hover:text-white" href="/docs">Docs</a>
+          <a class="hover:text-zinc-950 dark:hover:text-white" href="/docs/components">Components</a>
+          <a class="hover:text-zinc-950 dark:hover:text-white" href="/llms.txt">llms.txt</a>
+        </nav>
+        <a
+          class="ml-auto text-sm text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+          href="https://github.com/bennajah/openui"
+          rel="noreferrer"
+          >GitHub</a
+        >
+      </div>
+    </header>
+
+    <div class="mx-auto flex max-w-6xl gap-10 px-4 py-10 sm:px-6">
+      <aside class="hidden w-52 shrink-0 lg:block">
+        <nav class="sticky top-24 space-y-8 text-sm">
+          <div>
+            <p
+              class="mb-2 text-xs font-semibold tracking-wider text-zinc-500 uppercase dark:text-zinc-500"
+            >
+              Documentation
+            </p>
+            <ul class="space-y-1">
+              {
+                main.map((entry) => (
+                  <li>
+                    <a
+                      href={`/docs/${entry.id}`}
+                      aria-current={currentSlug === entry.id ? "page" : undefined}
+                      class:list={[
+                        "block rounded-md px-2 py-1.5 transition-colors",
+                        currentSlug === entry.id
+                          ? "bg-zinc-100 font-medium text-zinc-950 dark:bg-zinc-800 dark:text-white"
+                          : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white",
+                      ]}
+                    >
+                      {entry.data.title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-xs font-semibold tracking-wider text-zinc-500 uppercase dark:text-zinc-500"
+            >
+              Frameworks
+            </p>
+            <ul class="space-y-1">
+              {
+                frameworks.map((entry) => (
+                  <li>
+                    <a
+                      href={`/docs/${entry.id}`}
+                      aria-current={currentSlug === entry.id ? "page" : undefined}
+                      class:list={[
+                        "block rounded-md px-2 py-1.5 transition-colors",
+                        currentSlug === entry.id
+                          ? "bg-zinc-100 font-medium text-zinc-950 dark:bg-zinc-800 dark:text-white"
+                          : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white",
+                      ]}
+                    >
+                      {entry.data.title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div class="border-t border-zinc-200 pt-4 dark:border-zinc-800">
+            <a
+              class="text-zinc-500 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-white"
+              href="/llms-full.txt">Full docs for LLMs</a
+            >
+          </div>
+        </nav>
+      </aside>
+
+      <main class="min-w-0 flex-1">
+        <slot />
+      </main>
+    </div>
+
+    <footer class="border-t border-zinc-200 py-8 dark:border-zinc-800">
+      <div
+        class="mx-auto flex max-w-6xl flex-col gap-2 px-4 text-sm text-zinc-500 sm:flex-row sm:px-6 dark:text-zinc-500"
+      >
+        <p>OpenUI · MIT licensed · beta</p>
+        <p class="sm:ml-auto">
+          <a class="hover:text-zinc-950 dark:hover:text-white" href="/llms.txt">llms.txt</a>
+          <span class="px-2">·</span>
+          <a class="hover:text-zinc-950 dark:hover:text-white" href="/schema.json">schema.json</a>
+          <span class="px-2">·</span>
+          <a class="hover:text-zinc-950 dark:hover:text-white" href="/registry/index.json"
+            >registry</a
+          >
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

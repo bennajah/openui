@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --cwd apps/docs dev",
-    "build": "bun run typecheck && bun run registry:build && bun run build:docs",
+    "build": "bun run typecheck && bun run schema:generate && bun run registry:build && bun run llms:generate && bun run build:docs",
     "build:docs": "bun run --cwd apps/docs build",
     "test": "bun test",
     "typecheck": "bun run --filter \"@openui/*\" typecheck",
@@ -16,15 +16,16 @@
     "format:check": "oxfmt --check",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix",
-    "registry:build": "bun run packages/cli/src/index.ts build",
-    "registry:validate": "bun run packages/cli/src/index.ts validate",
+    "registry:build": "bun run packages/cli/bin/openui.js build",
+    "registry:validate": "bun run packages/cli/bin/openui.js validate",
     "llms:generate": "bun run scripts/generate-llms.ts",
     "llms:validate": "bun run scripts/validate-llms.ts",
     "schema:generate": "bun run scripts/generate-schema.ts",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "verify": "bun run scripts/verify.ts"
+    "verify": "bun run scripts/verify.ts",
+    "registry:public": "bun run scripts/sync-registry-public.ts"
   },
   "devDependencies": {
     "@astrojs/compiler-rs": "^0.5.2",

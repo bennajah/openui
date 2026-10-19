@@ -8,7 +8,7 @@ const SOURCE = readFileSync(join(import.meta.dir, "../src/button.astro"), "utf8"
 describe("Button (Astro)", () => {
   it("compiles without diagnostics", async () => {
     const result = await transform(SOURCE, { filename: "button.astro" });
-    expect(result.diagnostics.filter((d) => d.severity === 1)).toEqual([]);
+    expect(result.diagnostics.filter((d) => d.severity === "error")).toEqual([]);
     expect(result.code).toContain("<button");
   });
 

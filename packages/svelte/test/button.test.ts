@@ -13,8 +13,8 @@ async function renderButton(props: Record<string, unknown> = {}): Promise<string
   try {
     const file = join(dir, "button.mjs");
     writeFileSync(file, result.js.code);
-    const module = (await import(file)) as { default: Parameters<typeof render>[0] };
-    return render(module.default, { props }).body;
+    const module = (await import(file)) as { default: unknown };
+    return render(module.default as Parameters<typeof render>[0], { props } as never).body;
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

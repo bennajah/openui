@@ -1,0 +1,107 @@
+---
+title: Theming
+description: Style OpenUI components with Tailwind CSS v4 utilities, dark mode, and local overrides.
+order: 6
+---
+
+# Theming
+
+OpenUI components are styled with plain Tailwind CSS utility classes. There is
+no CSS-in-JS runtime, no theme provider, and no stylesheet shipped by the
+registry. Your Tailwind build already sees the classes because the components
+are source files inside your project.
+
+## Tailwind CSS v4 setup
+
+If your project does not have Tailwind yet, follow the official Tailwind v4
+installation for your framework. The essential pieces are:
+
+1. Add `tailwindcss` and your framework's Tailwind plugin.
+2. Import Tailwind in your global CSS:
+
+```css
+@import "tailwindcss";
+```
+
+3. Make sure `openui.json` points at that file:
+
+```json
+{
+  "tailwind": { "css": "src/styles/global.css", "prefix": "" }
+}
+```
+
+No additional OpenUI import is required.
+
+## What the components use
+
+The Button uses core Tailwind utilities and the built-in `zinc` and `red`
+palettes:
+
+- Surfaces: `bg-zinc-900`, `bg-zinc-100`, `bg-transparent`.
+- Text: `text-white`, `text-zinc-900`, `text-zinc-50`.
+- Borders: `border-zinc-300`, `border-zinc-700`.
+- Focus: `ring-zinc-400`, `ring-zinc-600`, with `ring-offset-2`.
+
+Because these are standard utilities, they work in any Tailwind v4 project
+with no token configuration.
+
+## Dark mode
+
+Dark styles are written with Tailwind's `dark:` variant. Tailwind v4 defaults
+to the `prefers-color-scheme` strategy. To switch manually, define a custom
+variant in your global CSS:
+
+```css
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+Then toggle a `dark` class on `<html>`.
+
+## Brand tokens
+
+For a brand palette, map utilities to your own CSS variables with Tailwind v4's
+`@theme`:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-brand: oklch(0.55 0.2 255);
+  --color-brand-foreground: white;
+}
+```
+
+Edit the installed component to use them:
+
+```diff
+-  primary: "bg-zinc-900 text-white hover:bg-zinc-800",
++  primary: "bg-brand text-brand-foreground hover:bg-brand/90",
+```
+
+Remember that components are your source: edit them directly, and use
+`openui diff button` before accepting a registry update.
+
+## Local overrides
+
+Every component accepts a `class`/`className` prop and merges it last:
+
+```tsx
+<Button className="rounded-full px-8">Pill</Button>
+```
+
+Because variants are disjoint and the merge is a simple join, your utility
+comes later in the class list. For conflicting utilities, Tailwind's generated
+CSS order — not class-attribute order — decides the winner. Prefer overriding
+the component's variant map when you need a guaranteed conflict-free change.
+
+## Accessibility
+
+Focus rings and disabled styles are part of the base classes. If you customize
+them, keep:
+
+- a visible focus indicator with sufficient contrast;
+- a non-color-only disabled cue where possible;
+- at least a 40×40px target for icon-only buttons (the `icon` size).

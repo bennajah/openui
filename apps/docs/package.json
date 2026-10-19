@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "bun run ../../scripts/sync-registry-public.ts && astro build",
     "preview": "astro preview",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },

@@ -1,0 +1,113 @@
+---
+title: Svelte
+description: Install and use OpenUI components in Svelte 5 projects.
+order: 2
+---
+
+# Svelte
+
+OpenUI ships native Svelte 5 components. The installed file uses runes and
+snippets — no legacy slots, stores, or runtime package.
+
+## Install
+
+```bash
+openui init --framework svelte
+openui add button
+```
+
+The component is written in plain JavaScript with JSDoc types, so the same file
+works in TypeScript and JavaScript Svelte projects. There is no `lang="ts"` to
+break JavaScript tooling.
+
+## Import
+
+With SvelteKit's default `$lib` alias:
+
+```svelte
+<script>
+  import Button from "$lib/components/ui/button.svelte";
+</script>
+```
+
+If your project uses a different alias, update `aliases.ui` in `openui.json`
+so install destinations match your imports.
+
+## Usage
+
+```svelte
+<script>
+  import Button from "$lib/components/ui/button.svelte";
+
+  let saving = $state(false);
+</script>
+
+<Button variant="secondary" disabled={saving} onclick={() => (saving = true)}>
+  {saving ? "Saving…" : "Save"}
+</Button>
+```
+
+Svelte 5 uses `onclick` (not `on:click`) for native event attributes.
+
+## Children
+
+Content is passed as a snippet:
+
+```svelte
+<Button variant="danger">
+  {#snippet children()}
+    <TrashIcon aria-hidden="true" />
+    Delete
+  {/snippet}
+</Button>
+```
+
+Text between the tags also renders when no explicit snippet is supplied.
+
+## Forms
+
+The component defaults to `type="button"`. Opt into submission:
+
+```svelte
+<form method="POST">
+  <Button type="submit">Save</Button>
+</form>
+```
+
+## Props
+
+```js
+/** @typedef {"primary" | "secondary" | "outline" | "ghost" | "danger" | "link"} ButtonVariant */
+/** @typedef {"sm" | "md" | "lg" | "icon"} ButtonSize */
+```
+
+| Prop        | Default   |
+| ----------- | --------- |
+| `variant`   | `primary` |
+| `size`      | `md`      |
+| `fullWidth` | `false`   |
+| `type`      | `button`  |
+
+Remaining props (including `aria-*`, `disabled`, and `class`) are forwarded to
+the `<button>`. `class` is merged with the generated classes.
+
+## Styling
+
+Components use standard Tailwind utilities. Tailwind v4's Svelte integration
+discovers classes in `.svelte` files automatically. Pass `class` to extend:
+
+```svelte
+<Button class="rounded-full">Pill</Button>
+```
+
+## Type checking
+
+The file is plain JavaScript with JSDoc, so `svelte-check` understands its
+props without a TypeScript SFC. Keep `checkJs` off if your project does not
+type-check JavaScript files; the component remains valid either way.
+
+## Testing
+
+The repository compiles this component with `svelte/compiler` and renders the
+server output in tests. Use a similar smoke test to ensure a customized
+component still compiles.

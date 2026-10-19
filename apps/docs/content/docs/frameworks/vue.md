@@ -1,0 +1,119 @@
+---
+title: Vue
+description: Install and use OpenUI components in Vue 3 projects.
+order: 4
+---
+
+# Vue
+
+OpenUI ships native Vue 3 single-file components. The installed file uses
+`<script setup>` and plain JavaScript with runtime prop validation, so it works
+in both TypeScript and JavaScript projects.
+
+## Install
+
+```bash
+openui init --framework vue
+openui add button
+```
+
+## Import
+
+```vue
+<script setup>
+import Button from "@/components/ui/button.vue";
+</script>
+```
+
+Vite resolves `@/` through your alias configuration. If you use a different
+alias, update `aliases.ui` in `openui.json` so install destinations match.
+
+You can also register the component globally:
+
+```ts
+import { createApp } from "vue";
+import Button from "@/components/ui/button.vue";
+import App from "./App.vue";
+
+createApp(App).component("Button", Button).mount("#app");
+```
+
+## Usage
+
+```vue
+<script setup>
+import { ref } from "vue";
+import Button from "@/components/ui/button.vue";
+
+const saving = ref(false);
+
+async function save() {
+  saving.value = true;
+  try {
+    await fetch("/api/save", { method: "POST" });
+  } finally {
+    saving.value = false;
+  }
+}
+</script>
+
+<template>
+  <Button variant="secondary" :disabled="saving" @click="save">
+    {{ saving ? "Saving…" : "Save" }}
+  </Button>
+</template>
+```
+
+Events use Vue's `@click` binding. Native attributes such as `aria-*`,
+`disabled`, and `class` fall through to the root `<button>` element and classes
+are merged automatically.
+
+## Slots
+
+Content goes into the default slot:
+
+```vue
+<Button variant="ghost">
+  <TrashIcon aria-hidden="true" />
+  Delete
+</Button>
+```
+
+## Forms
+
+The component defaults to `type="button"`. Opt into submission:
+
+```vue
+<form method="POST" @submit.prevent="save">
+  <Button type="submit">Save</Button>
+</form>
+```
+
+## Props
+
+| Prop        | Type                                                         | Default   |
+| ----------- | ------------------------------------------------------------ | --------- |
+| `variant`   | `primary \| secondary \| outline \| ghost \| danger \| link` | `primary` |
+| `size`      | `sm \| md \| lg \| icon`                                     | `md`      |
+| `fullWidth` | `boolean`                                                    | `false`   |
+| `type`      | `button \| submit \| reset`                                  | `button`  |
+
+`variant` and `size` include runtime validators; an unknown value warns in
+development and falls back visually to the default class set.
+
+## Styling
+
+Components use standard Tailwind utilities. Pass `class` to extend:
+
+```vue
+<Button class="rounded-full">Pill</Button>
+```
+
+Tailwind v4's Vue integration scans `.vue` files.
+
+## Testing
+
+The repository compiles this SFC with `vue/compiler-sfc` and server-renders it
+with `vue/server-renderer`, so template errors and invalid props fail CI.
+Mount the component with Vue Test Utils for interaction tests in your own
+project.

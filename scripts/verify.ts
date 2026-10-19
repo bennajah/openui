@@ -8,9 +8,9 @@
  * 1. Formatting/linting first — cheapest, most mechanical failures.
  * 2. Type checking next — catches cross-package contract drift.
  * 3. Tests — behavior, including CLI integration tests.
- * 4. Registry build + validation — generated artifacts must be current.
+ * 4. Schema + registry generation and validation — generated artifacts must be current.
  * 5. LLM documentation generation + validation — docs must be in sync.
- * 6. Production docs build — final proof the site deploys.
+ * 6. Registry copy + production docs build — final proof the site deploys.
  */
 import { spawn } from "node:child_process";
 import process from "node:process";
@@ -25,11 +25,12 @@ const steps: Step[] = [
   { label: "Lint (oxlint)", command: ["oxlint", "."] },
   { label: "Type check (tsc)", command: ["bun", "run", "typecheck"] },
   { label: "Tests (bun test)", command: ["bun", "test"] },
+  { label: "Schema generation", command: ["bun", "run", "schema:generate"] },
   { label: "Registry build", command: ["bun", "run", "registry:build"] },
   { label: "Registry validation", command: ["bun", "run", "registry:validate"] },
   { label: "LLM docs generation", command: ["bun", "run", "llms:generate"] },
   { label: "LLM docs validation", command: ["bun", "run", "llms:validate"] },
-  { label: "Schema generation", command: ["bun", "run", "schema:generate"] },
+  { label: "Registry public copy", command: ["bun", "run", "registry:public"] },
   { label: "Docs production build", command: ["bun", "run", "build:docs"] },
 ];
 

@@ -1,0 +1,119 @@
+---
+title: Astro
+description: Install and use OpenUI components in Astro projects.
+order: 3
+---
+
+# Astro
+
+OpenUI ships native `.astro` components. They render to static HTML with zero
+client-side JavaScript unless you add interactivity yourself.
+
+## Install
+
+```bash
+openui init --framework astro
+openui add button
+```
+
+The component is plain JavaScript frontmatter with JSDoc types, so it works in
+both TypeScript and JavaScript Astro projects.
+
+## Import
+
+Astro components are default exports; the local name is yours to choose:
+
+```astro
+---
+import Button from "../components/ui/button.astro";
+---
+
+<Button type="submit">Save</Button>
+```
+
+The installed component has no named exports, so always use a default import.
+
+## Usage
+
+```astro
+---
+import Button from "../components/ui/button.astro";
+
+const items = await getItems();
+---
+
+<div>
+  <Button variant="secondary">Refresh</Button>
+  <Button variant="danger" data-action="delete">Delete</Button>
+</div>
+```
+
+## Slots
+
+Content inside the tag goes to the default slot:
+
+```astro
+<Button variant="ghost">
+  <TrashIcon aria-hidden="true" />
+  Delete
+</Button>
+```
+
+## Interactivity
+
+An Astro component is server-rendered. A `Button` with no client directive
+renders HTML and consumes no JavaScript. To handle clicks, either use a tiny
+inline script:
+
+```astro
+<Button data-confirm>Delete</Button>
+
+<script>
+  document.querySelectorAll("[data-confirm]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!confirm("Delete this item?")) return;
+      button.closest("form")?.submit();
+    });
+  });
+</script>
+```
+
+or render your framework's island component (`client:load`) when the
+interaction needs state.
+
+## Forms
+
+The component defaults to `type="button"`. For native form submission:
+
+```astro
+<form method="POST" action="/api/save">
+  <Button type="submit">Save</Button>
+</form>
+```
+
+## Props
+
+| Prop        | Default   |
+| ----------- | --------- |
+| `variant`   | `primary` |
+| `size`      | `md`      |
+| `fullWidth` | `false`   |
+| `type`      | `button`  |
+
+Unknown props — including `aria-*`, `disabled`, and `class` — are spread onto
+the `<button>` element. `class` is merged with the generated classes.
+
+## Styling
+
+The component uses standard Tailwind utilities. Astro's Tailwind v4
+integration scans `.astro` files. Pass `class` to extend:
+
+```astro
+<Button class="rounded-full">Pill</Button>
+```
+
+## Testing
+
+The repository compiles this component with `@astrojs/compiler-rs` in tests, so
+syntax and template errors fail CI. A production Astro build is the strongest
+end-to-end check for a customized component.
