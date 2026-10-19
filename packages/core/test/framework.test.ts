@@ -67,7 +67,10 @@ describe("detectFramework", () => {
   });
 
   test("a Next.js project resolves to react", () => {
-    const root = project({ "next.config.mjs": "export default {}", "package.json": pkg({ next: "^16.0.0" }) });
+    const root = project({
+      "next.config.mjs": "export default {}",
+      "package.json": pkg({ next: "^16.0.0" }),
+    });
     try {
       expect(detectFramework(root).framework).toBe("react");
     } finally {
@@ -77,7 +80,8 @@ describe("detectFramework", () => {
 
   test("build-tool config beats embedded renderers (Astro + Svelte)", () => {
     const root = project({
-      "astro.config.mjs": 'import svelte from "@astrojs/svelte"; export default { integrations: [svelte()] }',
+      "astro.config.mjs":
+        'import svelte from "@astrojs/svelte"; export default { integrations: [svelte()] }',
       "package.json": pkg({ astro: "^7.0.0", "@astrojs/svelte": "^6.0.0", svelte: "^5.0.0" }),
     });
     try {

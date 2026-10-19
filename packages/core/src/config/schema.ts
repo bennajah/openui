@@ -63,7 +63,8 @@ export const configSchema = {
         ui: {
           type: "string",
           default: "@/components/ui",
-          description: "Import alias for UI primitives. Installed components target this directory.",
+          description:
+            "Import alias for UI primitives. Installed components target this directory.",
         },
       },
       additionalProperties: true,

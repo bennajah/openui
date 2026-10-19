@@ -59,7 +59,9 @@ export function loadConfig(options: LoadConfigOptions = {}): LoadConfigResult {
 
   let filePath: string | undefined;
   if (options.configPath) {
-    filePath = isAbsolute(options.configPath) ? options.configPath : resolve(cwd, options.configPath);
+    filePath = isAbsolute(options.configPath)
+      ? options.configPath
+      : resolve(cwd, options.configPath);
     if (!existsSync(filePath)) {
       return { ok: false, errors: [`Config file not found: ${filePath}`] };
     }
@@ -120,6 +122,8 @@ export function applyOverrides(
     ...config,
     ...(overrides.framework !== undefined ? { framework: overrides.framework } : {}),
     ...(overrides.typescript !== undefined ? { typescript: overrides.typescript } : {}),
-    ...(overrides.registry !== undefined ? { registry: { ...config.registry, url: overrides.registry } } : {}),
+    ...(overrides.registry !== undefined
+      ? { registry: { ...config.registry, url: overrides.registry } }
+      : {}),
   };
 }

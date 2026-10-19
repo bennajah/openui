@@ -107,7 +107,10 @@ describe("mergeConfig", () => {
       customSection: { a: 1 },
       tailwind: { css: "src/tw.css", prefix: "" },
     };
-    const merged = mergeConfig(existing, { tailwind: { css: "src/global.css" }, typescript: false });
+    const merged = mergeConfig(existing, {
+      tailwind: { css: "src/global.css" },
+      typescript: false,
+    });
     expect(merged).toEqual({
       framework: "react",
       customSection: { a: 1 },

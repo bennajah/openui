@@ -20,7 +20,14 @@ const goodIndex = {
       },
       meta: {
         variant: [{ name: "default", description: "Primary action." }],
-        props: [{ name: "variant", type: '"default" | "outline"', default: '"default"', description: "Visual style." }],
+        props: [
+          {
+            name: "variant",
+            type: '"default" | "outline"',
+            default: '"default"',
+            description: "Visual style.",
+          },
+        ],
       },
     },
   },
@@ -68,7 +75,11 @@ describe("validateRegistryIndex", () => {
       name: "x",
       version: "1.0.0",
       components: {
-        Button: { title: "B", description: "d", frameworks: { react: { item: "r/button-react.json" } } },
+        Button: {
+          title: "B",
+          description: "d",
+          frameworks: { react: { item: "r/button-react.json" } },
+        },
       },
     });
     expect(result.ok).toBe(false);
@@ -139,7 +150,10 @@ describe("alias + target resolution", () => {
   });
 
   test("falls back to the @/ → src/ convention", () => {
-    expect(resolveAliasToPath("@/components/ui")).toEqual({ path: "src/components/ui", via: "convention" });
+    expect(resolveAliasToPath("@/components/ui")).toEqual({
+      path: "src/components/ui",
+      via: "convention",
+    });
     expect(resolveAliasToPath("~/lib/utils")).toEqual({ path: "src/lib/utils", via: "convention" });
   });
 
@@ -150,9 +164,15 @@ describe("alias + target resolution", () => {
   });
 
   test("expandTarget substitutes all known tokens", () => {
-    expect(expandTarget("{ui}/button.tsx", { ui: "src/components/ui", components: "src/components", css: "src/styles" })).toBe(
-      "src/components/ui/button.tsx",
+    expect(
+      expandTarget("{ui}/button.tsx", {
+        ui: "src/components/ui",
+        components: "src/components",
+        css: "src/styles",
+      }),
+    ).toBe("src/components/ui/button.tsx");
+    expect(expandTarget("{css}/openui.css", { ui: "u", components: "c", css: "src/styles" })).toBe(
+      "src/styles/openui.css",
     );
-    expect(expandTarget("{css}/openui.css", { ui: "u", components: "c", css: "src/styles" })).toBe("src/styles/openui.css");
   });
 });

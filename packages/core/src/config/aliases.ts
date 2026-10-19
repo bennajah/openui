@@ -52,9 +52,7 @@ export function resolveAliasToPath(alias: string, pathsMap?: PathsMap): AliasRes
     const raw = Array.isArray(targets) ? targets[0] : targets;
     if (raw === undefined) continue;
     const suffix = alias.slice(prefix.length); // e.g. "/ui", or "" when alias === prefix
-    const target = raw.endsWith("/*")
-      ? raw.slice(0, -2) + suffix
-      : raw;
+    const target = raw.endsWith("/*") ? raw.slice(0, -2) + suffix : raw;
     if (bestKey === undefined || key.length > bestKey.length) {
       bestKey = key;
       bestTarget = target.replace(/^\.\//, "").replace(/\/$/, "");

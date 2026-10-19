@@ -1,5 +1,4 @@
 import { FRAMEWORK_NAMES, TARGET_TOKENS } from "../config/types.ts";
-import type { RegistryIndex, RegistryItem } from "./types.ts";
 
 /**
  * Zero-dependency validators for the registry index and install items.
@@ -7,7 +6,9 @@ import type { RegistryIndex, RegistryItem } from "./types.ts";
  * use these, so a broken registry can never ship.
  */
 
-export type RegistryValidation = { ok: true; warnings: string[] } | { ok: false; errors: string[]; warnings: string[] };
+export type RegistryValidation =
+  | { ok: true; warnings: string[] }
+  | { ok: false; errors: string[]; warnings: string[] };
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);

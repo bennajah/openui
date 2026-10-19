@@ -31,7 +31,13 @@ interface PackageJsonLike {
 }
 
 const CONFIG_FILES: Record<FrameworkName, readonly string[]> = {
-  astro: ["astro.config.mjs", "astro.config.ts", "astro.config.js", "astro.config.mts", "astro.config.cts"],
+  astro: [
+    "astro.config.mjs",
+    "astro.config.ts",
+    "astro.config.js",
+    "astro.config.mts",
+    "astro.config.cts",
+  ],
   svelte: ["svelte.config.js", "svelte.config.ts", "svelte.config.mjs"],
   vue: ["nuxt.config.ts", "nuxt.config.js", "nuxt.config.mjs"],
   react: ["next.config.js", "next.config.mjs", "next.config.ts", "next.config.cts"],
@@ -64,7 +70,9 @@ export function readPackageJson(root: string): PackageJsonLike | undefined {
 
 function hasDep(pkg: PackageJsonLike | undefined, name: string): boolean {
   if (!pkg) return false;
-  return Boolean(pkg.dependencies?.[name] || pkg.devDependencies?.[name] || pkg.peerDependencies?.[name]);
+  return Boolean(
+    pkg.dependencies?.[name] || pkg.devDependencies?.[name] || pkg.peerDependencies?.[name],
+  );
 }
 
 /**
@@ -93,7 +101,12 @@ export function detectFramework(root: string, packageJson?: PackageJsonLike): De
   // renderers embedded into another framework are weaker.
   for (const [dep, fw] of Object.entries(DEP_FRAMEWORKS)) {
     if (!hasDep(pkg, dep)) continue;
-    const strength = dep === fw ? 3 : dep === "next" || dep.startsWith("@astrojs/") || dep.startsWith("@sveltejs/") ? 2 : 1;
+    const strength =
+      dep === fw
+        ? 3
+        : dep === "next" || dep.startsWith("@astrojs/") || dep.startsWith("@sveltejs/")
+          ? 2
+          : 1;
     bump(fw, strength, `dependency "${dep}"`);
   }
 
@@ -116,6 +129,7 @@ export function detectFramework(root: string, packageJson?: PackageJsonLike): De
     return { framework: undefined, confidence: "unknown", evidence };
   }
 
+  // oxlint-disable-next-line unicorn/no-array-sort -- this copy is local and never escapes.
   const ranked = [...scores.entries()].sort((a, b) => b[1] - a[1]);
   const [top, topScore] = ranked[0]!;
   const second = ranked[1];
