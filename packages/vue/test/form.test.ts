@@ -32,6 +32,28 @@ async function renderComponent(
   }
 }
 
+/**
+ * Render an SFC that imports sibling modules. The compiled module is written
+ * next to `src/` so relative specifiers like `./theme.ts` resolve.
+ */
+async function renderWithImports(
+  name: string,
+  props: Record<string, unknown> = {},
+): Promise<string> {
+  const { descriptor, errors } = parse(source(name), { filename: `${name}.vue` });
+  if (errors.length > 0) throw new Error(String(errors[0]));
+  const compiled = compileScript(descriptor, { id: `openui-${name}`, inlineTemplate: true });
+
+  const file = join(import.meta.dir, `../src/.openui-${name}.test.mjs`);
+  writeFileSync(file, compiled.content);
+  try {
+    const module = (await import(file)) as { default: Parameters<typeof createSSRApp>[0] };
+    return await renderToString(createSSRApp({ render: () => h(module.default, props) }));
+  } finally {
+    rmSync(file, { force: true });
+  }
+}
+
 describe("form components (Vue)", () => {
   it("all compile without SFC errors", async () => {
     for (const name of COMPONENTS) {
@@ -125,5 +147,34 @@ describe("form components (Vue)", () => {
     for (const name of COMPONENTS) {
       expect(source(name)).not.toContain('<script lang="ts"');
     }
+  });
+});
+
+describe("Theme (Vue)", () => {
+  it("compiles the toggle without SFC errors", () => {
+    const { descriptor, errors } = parse(source("theme-toggle"), { filename: "theme-toggle.vue" });
+    expect(errors).toEqual([]);
+    const compiled = compileScript(descriptor, { id: "openui-theme-toggle", inlineTemplate: true });
+    expect(compiled.content.length).toBeGreaterThan(0);
+  });
+
+  it("renders an accessible button with the system icon by default", async () => {
+    const html = await renderWithImports("theme-toggle");
+    expect(html).toContain("<button");
+    expect(html).toContain('aria-label="Theme: System theme. Click to switch."');
+    expect(html).toContain("<rect");
+  });
+
+  it("renders the matching icon for an explicit initial theme", async () => {
+    expect(await renderWithImports("theme-toggle", { initialTheme: "light" })).toContain("<circle");
+    expect(await renderWithImports("theme-toggle", { initialTheme: "dark" })).toContain(
+      "M12 3a6 6 0 0 0 9 9",
+    );
+  });
+
+  it("ships the shared init script and storage key", () => {
+    const src = readFileSync(join(import.meta.dir, "../src/theme.ts"), "utf8");
+    expect(src).toContain('"openui-theme"');
+    expect(src).toContain("THEME_INIT_SCRIPT");
   });
 });

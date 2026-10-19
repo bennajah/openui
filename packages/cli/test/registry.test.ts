@@ -143,4 +143,39 @@ describe("registry integration", () => {
       expect(validation.errors).toEqual([]);
     }
   });
+
+  it("installs theme and rewrites sibling imports for JavaScript projects", async () => {
+    const registryRoot = makeTempDir();
+    const manifest = loadManifest(REPO_ROOT);
+    writeRegistry(registryRoot, manifest, buildRegistry(REPO_ROOT, manifest));
+
+    for (const framework of ["react", "svelte", "astro", "vue"] as const) {
+      const root = createProject({
+        framework,
+        typescript: false,
+        registry: { url: join(registryRoot, "registry") },
+      });
+      // oxlint-disable-next-line no-await-in-loop -- each framework is an isolated project.
+      const outcome = await runAdd({ components: ["theme"], cwd: root });
+      expect(outcome.ok).toBe(true);
+      if (!outcome.ok) throw new Error(`expected success for ${framework}`);
+
+      const ui = join(root, "src/components/ui");
+      // The plain TypeScript module becomes a JavaScript sibling.
+      expect(existsSync(join(ui, "theme.js"))).toBe(true);
+      expect(existsSync(join(ui, "theme.ts"))).toBe(false);
+    }
+
+    // React additionally rewrites the component's import to the JS variant.
+    const reactRoot = createProject({
+      framework: "react",
+      typescript: false,
+      registry: { url: join(registryRoot, "registry") },
+    });
+    // oxlint-disable-next-line no-await-in-loop -- validation pairs with the install above.
+    expect((await runAdd({ components: ["theme"], cwd: reactRoot })).ok).toBe(true);
+    const toggle = readFileSync(join(reactRoot, "src/components/ui/theme-toggle.jsx"), "utf8");
+    expect(toggle).toContain('from "./theme.js"');
+    expect(toggle).not.toContain('from "./theme.ts"');
+  });
 });

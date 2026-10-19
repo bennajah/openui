@@ -7,6 +7,8 @@ import { Label } from "../src/label.tsx";
 import { Radio } from "../src/radio.tsx";
 import { Select } from "../src/select.tsx";
 import { Textarea } from "../src/textarea.tsx";
+import { THEME_INIT_SCRIPT, THEME_STORAGE_KEY, readTheme, resolveTheme } from "../src/theme.ts";
+import { ThemeToggle } from "../src/theme-toggle.tsx";
 
 describe("Input (React)", () => {
   it("renders a text-ish field with default classes", () => {
@@ -150,5 +152,43 @@ describe("Field (React)", () => {
     );
     expect(html).toContain('for="name"');
     expect(html).toContain('id="name"');
+  });
+});
+
+describe("Theme (React)", () => {
+  it("renders a button with an accessible label and the system icon by default", () => {
+    const html = renderToStaticMarkup(<ThemeToggle />);
+    expect(html).toContain("<button");
+    expect(html).toContain('type="button"');
+    expect(html).toContain('aria-label="Theme: System theme. Click to switch."');
+    expect(html).toContain("<rect");
+  });
+
+  it("renders the matching icon for an explicit initial theme", () => {
+    expect(renderToStaticMarkup(<ThemeToggle initialTheme="light" />)).toContain("<circle");
+    expect(renderToStaticMarkup(<ThemeToggle initialTheme="dark" />)).toContain(
+      'd="M12 3a6 6 0 0 0 9 9',
+    );
+  });
+
+  it("merges custom classes and forwards attributes", () => {
+    const html = renderToStaticMarkup(<ThemeToggle className="custom" data-testid="toggle" />);
+    expect(html).toContain("custom");
+    expect(html).toContain('data-testid="toggle"');
+  });
+
+  it("exposes a storage key and a no-flash init script", () => {
+    expect(THEME_STORAGE_KEY).toBe("openui-theme");
+    expect(THEME_INIT_SCRIPT).toContain("openui-theme");
+    expect(THEME_INIT_SCRIPT).toContain("prefers-color-scheme");
+    expect(THEME_INIT_SCRIPT).toContain(".toggle");
+  });
+
+  it("resolves system against the media query and passes through explicit values", () => {
+    // No window in this environment, so system resolves to light.
+    expect(resolveTheme("system")).toBe("light");
+    expect(resolveTheme("dark")).toBe("dark");
+    expect(resolveTheme("light")).toBe("light");
+    expect(readTheme()).toBe("system");
   });
 });

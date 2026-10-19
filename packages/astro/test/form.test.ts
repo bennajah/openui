@@ -70,3 +70,34 @@ describe("form components (Astro)", () => {
     }
   });
 });
+
+describe("Theme (Astro)", () => {
+  it("compiles the toggle without diagnostics", async () => {
+    const result = await compile("theme-toggle");
+    expect(result.diagnostics.filter((d) => d.severity === "error")).toEqual([]);
+    expect(result.code.length).toBeGreaterThan(0);
+  });
+
+  it("emits the toggle hook, initial theme, and icon slots", async () => {
+    const result = await compile("theme-toggle");
+    expect(result.code).toContain("data-openui-theme-toggle");
+    expect(result.code).toContain("data-initial-theme");
+    expect(result.code).toContain('data-icon="light"');
+    expect(result.code).toContain('data-icon="dark"');
+    expect(result.code).toContain('data-icon="system"');
+    expect(result.code).toContain("aria-label");
+  });
+
+  it("carries a client script that applies and cycles the theme", async () => {
+    const result = await compile("theme-toggle");
+    expect(result.code).toContain("openui-theme");
+    expect(result.code).toContain("prefers-color-scheme");
+    expect(result.code).toContain("astro:after-swap");
+  });
+
+  it("ships the shared init script and storage key", () => {
+    const src = readFileSync(join(import.meta.dir, "../src/theme.ts"), "utf8");
+    expect(src).toContain('"openui-theme"');
+    expect(src).toContain("THEME_INIT_SCRIPT");
+  });
+});

@@ -24,6 +24,25 @@ async function renderComponent(name: string, props: Record<string, unknown> = {}
   }
 }
 
+/**
+ * Render a component that imports sibling modules. The compiled module is
+ * written next to `src/` so relative specifiers like `./theme.ts` resolve.
+ */
+async function renderWithImports(
+  name: string,
+  props: Record<string, unknown> = {},
+): Promise<string> {
+  const result = compile(source(name), { filename: `${name}.svelte`, generate: "server" });
+  const file = join(import.meta.dir, `../src/.openui-${name}.test.mjs`);
+  writeFileSync(file, result.js.code);
+  try {
+    const module = (await import(file)) as { default: unknown };
+    return render(module.default as Parameters<typeof render>[0], { props } as never).body;
+  } finally {
+    rmSync(file, { force: true });
+  }
+}
+
 describe("form components (Svelte)", () => {
   it("all compile as valid Svelte 5", () => {
     for (const name of COMPONENTS) {
@@ -93,5 +112,36 @@ describe("form components (Svelte)", () => {
       expect(src).toContain("$props()");
       expect(src).not.toContain("<slot");
     }
+  });
+});
+
+describe("Theme (Svelte)", () => {
+  it("compiles as valid Svelte 5", () => {
+    const result = compile(source("theme-toggle"), {
+      filename: "theme-toggle.svelte",
+      generate: "server",
+    });
+    expect(result.js.code.length).toBeGreaterThan(0);
+  });
+
+  it("renders an accessible button with the system icon by default", async () => {
+    const html = await renderWithImports("theme-toggle");
+    expect(html).toContain("<button");
+    expect(html).toContain('aria-label="Theme: System theme. Click to switch."');
+    expect(html).toContain("<rect");
+  });
+
+  it("renders the matching icon for an explicit initial theme", async () => {
+    expect(await renderWithImports("theme-toggle", { initialTheme: "light" })).toContain("<circle");
+    expect(await renderWithImports("theme-toggle", { initialTheme: "dark" })).toContain(
+      "M12 3a6 6 0 0 0 9 9",
+    );
+  });
+
+  it("ships the shared storage key and no-flash script", () => {
+    const src = readFileSync(join(import.meta.dir, "../src/theme.ts"), "utf8");
+    expect(src).toContain('"openui-theme"');
+    expect(src).toContain("prefers-color-scheme");
+    expect(src).toContain("THEME_INIT_SCRIPT");
   });
 });
