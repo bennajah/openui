@@ -1,0 +1,19 @@
+{
+  "name": "@openui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "OpenUI documentation website (Astro + Tailwind CSS v4).",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@openui/astro": "workspace:*",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.1",
+    "tailwindcss": "^4.3.3"
+  }
+}

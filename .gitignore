@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.bun/
+
+# Build outputs
+dist/
+build/
+apps/docs/dist/
+apps/docs/.astro/
+packages/*/dist/
+
+# Generated registry artifacts (built by `openui build`, committed on release)
+# NOTE: registry/r is intentionally committed for the beta so the registry can be
+# served statically. Do not add it here.
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# Changesets (CLI state only; config is committed)
+.changeset/*.json
+!.changeset/config.json
+!.changeset/README.md
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test artifacts
+coverage/
+*.log

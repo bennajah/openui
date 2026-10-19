@@ -1,0 +1,35 @@
+{
+  "name": "@openui/core",
+  "version": "0.1.0-beta.0",
+  "description": "OpenUI core: openui.json configuration schema and validation, framework detection, and component registry validation. Zero runtime dependencies.",
+  "keywords": [
+    "components",
+    "openui",
+    "registry",
+    "tailwind",
+    "ui"
+  ],
+  "homepage": "https://openui.dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bennajah/openui.git",
+    "directory": "packages/core"
+  },
+  "files": [
+    "src"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./config": "./src/config/index.ts",
+    "./registry": "./src/registry/index.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
