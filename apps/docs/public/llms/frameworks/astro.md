@@ -2,7 +2,7 @@
 
 # Astro
 
-Source: https://openui.dev/docs/frameworks/astro
+Source: https://openuii.vercel.app/docs/frameworks/astro
 
 # Astro
 

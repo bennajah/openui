@@ -17,7 +17,7 @@ describe("openui init", () => {
     expect(result.ok).toBe(true);
     const config = readConfig(root);
     expect(validateConfig(config).ok).toBe(true);
-    expect((config as { $schema: string }).$schema).toBe("https://openui.dev/schema.json");
+    expect((config as { $schema: string }).$schema).toBe("https://openuii.vercel.app/schema.json");
     expect((config as { framework: string }).framework).toBe("react");
   });
 

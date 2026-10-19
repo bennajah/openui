@@ -2,7 +2,7 @@
 
 # Registry
 
-Source: https://openui.dev/docs/registry
+Source: https://openuii.vercel.app/docs/registry
 
 # Registry
 
@@ -28,7 +28,7 @@ component fetches its item once, because every file's content is inlined.
 {
   "name": "openui",
   "version": "0.1.0-beta.0",
-  "homepage": "https://openui.dev",
+  "homepage": "https://openuii.vercel.app",
   "components": {
     "button": {
       "title": "Button",
@@ -131,7 +131,7 @@ Any static host works. Point `registry.url` at the directory that contains
 `index.json`:
 
 ```json
-{ "registry": { "url": "https://openui.dev/registry" } }
+{ "registry": { "url": "https://openuii.vercel.app/registry" } }
 ```
 
 For development, use a filesystem path:

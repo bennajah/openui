@@ -2,7 +2,7 @@
 
 # Components
 
-Source: https://openui.dev/docs/components
+Source: https://openuii.vercel.app/docs/components
 
 # Components
 

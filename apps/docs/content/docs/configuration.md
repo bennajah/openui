@@ -9,13 +9,13 @@ order: 2
 OpenUI uses exactly one configuration file: **`openui.json`**. There is no
 `openui.config.ts` and no JavaScript configuration API, so the same file is
 readable by humans, CI, editors, and the JSON Schema at
-`https://openui.dev/schema.json`.
+`https://openuii.vercel.app/schema.json`.
 
 ## Example
 
 ```json
 {
-  "$schema": "https://openui.dev/schema.json",
+  "$schema": "https://openuii.vercel.app/schema.json",
   "framework": "auto",
   "typescript": true,
   "tailwind": {
@@ -27,7 +27,7 @@ readable by humans, CI, editors, and the JSON Schema at
     "ui": "@/components/ui"
   },
   "registry": {
-    "url": "https://openui.dev/registry"
+    "url": "https://openuii.vercel.app/registry"
   }
 }
 ```

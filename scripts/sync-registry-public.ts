@@ -1,6 +1,6 @@
 /**
  * Copy the generated registry into the docs site's public directory so it is
- * served at https://openui.dev/registry (the CLI's default registry URL).
+ * served at https://openuii.vercel.app/registry (the CLI's default registry URL).
  */
 import { copyFileSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";

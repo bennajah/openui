@@ -1,5 +1,5 @@
 {
-  "$schema": "https://openui.dev/registry/item-schema.json",
+  "$schema": "https://openuii.vercel.app/registry/item-schema.json",
   "name": "textarea",
   "framework": "astro",
   "version": "0.1.0-beta.0",

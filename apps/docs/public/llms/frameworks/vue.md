@@ -2,7 +2,7 @@
 
 # Vue
 
-Source: https://openui.dev/docs/frameworks/vue
+Source: https://openuii.vercel.app/docs/frameworks/vue
 
 # Vue
 

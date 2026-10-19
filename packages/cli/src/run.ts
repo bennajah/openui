@@ -56,7 +56,7 @@ ${ui.bold("Examples")}
   openui add button --dry-run --cwd ./apps/web
   openui validate
 
-Docs: https://openui.dev/llms.txt
+Docs: https://openuii.vercel.app/llms.txt
 `;
 
 const COMMAND_HELP: Record<string, string> = {

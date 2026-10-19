@@ -11,7 +11,7 @@ import { dirname, join, relative, resolve } from "node:path";
 
 export const DOCS_DIR = "apps/docs/content/docs";
 export const PUBLIC_DIR = "apps/docs/public";
-export const SITE_URL = "https://openui.dev";
+export const SITE_URL = "https://openuii.vercel.app";
 
 /** Pages that must always exist (also used by tests and CI). */
 export const REQUIRED_SLUGS = [
@@ -179,7 +179,7 @@ export function buildLlms(root: string): LlmsOutput[] {
     "",
     "## Optional",
     "",
-    "- [Contributing](https://openui.dev/docs/contributing): Repository workflow and beta limitations.",
+    "- [Contributing](https://openuii.vercel.app/docs/contributing): Repository workflow and beta limitations.",
     "",
   ];
 

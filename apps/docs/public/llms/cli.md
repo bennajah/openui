@@ -2,7 +2,7 @@
 
 # CLI
 
-Source: https://openui.dev/docs/cli
+Source: https://openuii.vercel.app/docs/cli
 
 # CLI
 
@@ -109,7 +109,7 @@ openui build
 ```
 
 It prunes generated items that are no longer referenced, so the output is
-reproducible and reviewable. See [Registry](https://openui.dev/docs/registry).
+reproducible and reviewable. See [Registry](https://openuii.vercel.app/docs/registry).
 
 ## Exit codes
 

@@ -2,7 +2,7 @@
 
 # Getting started
 
-Source: https://openui.dev/docs/getting-started
+Source: https://openuii.vercel.app/docs/getting-started
 
 # Getting started
 
@@ -17,7 +17,7 @@ your project, it is your code.
 - One of React 18+, Svelte 5, Astro 5+, or Vue 3.3+.
 
 > The beta ships TypeScript sources directly. A Node-compatible build is
-> planned before the first stable release. See [Contributing](https://openui.dev/docs/contributing)
+> planned before the first stable release. See [Contributing](https://openuii.vercel.app/docs/contributing)
 > for the current limitations.
 
 ## Install the CLI
@@ -41,7 +41,7 @@ openui init
 ```
 
 The command detects your framework from `package.json` and writes
-[`openui.json`](https://openui.dev/docs/configuration). If detection is inconclusive it writes
+[`openui.json`](https://openuii.vercel.app/docs/configuration). If detection is inconclusive it writes
 `"framework": "auto"` and tells you to choose one:
 
 ```bash
@@ -72,7 +72,7 @@ openui list
 
 The beta ships eight components: `button`, `input`, `textarea`, `select`,
 `checkbox`, `radio`, `label`, and `field`. See the
-[Components](https://openui.dev/docs/components) reference for each API.
+[Components](https://openuii.vercel.app/docs/components) reference for each API.
 
 ## Use it
 
@@ -144,7 +144,7 @@ each install target stays inside your project. Run it in CI.
 
 ## Next steps
 
-- Read [Configuration](https://openui.dev/docs/configuration) for every `openui.json` field.
-- Learn the [CLI](https://openui.dev/docs/cli) and its safety guarantees.
-- Browse the [Components](https://openui.dev/docs/components) reference.
-- Set up [theming](https://openui.dev/docs/theming) with Tailwind CSS v4.
+- Read [Configuration](https://openuii.vercel.app/docs/configuration) for every `openui.json` field.
+- Learn the [CLI](https://openuii.vercel.app/docs/cli) and its safety guarantees.
+- Browse the [Components](https://openuii.vercel.app/docs/components) reference.
+- Set up [theming](https://openuii.vercel.app/docs/theming) with Tailwind CSS v4.

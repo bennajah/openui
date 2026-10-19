@@ -26,7 +26,7 @@
 
 # Getting started
 
-Source: https://openui.dev/docs/getting-started
+Source: https://openuii.vercel.app/docs/getting-started
 
 # Getting started
 
@@ -41,7 +41,7 @@ your project, it is your code.
 - One of React 18+, Svelte 5, Astro 5+, or Vue 3.3+.
 
 > The beta ships TypeScript sources directly. A Node-compatible build is
-> planned before the first stable release. See [Contributing](https://openui.dev/docs/contributing)
+> planned before the first stable release. See [Contributing](https://openuii.vercel.app/docs/contributing)
 > for the current limitations.
 
 ## Install the CLI
@@ -65,7 +65,7 @@ openui init
 ```
 
 The command detects your framework from `package.json` and writes
-[`openui.json`](https://openui.dev/docs/configuration). If detection is inconclusive it writes
+[`openui.json`](https://openuii.vercel.app/docs/configuration). If detection is inconclusive it writes
 `"framework": "auto"` and tells you to choose one:
 
 ```bash
@@ -96,7 +96,7 @@ openui list
 
 The beta ships eight components: `button`, `input`, `textarea`, `select`,
 `checkbox`, `radio`, `label`, and `field`. See the
-[Components](https://openui.dev/docs/components) reference for each API.
+[Components](https://openuii.vercel.app/docs/components) reference for each API.
 
 ## Use it
 
@@ -168,10 +168,10 @@ each install target stays inside your project. Run it in CI.
 
 ## Next steps
 
-- Read [Configuration](https://openui.dev/docs/configuration) for every `openui.json` field.
-- Learn the [CLI](https://openui.dev/docs/cli) and its safety guarantees.
-- Browse the [Components](https://openui.dev/docs/components) reference.
-- Set up [theming](https://openui.dev/docs/theming) with Tailwind CSS v4.
+- Read [Configuration](https://openuii.vercel.app/docs/configuration) for every `openui.json` field.
+- Learn the [CLI](https://openuii.vercel.app/docs/cli) and its safety guarantees.
+- Browse the [Components](https://openuii.vercel.app/docs/components) reference.
+- Set up [theming](https://openuii.vercel.app/docs/theming) with Tailwind CSS v4.
 
 ---
 
@@ -179,20 +179,20 @@ each install target stays inside your project. Run it in CI.
 
 # Configuration
 
-Source: https://openui.dev/docs/configuration
+Source: https://openuii.vercel.app/docs/configuration
 
 # Configuration
 
 OpenUI uses exactly one configuration file: **`openui.json`**. There is no
 `openui.config.ts` and no JavaScript configuration API, so the same file is
 readable by humans, CI, editors, and the JSON Schema at
-`https://openui.dev/schema.json`.
+`https://openuii.vercel.app/schema.json`.
 
 ## Example
 
 ```json
 {
-  "$schema": "https://openui.dev/schema.json",
+  "$schema": "https://openuii.vercel.app/schema.json",
   "framework": "auto",
   "typescript": true,
   "tailwind": {
@@ -204,7 +204,7 @@ readable by humans, CI, editors, and the JSON Schema at
     "ui": "@/components/ui"
   },
   "registry": {
-    "url": "https://openui.dev/registry"
+    "url": "https://openuii.vercel.app/registry"
   }
 }
 ```
@@ -318,7 +318,7 @@ invalid file by construction.
 
 # CLI
 
-Source: https://openui.dev/docs/cli
+Source: https://openuii.vercel.app/docs/cli
 
 # CLI
 
@@ -425,7 +425,7 @@ openui build
 ```
 
 It prunes generated items that are no longer referenced, so the output is
-reproducible and reviewable. See [Registry](https://openui.dev/docs/registry).
+reproducible and reviewable. See [Registry](https://openuii.vercel.app/docs/registry).
 
 ## Exit codes
 
@@ -454,7 +454,7 @@ replaces an existing file.
 
 # Components
 
-Source: https://openui.dev/docs/components
+Source: https://openuii.vercel.app/docs/components
 
 # Components
 
@@ -775,7 +775,7 @@ conflict — so the simple join helper remains correct.
 
 # Registry
 
-Source: https://openui.dev/docs/registry
+Source: https://openuii.vercel.app/docs/registry
 
 # Registry
 
@@ -801,7 +801,7 @@ component fetches its item once, because every file's content is inlined.
 {
   "name": "openui",
   "version": "0.1.0-beta.0",
-  "homepage": "https://openui.dev",
+  "homepage": "https://openuii.vercel.app",
   "components": {
     "button": {
       "title": "Button",
@@ -904,7 +904,7 @@ Any static host works. Point `registry.url` at the directory that contains
 `index.json`:
 
 ```json
-{ "registry": { "url": "https://openui.dev/registry" } }
+{ "registry": { "url": "https://openuii.vercel.app/registry" } }
 ```
 
 For development, use a filesystem path:
@@ -945,7 +945,7 @@ the package version you are publishing.
 
 # Theming
 
-Source: https://openui.dev/docs/theming
+Source: https://openuii.vercel.app/docs/theming
 
 # Theming
 
@@ -1004,7 +1004,7 @@ variant in your global CSS:
 Then toggle a `dark` class on `<html>`. The `theme` component does exactly
 this: install it with `openui add theme` and it ships the state API plus a
 `ThemeToggle` button that cycles light, dark, and system. See
-[Components → Theme](https://openui.dev/docs/components#theme) for the full API. The short
+[Components → Theme](https://openuii.vercel.app/docs/components#theme) for the full API. The short
 version:
 
 ```bash
@@ -1075,7 +1075,7 @@ them, keep:
 
 # Contributing
 
-Source: https://openui.dev/docs/contributing
+Source: https://openuii.vercel.app/docs/contributing
 
 # Contributing
 
@@ -1227,7 +1227,7 @@ Keep commits focused. Run `bun run verify` before pushing.
 
 # React
 
-Source: https://openui.dev/docs/frameworks/react
+Source: https://openuii.vercel.app/docs/frameworks/react
 
 # React
 
@@ -1315,7 +1315,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 ```
 
-All native attributes are forwarded. See [Components](https://openui.dev/docs/components) for
+All native attributes are forwarded. See [Components](https://openuii.vercel.app/docs/components) for
 variant and size guidance.
 
 ## Styling
@@ -1347,7 +1347,7 @@ expect(screen.getByRole("button", { name: "Delete" })).toHaveClass("bg-red-600")
 
 # Svelte
 
-Source: https://openui.dev/docs/frameworks/svelte
+Source: https://openuii.vercel.app/docs/frameworks/svelte
 
 # Svelte
 
@@ -1463,7 +1463,7 @@ component still compiles.
 
 # Astro
 
-Source: https://openui.dev/docs/frameworks/astro
+Source: https://openuii.vercel.app/docs/frameworks/astro
 
 # Astro
 
@@ -1585,7 +1585,7 @@ end-to-end check for a customized component.
 
 # Vue
 
-Source: https://openui.dev/docs/frameworks/vue
+Source: https://openuii.vercel.app/docs/frameworks/vue
 
 # Vue
 

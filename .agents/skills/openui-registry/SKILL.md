@@ -31,7 +31,7 @@ items.
 {
   "name": "openui",
   "version": "0.1.0-beta.0",
-  "homepage": "https://openui.dev",
+  "homepage": "https://openuii.vercel.app",
   "output": "registry",
   "components": [
     {
@@ -112,9 +112,9 @@ frameworks. It catches manifest and target regressions.
 ## Serving
 
 The docs build copies `registry/` to `apps/docs/public/registry/`, so the
-deployed site serves `https://openui.dev/registry/index.json` and
-`https://openui.dev/registry/r/*.json`. The CLI default is
-`https://openui.dev/registry`.
+deployed site serves `https://openuii.vercel.app/registry/index.json` and
+`https://openuii.vercel.app/registry/r/*.json`. The CLI default is
+`https://openuii.vercel.app/registry`.
 
 ## Versioning
 

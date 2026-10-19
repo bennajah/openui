@@ -2,7 +2,7 @@
 
 # Theming
 
-Source: https://openui.dev/docs/theming
+Source: https://openuii.vercel.app/docs/theming
 
 # Theming
 
@@ -61,7 +61,7 @@ variant in your global CSS:
 Then toggle a `dark` class on `<html>`. The `theme` component does exactly
 this: install it with `openui add theme` and it ships the state API plus a
 `ThemeToggle` button that cycles light, dark, and system. See
-[Components → Theme](https://openui.dev/docs/components#theme) for the full API. The short
+[Components → Theme](https://openuii.vercel.app/docs/components#theme) for the full API. The short
 version:
 
 ```bash

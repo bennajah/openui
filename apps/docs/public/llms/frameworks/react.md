@@ -2,7 +2,7 @@
 
 # React
 
-Source: https://openui.dev/docs/frameworks/react
+Source: https://openuii.vercel.app/docs/frameworks/react
 
 # React
 
@@ -90,7 +90,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 ```
 
-All native attributes are forwarded. See [Components](https://openui.dev/docs/components) for
+All native attributes are forwarded. See [Components](https://openuii.vercel.app/docs/components) for
 variant and size guidance.
 
 ## Styling

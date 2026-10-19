@@ -238,7 +238,7 @@ export function validateConfig(value: unknown): ValidationResult {
           errors.push({
             path: "registry.url",
             message:
-              'must be a non-empty string, e.g. "https://openui.dev/registry" or "./registry".',
+              'must be a non-empty string, e.g. "https://openuii.vercel.app/registry" or "./registry".',
           });
         } else if (
           !/^https?:\/\//.test(url) &&

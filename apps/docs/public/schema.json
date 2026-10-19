@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openui.dev/schema.json",
+  "$id": "https://openuii.vercel.app/schema.json",
   "title": "OpenUI configuration",
   "description": "Configuration for the OpenUI CLI and component registry (openui.json). Paths are resolved relative to the consuming project's root.",
   "type": "object",
@@ -59,7 +59,7 @@
       "properties": {
         "url": {
           "type": "string",
-          "default": "https://openui.dev/registry",
+          "default": "https://openuii.vercel.app/registry",
           "description": "Registry root: an http(s) URL serving `index.json` and `r/*.json`, or a filesystem path (absolute, or relative to the project root)."
         }
       },

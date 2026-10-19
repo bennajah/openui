@@ -58,7 +58,7 @@ order: 2
 - Lead with the command or decision, not background.
 - Use fenced `bash` blocks for commands, with one command per line.
 - Link between pages with site-absolute paths: `[CLI](/docs/cli)`. The
-  generator rewrites these to `https://openui.dev/docs/...` for raw LLM files.
+  generator rewrites these to `https://openuii.vercel.app/docs/...` for raw LLM files.
 - Do not link to a page that does not exist; validation fails.
 - Prefer tables for option/flag references.
 - State beta limitations explicitly instead of implying production readiness.

@@ -131,7 +131,7 @@ export interface BuildResult {
 export function buildRegistry(root: string, manifest: RegistryManifest): BuildResult {
   const items = new Map<string, RegistryItem>();
   const index: RegistryIndex = {
-    $schema: "https://openui.dev/registry/schema.json",
+    $schema: "https://openuii.vercel.app/registry/schema.json",
     name: manifest.name,
     version: manifest.version,
     ...(manifest.homepage !== undefined ? { homepage: manifest.homepage } : {}),
@@ -147,7 +147,7 @@ export function buildRegistry(root: string, manifest: RegistryManifest): BuildRe
 
       const files = sources.flatMap((source) => inlineSource(root, source));
       const item: RegistryItem = {
-        $schema: "https://openui.dev/registry/item-schema.json",
+        $schema: "https://openuii.vercel.app/registry/item-schema.json",
         name: component.name,
         framework,
         version: readPackageVersion(root, framework),

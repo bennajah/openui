@@ -2,7 +2,7 @@
 
 # Contributing
 
-Source: https://openui.dev/docs/contributing
+Source: https://openuii.vercel.app/docs/contributing
 
 # Contributing
 

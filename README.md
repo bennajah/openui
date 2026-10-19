@@ -95,11 +95,11 @@ are rejected, so an item can never write outside the project root.
 OpenUI uses exactly one file: **`openui.json`**. There is no
 `openui.config.ts` and no JavaScript config API, so the file is readable by
 humans, CI, editors, and the published JSON Schema at
-`https://openui.dev/schema.json`.
+`https://openuii.vercel.app/schema.json`.
 
 ```json
 {
-  "$schema": "https://openui.dev/schema.json",
+  "$schema": "https://openuii.vercel.app/schema.json",
   "framework": "auto",
   "typescript": true,
   "tailwind": {
@@ -111,20 +111,20 @@ humans, CI, editors, and the published JSON Schema at
     "ui": "@/components/ui"
   },
   "registry": {
-    "url": "https://openui.dev/registry"
+    "url": "https://openuii.vercel.app/registry"
   }
 }
 ```
 
-| Field                | Default                       | Notes                                                         |
-| -------------------- | ----------------------------- | ------------------------------------------------------------- |
-| `framework`          | `"auto"`                      | `react`, `svelte`, `astro`, `vue`, or `auto` detection.       |
-| `typescript`         | `true`                        | React installs `.tsx` or `.jsx`; other frameworks use JSDoc.  |
-| `tailwind.css`       | `src/styles/global.css`       | Project-root relative path to the Tailwind entry file.        |
-| `tailwind.prefix`    | `""`                          | Recorded, but not rewritten in component sources during beta. |
-| `aliases.components` | `@/components`                | Shared component alias.                                       |
-| `aliases.ui`         | `@/components/ui`             | Where registry targets (`{ui}`) install.                      |
-| `registry.url`       | `https://openui.dev/registry` | HTTPS registry or filesystem path.                            |
+| Field                | Default                               | Notes                                                         |
+| -------------------- | ------------------------------------- | ------------------------------------------------------------- |
+| `framework`          | `"auto"`                              | `react`, `svelte`, `astro`, `vue`, or `auto` detection.       |
+| `typescript`         | `true`                                | React installs `.tsx` or `.jsx`; other frameworks use JSDoc.  |
+| `tailwind.css`       | `src/styles/global.css`               | Project-root relative path to the Tailwind entry file.        |
+| `tailwind.prefix`    | `""`                                  | Recorded, but not rewritten in component sources during beta. |
+| `aliases.components` | `@/components`                        | Shared component alias.                                       |
+| `aliases.ui`         | `@/components/ui`                     | Where registry targets (`{ui}`) install.                      |
+| `registry.url`       | `https://openuii.vercel.app/registry` | HTTPS registry or filesystem path.                            |
 
 Config discovery walks up from the current directory, like Git. Paths in the
 file resolve relative to the project root, not the current working directory.
@@ -132,7 +132,7 @@ CLI flags override values for one invocation and never rewrite the file. Unknown
 fields produce a warning and are preserved; `init` only writes config, and it
 refuses to overwrite an existing file without `--force` or confirmation.
 
-Full reference: [docs/configuration](https://openui.dev/docs/configuration).
+Full reference: [docs/configuration](https://openuii.vercel.app/docs/configuration).
 
 ## Repository development
 

@@ -29,7 +29,7 @@ describe("LLM documentation", () => {
 
   it("rewrites site links to absolute URLs", () => {
     expect(rewriteLinks("[config](/docs/configuration)")).toBe(
-      "[config](https://openui.dev/docs/configuration)",
+      "[config](https://openuii.vercel.app/docs/configuration)",
     );
   });
 
@@ -44,7 +44,7 @@ describe("LLM documentation", () => {
     const publicRoot = resolve(REPO_ROOT, "apps/docs/public");
     const errors = checkLinks(
       "llms/test.md",
-      "[ok](https://openui.dev/docs/cli) [bad](https://openui.dev/docs/nope) [rel](./missing.md)",
+      "[ok](https://openuii.vercel.app/docs/cli) [bad](https://openuii.vercel.app/docs/nope) [rel](./missing.md)",
       new Set(["cli"]),
       publicRoot,
     );

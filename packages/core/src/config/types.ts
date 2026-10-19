@@ -38,7 +38,7 @@ export interface RegistryConfig {
 }
 
 export interface OpenUIConfig {
-  /** Optional JSON Schema reference, conventionally `https://openui.dev/schema.json`. */
+  /** Optional JSON Schema reference, conventionally `https://openuii.vercel.app/schema.json`. */
   $schema?: string;
   /** Framework selection. `"auto"` detects from the project's dependencies. */
   framework: FrameworkChoice;
@@ -62,7 +62,7 @@ export const DEFAULT_CONFIG: OpenUIConfig = {
     ui: "@/components/ui",
   },
   registry: {
-    url: "https://openui.dev/registry",
+    url: "https://openuii.vercel.app/registry",
   },
 };
 

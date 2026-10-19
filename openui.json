@@ -1,5 +1,5 @@
 {
-  "$schema": "https://openui.dev/schema.json",
+  "$schema": "https://openuii.vercel.app/schema.json",
   "framework": "auto",
   "typescript": true,
   "tailwind": {

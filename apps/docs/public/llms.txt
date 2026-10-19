@@ -8,27 +8,27 @@ and Vue. Components are plain framework code styled with Tailwind CSS v4; the
 
 ## Documentation
 
-- [Getting started](https://openui.dev/docs/getting-started): Install OpenUI, initialize a project, and add your first component.
-- [Configuration](https://openui.dev/docs/configuration): Every field in openui.json, how discovery works, and how CLI flags interact with the file.
-- [CLI](https://openui.dev/docs/cli): Commands, flags, exit codes, and the safety model behind file writes.
-- [Components](https://openui.dev/docs/components): The Button, form control, Field, and Theme APIs, accessibility behavior, and framework-specific usage.
-- [Registry](https://openui.dev/docs/registry): How the OpenUI registry is laid out, generated, served, and validated.
-- [Theming](https://openui.dev/docs/theming): Style OpenUI components with Tailwind CSS v4 utilities, dark mode, and local overrides.
-- [Contributing](https://openui.dev/docs/contributing): Repository layout, local workflow, verification, changesets, and known beta limitations.
+- [Getting started](https://openuii.vercel.app/docs/getting-started): Install OpenUI, initialize a project, and add your first component.
+- [Configuration](https://openuii.vercel.app/docs/configuration): Every field in openui.json, how discovery works, and how CLI flags interact with the file.
+- [CLI](https://openuii.vercel.app/docs/cli): Commands, flags, exit codes, and the safety model behind file writes.
+- [Components](https://openuii.vercel.app/docs/components): The Button, form control, Field, and Theme APIs, accessibility behavior, and framework-specific usage.
+- [Registry](https://openuii.vercel.app/docs/registry): How the OpenUI registry is laid out, generated, served, and validated.
+- [Theming](https://openuii.vercel.app/docs/theming): Style OpenUI components with Tailwind CSS v4 utilities, dark mode, and local overrides.
+- [Contributing](https://openuii.vercel.app/docs/contributing): Repository layout, local workflow, verification, changesets, and known beta limitations.
 
 ## Frameworks
 
-- [React](https://openui.dev/docs/frameworks/react): Install and use OpenUI components in React, including TypeScript and JavaScript variants.
-- [Svelte](https://openui.dev/docs/frameworks/svelte): Install and use OpenUI components in Svelte 5 projects.
-- [Astro](https://openui.dev/docs/frameworks/astro): Install and use OpenUI components in Astro projects.
-- [Vue](https://openui.dev/docs/frameworks/vue): Install and use OpenUI components in Vue 3 projects.
+- [React](https://openuii.vercel.app/docs/frameworks/react): Install and use OpenUI components in React, including TypeScript and JavaScript variants.
+- [Svelte](https://openuii.vercel.app/docs/frameworks/svelte): Install and use OpenUI components in Svelte 5 projects.
+- [Astro](https://openuii.vercel.app/docs/frameworks/astro): Install and use OpenUI components in Astro projects.
+- [Vue](https://openuii.vercel.app/docs/frameworks/vue): Install and use OpenUI components in Vue 3 projects.
 
 ## Machine-readable
 
-- [Full documentation](https://openui.dev/llms-full.txt): Every page in one file.
-- [JSON Schema](https://openui.dev/schema.json): Schema for `openui.json`.
-- [Registry index](https://openui.dev/registry/index.json): Components and item locations.
+- [Full documentation](https://openuii.vercel.app/llms-full.txt): Every page in one file.
+- [JSON Schema](https://openuii.vercel.app/schema.json): Schema for `openui.json`.
+- [Registry index](https://openuii.vercel.app/registry/index.json): Components and item locations.
 
 ## Optional
 
-- [Contributing](https://openui.dev/docs/contributing): Repository workflow and beta limitations.
+- [Contributing](https://openuii.vercel.app/docs/contributing): Repository workflow and beta limitations.

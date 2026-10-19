@@ -2,7 +2,7 @@
 
 # Svelte
 
-Source: https://openui.dev/docs/frameworks/svelte
+Source: https://openuii.vercel.app/docs/frameworks/svelte
 
 # Svelte
 

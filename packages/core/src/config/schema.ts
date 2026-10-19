@@ -4,14 +4,14 @@ import type { OpenUIConfig } from "./types.ts";
  * JSON Schema for `openui.json` (draft 2020-12).
  *
  * This object is the canonical source: `bun run schema:generate` writes it to
- * `apps/docs/public/schema.json` so it is served at https://openui.dev/schema.json.
+ * `apps/docs/public/schema.json` so it is served at https://openuii.vercel.app/schema.json.
  *
  * `additionalProperties` is deliberately `true`: tools may extend the config,
  * and the CLI preserves unknown fields when it rewrites the file.
  */
 export const configSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
-  $id: "https://openui.dev/schema.json",
+  $id: "https://openuii.vercel.app/schema.json",
   title: "OpenUI configuration",
   description:
     "Configuration for the OpenUI CLI and component registry (openui.json). Paths are resolved relative to the consuming project's root.",
@@ -75,7 +75,7 @@ export const configSchema = {
       properties: {
         url: {
           type: "string",
-          default: "https://openui.dev/registry",
+          default: "https://openuii.vercel.app/registry",
           description:
             "Registry root: an http(s) URL serving `index.json` and `r/*.json`, or a filesystem path (absolute, or relative to the project root).",
         },
@@ -88,7 +88,7 @@ export const configSchema = {
 
 /** Example configuration used by `openui init`, the docs, and tests. */
 export const EXAMPLE_CONFIG: OpenUIConfig = {
-  $schema: "https://openui.dev/schema.json",
+  $schema: "https://openuii.vercel.app/schema.json",
   framework: "auto",
   typescript: true,
   tailwind: {
@@ -100,6 +100,6 @@ export const EXAMPLE_CONFIG: OpenUIConfig = {
     ui: "@/components/ui",
   },
   registry: {
-    url: "https://openui.dev/registry",
+    url: "https://openuii.vercel.app/registry",
   },
 };
