@@ -932,8 +932,8 @@ bun run llms:validate
 ```
 
 Do not edit generated files by hand. Update the Markdown source and regenerate.
-When you add a page, also add it to the required page list in
-`scripts/validate-llms.ts` if it must always exist.
+When you add a page, also add it to `REQUIRED_SLUGS` in
+`scripts/lib/docs.ts` if it must always exist.
 
 ## JSON Schema
 

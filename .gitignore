@@ -21,9 +21,10 @@ packages/*/dist/
 # Vercel
 .vercel/
 
-# Changesets (CLI state only; config is committed)
+# Changesets (CLI state only; config and pre-release mode are committed)
 .changeset/*.json
 !.changeset/config.json
+!.changeset/pre.json
 !.changeset/README.md
 
 # Editor / OS
