@@ -1,0 +1,44 @@
+<script>
+  /**
+   * OpenUI Select — framework-native, zero runtime dependencies.
+   *
+   * Plain JavaScript with JSDoc types so the same source installs into
+   * TypeScript and JavaScript Svelte projects. Svelte 5 runes.
+   */
+
+  /** @type {{ invalid?: boolean, class?: string, children?: import("svelte").Snippet, [key: string]: unknown }} */
+  let { invalid = false, class: className = "", children, ...rest } = $props();
+
+  const BASE_CLASSES =
+    "flex h-10 w-full appearance-none rounded-md border bg-white py-2 pr-9 pl-3 text-sm text-zinc-900 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-950 dark:text-zinc-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950";
+
+  const classes = $derived(
+    [
+      BASE_CLASSES,
+      invalid
+        ? "border-red-500 dark:border-red-400"
+        : "border-zinc-300 dark:border-zinc-700",
+      className,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+</script>
+
+<div class="relative">
+  <select aria-invalid={invalid || undefined} class={classes} {...rest}>
+    {@render children?.()}
+  </select>
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    class="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-zinc-500 dark:text-zinc-400"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+      clip-rule="evenodd"
+    ></path>
+  </svg>
+</div>

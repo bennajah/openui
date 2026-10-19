@@ -1,0 +1,23 @@
+---
+/**
+ * OpenUI Label — framework-native, zero runtime dependencies.
+ *
+ * Plain JavaScript frontmatter (no `lang="ts"`) so the same source installs
+ * into TypeScript and JavaScript Astro projects. Types live in JSDoc.
+ *
+ * @typedef {Object} LabelProps
+ * @property {string} [class]
+ * @property {string} [for]
+ */
+
+const { class: className = "", ...rest } = Astro.props;
+
+const BASE_CLASSES =
+  "text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-zinc-50";
+
+const classes = [BASE_CLASSES, className].filter(Boolean).join(" ");
+---
+
+<label class={classes} {...rest}>
+  <slot />
+</label>

@@ -1,0 +1,49 @@
+---
+/**
+ * OpenUI Field — framework-native, zero runtime dependencies.
+ *
+ * Composes a label, a control, and a hint or error message with `for`/`id`
+ * and `aria-describedby` wiring.
+ *
+ * The default slot is rendered as-is. The component exposes the generated
+ * wiring on the wrapping element as `data-control-id`, `data-described-by`,
+ * and `data-invalid` so a client script or an explicit `id` can reuse it.
+ * Pass `id` and `aria-describedby` to your control for the strongest result:
+ *
+ *   <Field label="Email" id="email" hint="We never share it." error={message}>
+ *     <Input id="email" aria-describedby="email-hint email-error" />
+ *   </Field>
+ *
+ * @typedef {Object} FieldProps
+ * @property {string} [label]
+ * @property {string} [hint]
+ * @property {string} [error]
+ * @property {string} [id]
+ * @property {string} [class]
+ */
+
+const { label = "", hint = "", error = "", id = "", class: className = "" } = Astro.props;
+
+const generated = Math.random().toString(36).slice(2, 10);
+const controlId = id || `field-${generated}`;
+const hintId = hint ? `${controlId}-hint` : "";
+const errorId = error ? `${controlId}-error` : "";
+const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
+
+const LABEL_CLASSES = "text-sm font-medium leading-none text-zinc-900 dark:text-zinc-50";
+const classes = ["flex flex-col gap-2", className].filter(Boolean).join(" ");
+---
+
+<div
+  class={classes}
+  data-control-id={controlId}
+  data-described-by={describedBy}
+  data-invalid={error ? "true" : undefined}
+>
+  <label for={controlId} class={LABEL_CLASSES}>
+    <slot name="label">{label}</slot>
+  </label>
+  <slot />
+  {hint && <p id={hintId} class="text-xs text-zinc-500 dark:text-zinc-400">{hint}</p>}
+  {error && <p id={errorId} class="text-xs font-medium text-red-600 dark:text-red-400">{error}</p>}
+</div>
