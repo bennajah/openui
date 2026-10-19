@@ -15,3 +15,20 @@ export { Label, type LabelProps } from "./label.tsx";
 export { Radio, type RadioProps } from "./radio.tsx";
 export { Select, type SelectProps } from "./select.tsx";
 export { Textarea, type TextareaProps } from "./textarea.tsx";
+export {
+  applyTheme,
+  initTheme,
+  notifyThemeChange,
+  readTheme,
+  readThemeSnapshot,
+  resolveTheme,
+  serverThemeSnapshot,
+  subscribeTheme,
+  THEME_CLASS,
+  THEME_INIT_SCRIPT,
+  THEME_STORAGE_KEY,
+  useTheme,
+  type ResolvedTheme,
+  type Theme,
+} from "./theme.ts";
+export { ThemeInitScript, ThemeToggle, type ThemeToggleProps } from "./theme-toggle.tsx";

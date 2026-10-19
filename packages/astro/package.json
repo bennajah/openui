@@ -22,7 +22,9 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./theme": "./src/theme.ts",
+    "./theme-toggle.astro": "./src/theme-toggle.astro"
   },
   "publishConfig": {
     "access": "public"
