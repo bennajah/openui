@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "button",
+  "framework": "vue",
+  "version": "0.1.0-beta.0",
+  "description": "A framework-native button with disjoint variants and sizes, built on Tailwind CSS utilities.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/vue/src/button.vue",
+      "content": "<script setup>\n/**\n * OpenUI Button — framework-native, zero runtime dependencies.\n *\n * Plain `<script setup>` (no `lang=\"ts\"`) so the same source installs into\n * TypeScript and JavaScript Vue projects.\n */\nimport { computed } from \"vue\";\n\nconst props = defineProps({\n  variant: {\n    type: String,\n    default: \"primary\",\n    validator: (value) =>\n      [\"primary\", \"secondary\", \"outline\", \"ghost\", \"danger\", \"link\"].includes(value),\n  },\n  size: {\n    type: String,\n    default: \"md\",\n    validator: (value) => [\"sm\", \"md\", \"lg\", \"icon\"].includes(value),\n  },\n  fullWidth: { type: Boolean, default: false },\n  type: { type: String, default: \"button\" },\n});\n\nconst BASE_CLASSES =\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst VARIANT_CLASSES = {\n  primary:\n    \"bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200\",\n  secondary:\n    \"bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700\",\n  outline:\n    \"border border-zinc-300 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n  ghost: \"bg-transparent text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n  danger: \"bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-400\",\n  link: \"bg-transparent text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50\",\n};\n\nconst SIZE_CLASSES = {\n  sm: \"h-8 px-3 text-xs\",\n  md: \"h-10 px-4 text-sm\",\n  lg: \"h-12 px-6 text-base\",\n  icon: \"h-10 w-10\",\n};\n\nconst classes = computed(() =>\n  [\n    BASE_CLASSES,\n    VARIANT_CLASSES[props.variant] ?? VARIANT_CLASSES.primary,\n    SIZE_CLASSES[props.size] ?? SIZE_CLASSES.md,\n    props.fullWidth ? \"w-full\" : \"\",\n  ]\n    .filter(Boolean)\n    .join(\" \"),\n);\n</script>\n\n<template>\n  <button :type=\"type\" :class=\"classes\">\n    <slot />\n  </button>\n</template>\n",
+      "target": "{ui}/button.vue",
+      "type": "component"
+    }
+  ]
+}

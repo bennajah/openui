@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "button",
+  "framework": "astro",
+  "version": "0.1.0-beta.0",
+  "description": "A framework-native button with disjoint variants and sizes, built on Tailwind CSS utilities.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/astro/src/button.astro",
+      "content": "---\n/**\n * OpenUI Button — framework-native, zero runtime dependencies.\n *\n * Plain JavaScript frontmatter (no `lang=\"ts\"`) so the same source installs\n * into TypeScript and JavaScript Astro projects. Types live in JSDoc.\n *\n * @typedef {\"primary\" | \"secondary\" | \"outline\" | \"ghost\" | \"danger\" | \"link\"} ButtonVariant\n * @typedef {\"sm\" | \"md\" | \"lg\" | \"icon\"} ButtonSize\n */\n\nconst {\n  variant = \"primary\",\n  size = \"md\",\n  fullWidth = false,\n  type = \"button\",\n  class: className = \"\",\n  ...rest\n} = Astro.props;\n\nconst BASE_CLASSES =\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\n/** @type {Record<ButtonVariant, string>} */\nconst VARIANT_CLASSES = {\n  primary:\n    \"bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200\",\n  secondary:\n    \"bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700\",\n  outline:\n    \"border border-zinc-300 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n  ghost: \"bg-transparent text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n  danger: \"bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-400\",\n  link: \"bg-transparent text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50\",\n};\n\n/** @type {Record<ButtonSize, string>} */\nconst SIZE_CLASSES = {\n  sm: \"h-8 px-3 text-xs\",\n  md: \"h-10 px-4 text-sm\",\n  lg: \"h-12 px-6 text-base\",\n  icon: \"h-10 w-10\",\n};\n\nconst classes = [\n  BASE_CLASSES,\n  VARIANT_CLASSES[variant] ?? VARIANT_CLASSES.primary,\n  SIZE_CLASSES[size] ?? SIZE_CLASSES.md,\n  fullWidth ? \"w-full\" : \"\",\n  className,\n]\n  .filter(Boolean)\n  .join(\" \");\n---\n\n<button type={type} class={classes} {...rest}>\n  <slot />\n</button>\n",
+      "target": "{ui}/button.astro",
+      "type": "component"
+    }
+  ]
+}

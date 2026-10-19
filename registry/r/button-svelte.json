@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "button",
+  "framework": "svelte",
+  "version": "0.1.0-beta.0",
+  "description": "A framework-native button with disjoint variants and sizes, built on Tailwind CSS utilities.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/svelte/src/button.svelte",
+      "content": "<script>\n  /**\n   * OpenUI Button — framework-native, zero runtime dependencies.\n   *\n   * Written as plain JavaScript with JSDoc types so the same source installs\n   * into both TypeScript and JavaScript Svelte projects. Svelte 5 runes.\n   */\n\n  /**\n   * @typedef {\"primary\" | \"secondary\" | \"outline\" | \"ghost\" | \"danger\" | \"link\"} ButtonVariant\n   * @typedef {\"sm\" | \"md\" | \"lg\" | \"icon\"} ButtonSize\n   */\n\n  /** @type {{ variant?: ButtonVariant, size?: ButtonSize, fullWidth?: boolean, type?: \"button\" | \"submit\" | \"reset\", class?: string, children?: import(\"svelte\").Snippet, [key: string]: unknown }} */\n  let {\n    variant = \"primary\",\n    size = \"md\",\n    fullWidth = false,\n    type = \"button\",\n    class: className = \"\",\n    children,\n    ...rest\n  } = $props();\n\n  const BASE_CLASSES =\n    \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\n  /** @type {Record<ButtonVariant, string>} */\n  const VARIANT_CLASSES = {\n    primary:\n      \"bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200\",\n    secondary:\n      \"bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700\",\n    outline:\n      \"border border-zinc-300 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n    ghost:\n      \"bg-transparent text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n    danger: \"bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-400\",\n    link: \"bg-transparent text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50\",\n  };\n\n  /** @type {Record<ButtonSize, string>} */\n  const SIZE_CLASSES = {\n    sm: \"h-8 px-3 text-xs\",\n    md: \"h-10 px-4 text-sm\",\n    lg: \"h-12 px-6 text-base\",\n    icon: \"h-10 w-10\",\n  };\n\n  let classes = $derived(\n    [\n      BASE_CLASSES,\n      VARIANT_CLASSES[variant],\n      SIZE_CLASSES[size],\n      fullWidth ? \"w-full\" : \"\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \"),\n  );\n</script>\n\n<button {type} class={classes} {...rest}>\n  {@render children?.()}\n</button>\n",
+      "target": "{ui}/button.svelte",
+      "type": "component"
+    }
+  ]
+}

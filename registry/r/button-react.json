@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "button",
+  "framework": "react",
+  "version": "0.1.0-beta.0",
+  "description": "A framework-native button with disjoint variants and sizes, built on Tailwind CSS utilities.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/react/src/button.tsx",
+      "content": "import type { ButtonHTMLAttributes } from \"react\";\n\n/**\n * OpenUI Button — framework-native, zero runtime dependencies.\n *\n * Styling is plain Tailwind CSS utility classes. Variant and size class sets\n * are disjoint, so a local join helper is sufficient (no tailwind-merge).\n */\n\nexport type ButtonVariant = \"primary\" | \"secondary\" | \"outline\" | \"ghost\" | \"danger\" | \"link\";\nexport type ButtonSize = \"sm\" | \"md\" | \"lg\" | \"icon\";\n\nexport interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: ButtonVariant;\n  size?: ButtonSize;\n  fullWidth?: boolean;\n}\n\nconst BASE_CLASSES =\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst VARIANT_CLASSES: Record<ButtonVariant, string> = {\n  primary:\n    \"bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200\",\n  secondary:\n    \"bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700\",\n  outline:\n    \"border border-zinc-300 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n  ghost: \"bg-transparent text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n  danger: \"bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-400\",\n  link: \"bg-transparent text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50\",\n};\n\nconst SIZE_CLASSES: Record<ButtonSize, string> = {\n  sm: \"h-8 px-3 text-xs\",\n  md: \"h-10 px-4 text-sm\",\n  lg: \"h-12 px-6 text-base\",\n  icon: \"h-10 w-10\",\n};\n\nfunction cn(...classes: Array<string | false | null | undefined>): string {\n  return classes.filter(Boolean).join(\" \");\n}\n\nexport function Button({\n  variant = \"primary\",\n  size = \"md\",\n  fullWidth = false,\n  className,\n  type = \"button\",\n  ...props\n}: ButtonProps) {\n  return (\n    <button\n      type={type}\n      className={cn(\n        BASE_CLASSES,\n        VARIANT_CLASSES[variant],\n        SIZE_CLASSES[size],\n        fullWidth && \"w-full\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n",
+      "target": "{ui}/button.tsx",
+      "type": "component"
+    },
+    {
+      "path": "packages/react/src/button.jsx",
+      "content": "const BASE_CLASSES = \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\nconst VARIANT_CLASSES = {\n    primary: \"bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200\",\n    secondary: \"bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700\",\n    outline: \"border border-zinc-300 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n    ghost: \"bg-transparent text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800\",\n    danger: \"bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-400\",\n    link: \"bg-transparent text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50\",\n};\nconst SIZE_CLASSES = {\n    sm: \"h-8 px-3 text-xs\",\n    md: \"h-10 px-4 text-sm\",\n    lg: \"h-12 px-6 text-base\",\n    icon: \"h-10 w-10\",\n};\nfunction cn(...classes) {\n    return classes.filter(Boolean).join(\" \");\n}\nexport function Button({ variant = \"primary\", size = \"md\", fullWidth = false, className, type = \"button\", ...props }) {\n    return (<button type={type} className={cn(BASE_CLASSES, VARIANT_CLASSES[variant], SIZE_CLASSES[size], fullWidth && \"w-full\", className)} {...props}/>);\n}\n",
+      "target": "{ui}/button.jsx",
+      "type": "component"
+    }
+  ]
+}
