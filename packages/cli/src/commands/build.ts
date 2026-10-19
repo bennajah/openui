@@ -66,6 +66,20 @@ export function toJsx(source: string, fileName: string): string {
   return result.outputText;
 }
 
+/** Emit a JS variant of a TypeScript module, dropping types and keeping ESM. */
+export function toJs(source: string, fileName: string): string {
+  const result = ts.transpileModule(source, {
+    fileName,
+    compilerOptions: {
+      target: ts.ScriptTarget.ESNext,
+      module: ts.ModuleKind.ESNext,
+      removeComments: false,
+    },
+    reportDiagnostics: false,
+  });
+  return result.outputText;
+}
+
 function readPackageVersion(root: string, framework: FrameworkName): string {
   const file = join(root, "packages", framework, "package.json");
   if (!existsSync(file)) return "0.0.0";
@@ -93,6 +107,18 @@ function inlineSource(root: string, source: ManifestSource): RegistryItemFile[] 
       type: source.type,
     });
   }
+
+  // Plain TypeScript modules (no JSX) get a `.js` sibling so JS projects can
+  // install them without a TypeScript toolchain.
+  if (source.languageVariants === true && source.target.endsWith(".ts")) {
+    files.push({
+      path: source.path.replace(/\.ts$/, ".js"),
+      content: toJs(content, source.path),
+      target: source.target.replace(/\.ts$/, ".js"),
+      type: source.type,
+    });
+  }
+
   return files;
 }
 

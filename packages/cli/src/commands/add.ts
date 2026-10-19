@@ -50,6 +50,21 @@ export interface AddSummary {
 
 export type AddOutcome = { ok: true; summary: AddSummary } | { ok: false; errors: string[] };
 
+/**
+ * Rewrite relative TypeScript specifiers to their JavaScript equivalents when
+ * installing into a JavaScript project. Every `.ts`/`.tsx` file in an item has a
+ * selected `.js`/`.jsx` sibling, so this keeps sibling imports resolvable — in
+ * plain modules and in framework component files (`.svelte`, `.astro`, `.vue`).
+ */
+export function rewriteImportsToJs(content: string, typescript: boolean): string {
+  if (typescript) return content;
+  return content
+    .replace(/(from\s+["'])(\.[^"']*?)\.tsx(["'])/g, "$1$2.jsx$3")
+    .replace(/(from\s+["'])(\.[^"']*?)\.ts(["'])/g, "$1$2.js$3")
+    .replace(/(import\s*\(\s*["'])(\.[^"']*?)\.tsx(["']\s*\))/g, "$1$2.jsx$3")
+    .replace(/(import\s*\(\s*["'])(\.[^"']*?)\.ts(["']\s*\))/g, "$1$2.js$3");
+}
+
 /** Select the language-appropriate variant of each file. */
 export function selectFilesForLanguage(
   files: RegistryItemFile[],
@@ -172,7 +187,10 @@ export async function runAdd(options: AddOptions): Promise<AddOutcome> {
       if (segments.includes("..") || rel.startsWith("..") || isAbsolute(rel)) {
         return { ok: false, errors: [`Refusing to write outside the project: ${target}`] };
       }
-      candidates.push({ target, content: file.content });
+      candidates.push({
+        target,
+        content: rewriteImportsToJs(file.content, config.typescript),
+      });
     }
     for (const dep of item.dependencies ?? []) {
       notes.push(

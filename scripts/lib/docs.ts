@@ -223,7 +223,8 @@ export function checkLinks(
     if (target.startsWith("#") || target.startsWith("mailto:")) continue;
 
     if (target.startsWith(`${SITE_URL}/docs/`)) {
-      const slug = target.slice(`${SITE_URL}/docs/`.length).replace(/\/$/, "");
+      // Fragments (`#theme`) select a heading, not a page; strip them first.
+      const slug = target.slice(`${SITE_URL}/docs/`.length).replace(/\/$/, "").replace(/#.*$/, "");
       if (!knownSlugs.has(slug)) {
         errors.push(`${label}: link to unknown docs page "${target}".`);
       }
