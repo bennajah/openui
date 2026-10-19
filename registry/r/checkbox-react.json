@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "checkbox",
+  "framework": "react",
+  "version": "0.1.0-beta.0",
+  "description": "A native checkbox input styled with Tailwind accents.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/react/src/checkbox.tsx",
+      "content": "import type { InputHTMLAttributes } from \"react\";\n\n/**\n * OpenUI Checkbox — framework-native, zero runtime dependencies.\n *\n * A native checkbox. Pair it with Label when the text should be clickable.\n */\n\nexport interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, \"type\"> {\n  invalid?: boolean;\n}\n\nconst BASE_CLASSES =\n  \"size-4 shrink-0 cursor-pointer rounded border-zinc-300 accent-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:accent-zinc-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst INVALID_CLASSES = \"outline outline-1 outline-red-500 dark:outline-red-400\";\n\nfunction cn(...classes: Array<string | false | null | undefined>): string {\n  return classes.filter(Boolean).join(\" \");\n}\n\nexport function Checkbox({ invalid = false, className, ...props }: CheckboxProps) {\n  return (\n    <input\n      type=\"checkbox\"\n      aria-invalid={invalid || undefined}\n      className={cn(BASE_CLASSES, invalid && INVALID_CLASSES, className)}\n      {...props}\n    />\n  );\n}\n",
+      "target": "{ui}/checkbox.tsx",
+      "type": "component"
+    },
+    {
+      "path": "packages/react/src/checkbox.jsx",
+      "content": "const BASE_CLASSES = \"size-4 shrink-0 cursor-pointer rounded border-zinc-300 accent-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:accent-zinc-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\nconst INVALID_CLASSES = \"outline outline-1 outline-red-500 dark:outline-red-400\";\nfunction cn(...classes) {\n    return classes.filter(Boolean).join(\" \");\n}\nexport function Checkbox({ invalid = false, className, ...props }) {\n    return (<input type=\"checkbox\" aria-invalid={invalid || undefined} className={cn(BASE_CLASSES, invalid && INVALID_CLASSES, className)} {...props}/>);\n}\n",
+      "target": "{ui}/checkbox.jsx",
+      "type": "component"
+    }
+  ]
+}

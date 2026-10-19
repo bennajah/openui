@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "label",
+  "framework": "vue",
+  "version": "0.1.0-beta.0",
+  "description": "A native label with form typography and peer-disabled styling.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/vue/src/label.vue",
+      "content": "<script setup>\n/**\n * OpenUI Label — framework-native, zero runtime dependencies.\n *\n * Plain `<script setup>` (no `lang=\"ts\"`) so the same source installs into\n * TypeScript and JavaScript Vue projects.\n */\n\ndefineOptions({ inheritAttrs: false });\n\nconst classes =\n  \"text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-zinc-50\";\n</script>\n\n<template>\n  <label v-bind=\"$attrs\" :class=\"classes\">\n    <slot />\n  </label>\n</template>\n",
+      "target": "{ui}/label.vue",
+      "type": "component"
+    }
+  ]
+}

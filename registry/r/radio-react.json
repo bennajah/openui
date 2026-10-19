@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "radio",
+  "framework": "react",
+  "version": "0.1.0-beta.0",
+  "description": "A native radio input. Group inputs by sharing a name and pair them with Label.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/react/src/radio.tsx",
+      "content": "import type { InputHTMLAttributes } from \"react\";\n\n/**\n * OpenUI Radio — framework-native, zero runtime dependencies.\n *\n * A native radio input. Give inputs in the same group the same `name` and pair\n * them with Label for a clickable caption.\n */\n\nexport interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, \"type\"> {\n  /** Renders an error outline. `aria-invalid` is not valid on `role=\"radio\"`. */\n  invalid?: boolean;\n}\n\nconst BASE_CLASSES =\n  \"size-4 shrink-0 cursor-pointer accent-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:accent-zinc-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst INVALID_CLASSES = \"outline outline-1 outline-red-500 dark:outline-red-400\";\n\nfunction cn(...classes: Array<string | false | null | undefined>): string {\n  return classes.filter(Boolean).join(\" \");\n}\n\nexport function Radio({ invalid = false, className, ...props }: RadioProps) {\n  return (\n    <input\n      type=\"radio\"\n      data-invalid={invalid || undefined}\n      className={cn(BASE_CLASSES, invalid && INVALID_CLASSES, className)}\n      {...props}\n    />\n  );\n}\n",
+      "target": "{ui}/radio.tsx",
+      "type": "component"
+    },
+    {
+      "path": "packages/react/src/radio.jsx",
+      "content": "const BASE_CLASSES = \"size-4 shrink-0 cursor-pointer accent-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:accent-zinc-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\nconst INVALID_CLASSES = \"outline outline-1 outline-red-500 dark:outline-red-400\";\nfunction cn(...classes) {\n    return classes.filter(Boolean).join(\" \");\n}\nexport function Radio({ invalid = false, className, ...props }) {\n    return (<input type=\"radio\" data-invalid={invalid || undefined} className={cn(BASE_CLASSES, invalid && INVALID_CLASSES, className)} {...props}/>);\n}\n",
+      "target": "{ui}/radio.jsx",
+      "type": "component"
+    }
+  ]
+}

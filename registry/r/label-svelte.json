@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "label",
+  "framework": "svelte",
+  "version": "0.1.0-beta.0",
+  "description": "A native label with form typography and peer-disabled styling.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/svelte/src/label.svelte",
+      "content": "<script>\n  /**\n   * OpenUI Label — framework-native, zero runtime dependencies.\n   *\n   * Plain JavaScript with JSDoc types so the same source installs into\n   * TypeScript and JavaScript Svelte projects. Svelte 5 runes.\n   */\n\n  /** @type {{ class?: string, children?: import(\"svelte\").Snippet, [key: string]: unknown }} */\n  let { class: className = \"\", children, ...rest } = $props();\n\n  const BASE_CLASSES =\n    \"text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-zinc-50\";\n\n  const classes = $derived([BASE_CLASSES, className].filter(Boolean).join(\" \"));\n</script>\n\n<label class={classes} {...rest}>\n  {@render children?.()}\n</label>\n",
+      "target": "{ui}/label.svelte",
+      "type": "component"
+    }
+  ]
+}

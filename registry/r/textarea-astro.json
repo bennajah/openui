@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "textarea",
+  "framework": "astro",
+  "version": "0.1.0-beta.0",
+  "description": "A native multi-line input that shares the Input field treatment.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/astro/src/textarea.astro",
+      "content": "---\n/**\n * OpenUI Textarea — framework-native, zero runtime dependencies.\n *\n * Plain JavaScript frontmatter (no `lang=\"ts\"`) so the same source installs\n * into TypeScript and JavaScript Astro projects. Types live in JSDoc.\n *\n * @typedef {Object} TextareaProps\n * @property {boolean} [invalid]\n * @property {number} [rows]\n * @property {string} [class]\n */\n\nconst { invalid = false, rows = 4, class: className = \"\", ...rest } = Astro.props;\n\nconst BASE_CLASSES =\n  \"flex min-h-20 w-full rounded-md border bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-400 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst classes = [\n  BASE_CLASSES,\n  invalid ? \"border-red-500 dark:border-red-400\" : \"border-zinc-300 dark:border-zinc-700\",\n  className,\n]\n  .filter(Boolean)\n  .join(\" \");\n---\n\n<textarea aria-invalid={invalid || undefined} rows={rows} class={classes} {...rest}></textarea>\n",
+      "target": "{ui}/textarea.astro",
+      "type": "component"
+    }
+  ]
+}

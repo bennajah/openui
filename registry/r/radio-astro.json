@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "radio",
+  "framework": "astro",
+  "version": "0.1.0-beta.0",
+  "description": "A native radio input. Group inputs by sharing a name and pair them with Label.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/astro/src/radio.astro",
+      "content": "---\n/**\n * OpenUI Radio — framework-native, zero runtime dependencies.\n *\n * Plain JavaScript frontmatter (no `lang=\"ts\"`) so the same source installs\n * into TypeScript and JavaScript Astro projects. Types live in JSDoc.\n *\n * @typedef {Object} RadioProps\n * @property {boolean} [invalid]\n * @property {string} [class]\n */\n\nconst { invalid = false, class: className = \"\", ...rest } = Astro.props;\n\nconst BASE_CLASSES =\n  \"size-4 shrink-0 cursor-pointer accent-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:accent-zinc-50 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst classes = [\n  BASE_CLASSES,\n  invalid ? \"outline outline-1 outline-red-500 dark:outline-red-400\" : \"\",\n  className,\n]\n  .filter(Boolean)\n  .join(\" \");\n---\n\n<input type=\"radio\" data-invalid={invalid || undefined} class={classes} {...rest} />\n",
+      "target": "{ui}/radio.astro",
+      "type": "component"
+    }
+  ]
+}

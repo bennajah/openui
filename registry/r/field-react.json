@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "field",
+  "framework": "react",
+  "version": "0.1.0-beta.0",
+  "description": "Composes a label, control, and hint or error message with for/id and aria-describedby wiring.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/react/src/field.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { useId } from \"react\";\n\n/**\n * OpenUI Field — framework-native, zero runtime dependencies.\n *\n * Composes a label, a control, and a hint or error message with the wiring a\n * form control needs: `htmlFor`/`id`, `aria-describedby`, and `aria-invalid`.\n * Pass a function as `children` to receive `controlProps`, an object that can\n * be spread directly onto any control:\n *\n *   <Field label=\"Email\" error={message}>\n *     {({ controlProps }) => <Input {...controlProps} />}\n *   </Field>\n */\n\nexport interface FieldControlProps {\n  id: string;\n  \"aria-describedby\": string | undefined;\n  \"aria-invalid\": true | undefined;\n}\n\nexport interface FieldRenderProps {\n  controlProps: FieldControlProps;\n}\n\nexport interface FieldProps {\n  label: ReactNode;\n  hint?: ReactNode;\n  error?: ReactNode;\n  id?: string;\n  className?: string;\n  children?: ReactNode | ((props: FieldRenderProps) => ReactNode);\n}\n\nexport function Field({ label, hint, error, id, className, children }: FieldProps) {\n  const generatedId = useId();\n  const controlId = id ?? `field-${generatedId}`;\n  const hintId = hint ? `${controlId}-hint` : undefined;\n  const errorId = error ? `${controlId}-error` : undefined;\n  const describedBy = [hintId, errorId].filter(Boolean).join(\" \") || undefined;\n\n  const renderProps: FieldRenderProps = {\n    controlProps: {\n      id: controlId,\n      \"aria-describedby\": describedBy,\n      \"aria-invalid\": error ? true : undefined,\n    },\n  };\n\n  return (\n    <div className={[\"flex flex-col gap-2\", className].filter(Boolean).join(\" \")}>\n      <label\n        htmlFor={controlId}\n        className=\"text-sm font-medium leading-none text-zinc-900 dark:text-zinc-50\"\n      >\n        {label}\n      </label>\n      {typeof children === \"function\" ? children(renderProps) : children}\n      {hint ? (\n        <p id={hintId} className=\"text-xs text-zinc-500 dark:text-zinc-400\">\n          {hint}\n        </p>\n      ) : null}\n      {error ? (\n        <p id={errorId} className=\"text-xs font-medium text-red-600 dark:text-red-400\">\n          {error}\n        </p>\n      ) : null}\n    </div>\n  );\n}\n",
+      "target": "{ui}/field.tsx",
+      "type": "component"
+    },
+    {
+      "path": "packages/react/src/field.jsx",
+      "content": "import { useId } from \"react\";\nexport function Field({ label, hint, error, id, className, children }) {\n    const generatedId = useId();\n    const controlId = id ?? `field-${generatedId}`;\n    const hintId = hint ? `${controlId}-hint` : undefined;\n    const errorId = error ? `${controlId}-error` : undefined;\n    const describedBy = [hintId, errorId].filter(Boolean).join(\" \") || undefined;\n    const renderProps = {\n        controlProps: {\n            id: controlId,\n            \"aria-describedby\": describedBy,\n            \"aria-invalid\": error ? true : undefined,\n        },\n    };\n    return (<div className={[\"flex flex-col gap-2\", className].filter(Boolean).join(\" \")}>\n      <label htmlFor={controlId} className=\"text-sm font-medium leading-none text-zinc-900 dark:text-zinc-50\">\n        {label}\n      </label>\n      {typeof children === \"function\" ? children(renderProps) : children}\n      {hint ? (<p id={hintId} className=\"text-xs text-zinc-500 dark:text-zinc-400\">\n          {hint}\n        </p>) : null}\n      {error ? (<p id={errorId} className=\"text-xs font-medium text-red-600 dark:text-red-400\">\n          {error}\n        </p>) : null}\n    </div>);\n}\n",
+      "target": "{ui}/field.jsx",
+      "type": "component"
+    }
+  ]
+}

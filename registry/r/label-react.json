@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "label",
+  "framework": "react",
+  "version": "0.1.0-beta.0",
+  "description": "A native label with form typography and peer-disabled styling.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/react/src/label.tsx",
+      "content": "import type { LabelHTMLAttributes } from \"react\";\n\n/**\n * OpenUI Label — framework-native, zero runtime dependencies.\n *\n * A native label with form typography. Pass `htmlFor` to associate it with a\n * control, or wrap the control directly.\n */\n\nexport type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;\n\nconst BASE_CLASSES =\n  \"text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-zinc-50\";\n\nfunction cn(...classes: Array<string | false | null | undefined>): string {\n  return classes.filter(Boolean).join(\" \");\n}\n\nexport function Label({ className, ...props }: LabelProps) {\n  // `Label` is a generic primitive: association is the caller's responsibility\n  // via `htmlFor` or by wrapping the control as children.\n  // oxlint-disable-next-line jsx-a11y/label-has-associated-control -- see above.\n  return <label className={cn(BASE_CLASSES, className)} {...props} />;\n}\n",
+      "target": "{ui}/label.tsx",
+      "type": "component"
+    },
+    {
+      "path": "packages/react/src/label.jsx",
+      "content": "const BASE_CLASSES = \"text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-zinc-50\";\nfunction cn(...classes) {\n    return classes.filter(Boolean).join(\" \");\n}\nexport function Label({ className, ...props }) {\n    // `Label` is a generic primitive: association is the caller's responsibility\n    // via `htmlFor` or by wrapping the control as children.\n    // oxlint-disable-next-line jsx-a11y/label-has-associated-control -- see above.\n    return <label className={cn(BASE_CLASSES, className)} {...props}/>;\n}\n",
+      "target": "{ui}/label.jsx",
+      "type": "component"
+    }
+  ]
+}

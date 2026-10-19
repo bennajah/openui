@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "field",
+  "framework": "svelte",
+  "version": "0.1.0-beta.0",
+  "description": "Composes a label, control, and hint or error message with for/id and aria-describedby wiring.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/svelte/src/field.svelte",
+      "content": "<script>\n  /**\n   * OpenUI Field — framework-native, zero runtime dependencies.\n   *\n   * Svelte 5 runes. Composes a label, a control, and a hint or error message\n   * with `for`/`id`, `aria-describedby`, and `aria-invalid` wiring. The\n   * `control` snippet receives `controlProps`, an object that can be spread\n   * directly onto any control:\n   *\n   *   <Field label=\"Email\" error={message}>\n   *     {#snippet control({ controlProps })}\n   *       <Input {...controlProps} />\n   *     {/snippet}\n   *   </Field>\n   */\n\n  /** @type {{ label?: string, hint?: string, error?: string, id?: string, control?: import(\"svelte\").Snippet<[{ controlProps: Record<string, string | boolean | undefined> }]>, children?: import(\"svelte\").Snippet, class?: string }} */\n  let { label = \"\", hint = \"\", error = \"\", id = \"\", control, children, class: className = \"\" } = $props();\n\n  const generated = Math.random().toString(36).slice(2, 10);\n  const controlId = $derived(id || `field-${generated}`);\n  const describedBy = $derived(\n    [hint ? `${controlId}-hint` : \"\", error ? `${controlId}-error` : \"\"].filter(Boolean).join(\" \") ||\n      undefined,\n  );\n  const controlProps = $derived({\n    id: controlId,\n    \"aria-describedby\": describedBy,\n    \"aria-invalid\": error ? true : undefined,\n  });\n\n  const LABEL_CLASSES = \"text-sm font-medium leading-none text-zinc-900 dark:text-zinc-50\";\n\n  const classes = $derived([\"flex flex-col gap-2\", className].filter(Boolean).join(\" \"));\n</script>\n\n<div class={classes}>\n  <label for={controlId} class={LABEL_CLASSES}>\n    {@render children?.()}\n    {label}\n  </label>\n  {@render control?.({ controlProps })}\n  {#if hint}\n    <p id={`${controlId}-hint`} class=\"text-xs text-zinc-500 dark:text-zinc-400\">{hint}</p>\n  {/if}\n  {#if error}\n    <p id={`${controlId}-error`} class=\"text-xs font-medium text-red-600 dark:text-red-400\">\n      {error}\n    </p>\n  {/if}\n</div>\n",
+      "target": "{ui}/field.svelte",
+      "type": "component"
+    }
+  ]
+}

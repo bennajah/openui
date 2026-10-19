@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "field",
+  "framework": "astro",
+  "version": "0.1.0-beta.0",
+  "description": "Composes a label, control, and hint or error message with for/id and aria-describedby wiring.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/astro/src/field.astro",
+      "content": "---\n/**\n * OpenUI Field — framework-native, zero runtime dependencies.\n *\n * Composes a label, a control, and a hint or error message with `for`/`id`\n * and `aria-describedby` wiring.\n *\n * The default slot is rendered as-is. The component exposes the generated\n * wiring on the wrapping element as `data-control-id`, `data-described-by`,\n * and `data-invalid` so a client script or an explicit `id` can reuse it.\n * Pass `id` and `aria-describedby` to your control for the strongest result:\n *\n *   <Field label=\"Email\" id=\"email\" hint=\"We never share it.\" error={message}>\n *     <Input id=\"email\" aria-describedby=\"email-hint email-error\" />\n *   </Field>\n *\n * @typedef {Object} FieldProps\n * @property {string} [label]\n * @property {string} [hint]\n * @property {string} [error]\n * @property {string} [id]\n * @property {string} [class]\n */\n\nconst { label = \"\", hint = \"\", error = \"\", id = \"\", class: className = \"\" } = Astro.props;\n\nconst generated = Math.random().toString(36).slice(2, 10);\nconst controlId = id || `field-${generated}`;\nconst hintId = hint ? `${controlId}-hint` : \"\";\nconst errorId = error ? `${controlId}-error` : \"\";\nconst describedBy = [hintId, errorId].filter(Boolean).join(\" \") || undefined;\n\nconst LABEL_CLASSES = \"text-sm font-medium leading-none text-zinc-900 dark:text-zinc-50\";\nconst classes = [\"flex flex-col gap-2\", className].filter(Boolean).join(\" \");\n---\n\n<div\n  class={classes}\n  data-control-id={controlId}\n  data-described-by={describedBy}\n  data-invalid={error ? \"true\" : undefined}\n>\n  <label for={controlId} class={LABEL_CLASSES}>\n    <slot name=\"label\">{label}</slot>\n  </label>\n  <slot />\n  {hint && <p id={hintId} class=\"text-xs text-zinc-500 dark:text-zinc-400\">{hint}</p>}\n  {error && <p id={errorId} class=\"text-xs font-medium text-red-600 dark:text-red-400\">{error}</p>}\n</div>\n",
+      "target": "{ui}/field.astro",
+      "type": "component"
+    }
+  ]
+}

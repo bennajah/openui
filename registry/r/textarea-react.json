@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "textarea",
+  "framework": "react",
+  "version": "0.1.0-beta.0",
+  "description": "A native multi-line input that shares the Input field treatment.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/react/src/textarea.tsx",
+      "content": "import type { TextareaHTMLAttributes } from \"react\";\n\n/**\n * OpenUI Textarea — framework-native, zero runtime dependencies.\n *\n * A native multi-line input with the same field treatment as Input.\n */\n\nexport interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {\n  invalid?: boolean;\n}\n\nconst BASE_CLASSES =\n  \"flex min-h-20 w-full rounded-md border bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-400 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\n\nconst BORDER_CLASSES = \"border-zinc-300 dark:border-zinc-700\";\nconst INVALID_CLASSES = \"border-red-500 dark:border-red-400\";\n\nfunction cn(...classes: Array<string | false | null | undefined>): string {\n  return classes.filter(Boolean).join(\" \");\n}\n\nexport function Textarea({ invalid = false, className, rows = 4, ...props }: TextareaProps) {\n  return (\n    <textarea\n      aria-invalid={invalid || undefined}\n      rows={rows}\n      className={cn(BASE_CLASSES, invalid ? INVALID_CLASSES : BORDER_CLASSES, className)}\n      {...props}\n    />\n  );\n}\n",
+      "target": "{ui}/textarea.tsx",
+      "type": "component"
+    },
+    {
+      "path": "packages/react/src/textarea.jsx",
+      "content": "const BASE_CLASSES = \"flex min-h-20 w-full rounded-md border bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm transition-colors placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-400 dark:focus-visible:ring-zinc-600 dark:focus-visible:ring-offset-zinc-950\";\nconst BORDER_CLASSES = \"border-zinc-300 dark:border-zinc-700\";\nconst INVALID_CLASSES = \"border-red-500 dark:border-red-400\";\nfunction cn(...classes) {\n    return classes.filter(Boolean).join(\" \");\n}\nexport function Textarea({ invalid = false, className, rows = 4, ...props }) {\n    return (<textarea aria-invalid={invalid || undefined} rows={rows} className={cn(BASE_CLASSES, invalid ? INVALID_CLASSES : BORDER_CLASSES, className)} {...props}/>);\n}\n",
+      "target": "{ui}/textarea.jsx",
+      "type": "component"
+    }
+  ]
+}

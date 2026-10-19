@@ -11,18 +11,48 @@
       "description": "A framework-native button with disjoint variants and sizes, built on Tailwind CSS utilities.",
       "meta": {
         "variant": [
-          { "name": "primary", "description": "High-emphasis action. The default." },
-          { "name": "secondary", "description": "Lower-emphasis action on a subtle surface." },
-          { "name": "outline", "description": "Bordered action for secondary contexts." },
-          { "name": "ghost", "description": "Borderless action, usually in toolbars." },
-          { "name": "danger", "description": "Destructive or irreversible action." },
-          { "name": "link", "description": "Inline text action that looks like a link." }
+          {
+            "name": "primary",
+            "description": "High-emphasis action. The default."
+          },
+          {
+            "name": "secondary",
+            "description": "Lower-emphasis action on a subtle surface."
+          },
+          {
+            "name": "outline",
+            "description": "Bordered action for secondary contexts."
+          },
+          {
+            "name": "ghost",
+            "description": "Borderless action, usually in toolbars."
+          },
+          {
+            "name": "danger",
+            "description": "Destructive or irreversible action."
+          },
+          {
+            "name": "link",
+            "description": "Inline text action that looks like a link."
+          }
         ],
         "size": [
-          { "name": "sm", "description": "Compact 32px control." },
-          { "name": "md", "description": "Default 40px control." },
-          { "name": "lg", "description": "Prominent 48px control." },
-          { "name": "icon", "description": "Square 40px control for a single icon." }
+          {
+            "name": "sm",
+            "description": "Compact 32px control."
+          },
+          {
+            "name": "md",
+            "description": "Default 40px control."
+          },
+          {
+            "name": "lg",
+            "description": "Prominent 48px control."
+          },
+          {
+            "name": "icon",
+            "description": "Square 40px control for a single icon."
+          }
         ],
         "props": [
           {
@@ -78,6 +108,342 @@
           {
             "path": "packages/vue/src/button.vue",
             "target": "{ui}/button.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "description": "A native text input with shared field styling and an invalid state.",
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Marks the control as invalid and adds a red border."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/input.tsx",
+            "target": "{ui}/input.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/input.svelte",
+            "target": "{ui}/input.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/input.astro",
+            "target": "{ui}/input.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/input.vue",
+            "target": "{ui}/input.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "description": "A native multi-line input that shares the Input field treatment.",
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Marks the control as invalid and adds a red border."
+          },
+          {
+            "name": "rows",
+            "type": "number",
+            "default": "4",
+            "description": "Initial visible line count."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/textarea.tsx",
+            "target": "{ui}/textarea.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/textarea.svelte",
+            "target": "{ui}/textarea.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/textarea.astro",
+            "target": "{ui}/textarea.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/textarea.vue",
+            "target": "{ui}/textarea.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "description": "A native select element with consistent field styling and a decorative chevron.",
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Marks the control as invalid and adds a red border."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/select.tsx",
+            "target": "{ui}/select.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/select.svelte",
+            "target": "{ui}/select.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/select.astro",
+            "target": "{ui}/select.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/select.vue",
+            "target": "{ui}/select.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "description": "A native checkbox input styled with Tailwind accents.",
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adds an error outline and sets aria-invalid."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/checkbox.tsx",
+            "target": "{ui}/checkbox.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/checkbox.svelte",
+            "target": "{ui}/checkbox.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/checkbox.astro",
+            "target": "{ui}/checkbox.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/checkbox.vue",
+            "target": "{ui}/checkbox.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "radio",
+      "title": "Radio",
+      "description": "A native radio input. Group inputs by sharing a name and pair them with Label.",
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adds an error outline and sets aria-invalid."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/radio.tsx",
+            "target": "{ui}/radio.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/radio.svelte",
+            "target": "{ui}/radio.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/radio.astro",
+            "target": "{ui}/radio.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/radio.vue",
+            "target": "{ui}/radio.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "label",
+      "title": "Label",
+      "description": "A native label with form typography and peer-disabled styling.",
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/label.tsx",
+            "target": "{ui}/label.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/label.svelte",
+            "target": "{ui}/label.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/label.astro",
+            "target": "{ui}/label.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/label.vue",
+            "target": "{ui}/label.vue",
+            "type": "component"
+          }
+        ]
+      }
+    },
+    {
+      "name": "field",
+      "title": "Field",
+      "description": "Composes a label, control, and hint or error message with for/id and aria-describedby wiring.",
+      "meta": {
+        "props": [
+          {
+            "name": "label",
+            "type": "string | ReactNode",
+            "default": "\"\"",
+            "description": "Visible label text."
+          },
+          {
+            "name": "hint",
+            "type": "string | ReactNode",
+            "default": "\"\"",
+            "description": "Helper text linked with aria-describedby."
+          },
+          {
+            "name": "error",
+            "type": "string | ReactNode",
+            "default": "\"\"",
+            "description": "Error message that also sets aria-invalid on the control."
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "default": "generated",
+            "description": "Control id. Generated when omitted."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/field.tsx",
+            "target": "{ui}/field.tsx",
+            "type": "component",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/field.svelte",
+            "target": "{ui}/field.svelte",
+            "type": "component"
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/field.astro",
+            "target": "{ui}/field.astro",
+            "type": "component"
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/field.vue",
+            "target": "{ui}/field.vue",
             "type": "component"
           }
         ]

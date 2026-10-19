@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "label",
+  "framework": "astro",
+  "version": "0.1.0-beta.0",
+  "description": "A native label with form typography and peer-disabled styling.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/astro/src/label.astro",
+      "content": "---\n/**\n * OpenUI Label — framework-native, zero runtime dependencies.\n *\n * Plain JavaScript frontmatter (no `lang=\"ts\"`) so the same source installs\n * into TypeScript and JavaScript Astro projects. Types live in JSDoc.\n *\n * @typedef {Object} LabelProps\n * @property {string} [class]\n * @property {string} [for]\n */\n\nconst { class: className = \"\", ...rest } = Astro.props;\n\nconst BASE_CLASSES =\n  \"text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-zinc-50\";\n\nconst classes = [BASE_CLASSES, className].filter(Boolean).join(\" \");\n---\n\n<label class={classes} {...rest}>\n  <slot />\n</label>\n",
+      "target": "{ui}/label.astro",
+      "type": "component"
+    }
+  ]
+}

@@ -63,15 +63,35 @@ want to see the plan:
 openui add button --dry-run
 ```
 
+Add several components at once, or browse what is available first:
+
+```bash
+openui add input textarea select checkbox radio label field
+openui list
+```
+
+The beta ships eight components: `button`, `input`, `textarea`, `select`,
+`checkbox`, `radio`, `label`, and `field`. See the
+[Components](/docs/components) reference for each API.
+
 ## Use it
 
 ### React
 
 ```tsx
 import { Button } from "@/components/ui/button";
+import { Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
-export function SaveBar() {
-  return <Button type="submit">Save changes</Button>;
+export function SignInForm() {
+  return (
+    <form>
+      <Field label="Email" hint="We never share it.">
+        {({ controlProps }) => <Input type="email" {...controlProps} />}
+      </Field>
+      <Button type="submit">Save changes</Button>
+    </form>
+  );
 }
 ```
 
@@ -80,8 +100,10 @@ export function SaveBar() {
 ```svelte
 <script>
   import Button from "$lib/components/ui/button.svelte";
+  import Input from "$lib/components/ui/input.svelte";
 </script>
 
+<Input type="email" name="email" />
 <Button variant="secondary">Save changes</Button>
 ```
 
@@ -90,8 +112,10 @@ export function SaveBar() {
 ```astro
 ---
 import Button from "../components/ui/button.astro";
+import Input from "../components/ui/input.astro";
 ---
 
+<Input type="email" name="email" />
 <Button type="submit">Save changes</Button>
 ```
 
@@ -100,9 +124,11 @@ import Button from "../components/ui/button.astro";
 ```vue
 <script setup>
 import Button from "@/components/ui/button.vue";
+import Input from "@/components/ui/input.vue";
 </script>
 
 <template>
+  <Input type="email" name="email" />
   <Button variant="secondary">Save changes</Button>
 </template>
 ```
@@ -120,5 +146,5 @@ each install target stays inside your project. Run it in CI.
 
 - Read [Configuration](/docs/configuration) for every `openui.json` field.
 - Learn the [CLI](/docs/cli) and its safety guarantees.
-- Browse the [Button](/docs/components) API.
+- Browse the [Components](/docs/components) reference.
 - Set up [theming](/docs/theming) with Tailwind CSS v4.

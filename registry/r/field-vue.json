@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openui.dev/registry/item-schema.json",
+  "name": "field",
+  "framework": "vue",
+  "version": "0.1.0-beta.0",
+  "description": "Composes a label, control, and hint or error message with for/id and aria-describedby wiring.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/vue/src/field.vue",
+      "content": "<script setup>\n/**\n * OpenUI Field — framework-native, zero runtime dependencies.\n *\n * Composes a label, a control, and a hint or error message with the wiring a\n * form control needs: `for`/`id`, `aria-describedby`, and `aria-invalid`.\n * The default slot receives `controlProps`, an object that can be spread\n * directly onto any control:\n *\n *   <Field label=\"Email\" :error=\"message\">\n *     <template #default=\"{ controlProps }\">\n *       <Input v-bind=\"controlProps\" />\n *     </template>\n *   </Field>\n */\nimport { computed, useId } from \"vue\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = defineProps({\n  label: { type: String, default: \"\" },\n  hint: { type: String, default: \"\" },\n  error: { type: String, default: \"\" },\n  id: { type: String, default: \"\" },\n});\n\nconst generatedId = useId();\nconst controlId = computed(() => props.id || `field-${generatedId}`);\nconst describedBy = computed(() => {\n  /** @type {string[]} */\n  const ids = [];\n  if (props.hint) ids.push(`${controlId.value}-hint`);\n  if (props.error) ids.push(`${controlId.value}-error`);\n  return ids.length > 0 ? ids.join(\" \") : undefined;\n});\n\nconst LABEL_CLASSES = \"text-sm font-medium leading-none text-zinc-900 dark:text-zinc-50\";\nconst controlProps = computed(() => ({\n  id: controlId.value,\n  ariaDescribedby: describedBy.value,\n  ariaInvalid: props.error ? true : undefined,\n}));\n</script>\n\n<template>\n  <div class=\"flex flex-col gap-2\">\n    <label :for=\"controlId\" :class=\"LABEL_CLASSES\">\n      <slot name=\"label\">{{ label }}</slot>\n    </label>\n    <slot :control-props=\"controlProps\" />\n    <p v-if=\"hint\" :id=\"`${controlId}-hint`\" class=\"text-xs text-zinc-500 dark:text-zinc-400\">\n      {{ hint }}\n    </p>\n    <p\n      v-if=\"error\"\n      :id=\"`${controlId}-error`\"\n      class=\"text-xs font-medium text-red-600 dark:text-red-400\"\n    >\n      {{ error }}\n    </p>\n  </div>\n</template>\n",
+      "target": "{ui}/field.vue",
+      "type": "component"
+    }
+  ]
+}

@@ -93,6 +93,216 @@
           }
         ]
       }
+    },
+    "input": {
+      "title": "Input",
+      "description": "A native text input with shared field styling and an invalid state.",
+      "frameworks": {
+        "react": {
+          "item": "r/input-react.json"
+        },
+        "svelte": {
+          "item": "r/input-svelte.json"
+        },
+        "astro": {
+          "item": "r/input-astro.json"
+        },
+        "vue": {
+          "item": "r/input-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Marks the control as invalid and adds a red border."
+          }
+        ]
+      }
+    },
+    "textarea": {
+      "title": "Textarea",
+      "description": "A native multi-line input that shares the Input field treatment.",
+      "frameworks": {
+        "react": {
+          "item": "r/textarea-react.json"
+        },
+        "svelte": {
+          "item": "r/textarea-svelte.json"
+        },
+        "astro": {
+          "item": "r/textarea-astro.json"
+        },
+        "vue": {
+          "item": "r/textarea-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Marks the control as invalid and adds a red border."
+          },
+          {
+            "name": "rows",
+            "type": "number",
+            "default": "4",
+            "description": "Initial visible line count."
+          }
+        ]
+      }
+    },
+    "select": {
+      "title": "Select",
+      "description": "A native select element with consistent field styling and a decorative chevron.",
+      "frameworks": {
+        "react": {
+          "item": "r/select-react.json"
+        },
+        "svelte": {
+          "item": "r/select-svelte.json"
+        },
+        "astro": {
+          "item": "r/select-astro.json"
+        },
+        "vue": {
+          "item": "r/select-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Marks the control as invalid and adds a red border."
+          }
+        ]
+      }
+    },
+    "checkbox": {
+      "title": "Checkbox",
+      "description": "A native checkbox input styled with Tailwind accents.",
+      "frameworks": {
+        "react": {
+          "item": "r/checkbox-react.json"
+        },
+        "svelte": {
+          "item": "r/checkbox-svelte.json"
+        },
+        "astro": {
+          "item": "r/checkbox-astro.json"
+        },
+        "vue": {
+          "item": "r/checkbox-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adds an error outline and sets aria-invalid."
+          }
+        ]
+      }
+    },
+    "radio": {
+      "title": "Radio",
+      "description": "A native radio input. Group inputs by sharing a name and pair them with Label.",
+      "frameworks": {
+        "react": {
+          "item": "r/radio-react.json"
+        },
+        "svelte": {
+          "item": "r/radio-svelte.json"
+        },
+        "astro": {
+          "item": "r/radio-astro.json"
+        },
+        "vue": {
+          "item": "r/radio-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "invalid",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adds an error outline and sets aria-invalid."
+          }
+        ]
+      }
+    },
+    "label": {
+      "title": "Label",
+      "description": "A native label with form typography and peer-disabled styling.",
+      "frameworks": {
+        "react": {
+          "item": "r/label-react.json"
+        },
+        "svelte": {
+          "item": "r/label-svelte.json"
+        },
+        "astro": {
+          "item": "r/label-astro.json"
+        },
+        "vue": {
+          "item": "r/label-vue.json"
+        }
+      }
+    },
+    "field": {
+      "title": "Field",
+      "description": "Composes a label, control, and hint or error message with for/id and aria-describedby wiring.",
+      "frameworks": {
+        "react": {
+          "item": "r/field-react.json"
+        },
+        "svelte": {
+          "item": "r/field-svelte.json"
+        },
+        "astro": {
+          "item": "r/field-astro.json"
+        },
+        "vue": {
+          "item": "r/field-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "label",
+            "type": "string | ReactNode",
+            "default": "\"\"",
+            "description": "Visible label text."
+          },
+          {
+            "name": "hint",
+            "type": "string | ReactNode",
+            "default": "\"\"",
+            "description": "Helper text linked with aria-describedby."
+          },
+          {
+            "name": "error",
+            "type": "string | ReactNode",
+            "default": "\"\"",
+            "description": "Error message that also sets aria-invalid on the control."
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "default": "generated",
+            "description": "Control id. Generated when omitted."
+          }
+        ]
+      }
     }
   }
 }
