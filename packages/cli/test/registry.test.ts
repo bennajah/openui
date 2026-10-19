@@ -10,16 +10,19 @@ const REPO_ROOT = resolve(import.meta.dir, "../../..");
 
 describe("registry build", () => {
   it("builds one item per framework and a validated index", () => {
-    const result = buildRegistry(REPO_ROOT, loadManifest(REPO_ROOT));
+    const manifest = loadManifest(REPO_ROOT);
+    const result = buildRegistry(REPO_ROOT, manifest);
 
-    expect(Object.keys(result.index.components)).toContain("button");
+    const componentNames = manifest.components.map((c) => c.name);
     // oxlint-disable-next-line unicorn/no-array-sort -- freshly built array, safe to sort.
-    expect([...result.items.keys()].sort()).toEqual([
-      "r/button-astro.json",
-      "r/button-react.json",
-      "r/button-svelte.json",
-      "r/button-vue.json",
-    ]);
+    expect(Object.keys(result.index.components).sort()).toEqual(componentNames.sort());
+
+    const expectedItems = componentNames
+      .flatMap((name) => ["react", "svelte", "astro", "vue"].map((fw) => `r/${name}-${fw}.json`))
+      // oxlint-disable-next-line unicorn/no-array-sort -- freshly built array, safe to sort.
+      .sort();
+    // oxlint-disable-next-line unicorn/no-array-sort -- freshly built array, safe to sort.
+    expect([...result.items.keys()].sort()).toEqual(expectedItems);
 
     const react = result.items.get("r/button-react.json");
     // oxlint-disable-next-line unicorn/no-array-sort -- freshly built array, safe to sort.
@@ -27,6 +30,10 @@ describe("registry build", () => {
       "{ui}/button.jsx",
       "{ui}/button.tsx",
     ]);
+
+    // Every component ships exactly one React item with a TSX and a JSX variant.
+    const reactField = result.items.get("r/field-react.json");
+    expect(reactField?.files.map((f) => f.target)).toContain("{ui}/field.jsx");
   });
 
   it("transpiles TSX to JSX without type annotations", () => {
@@ -43,7 +50,8 @@ describe("registry build", () => {
     const manifest = loadManifest(REPO_ROOT);
     const result = buildRegistry(REPO_ROOT, manifest);
     const written = writeRegistry(dir, manifest, result);
-    expect(written.length).toBe(5);
+    // index.json + one item per component per framework.
+    expect(written.length).toBe(1 + manifest.components.length * 4);
 
     // A stale item from a previous build is removed, not left behind.
     writeJson(join(dir, "registry/r/stale-react.json"), { name: "stale" });
@@ -102,5 +110,37 @@ describe("registry integration", () => {
     const content = readFileSync(join(root, "src/components/ui/button.jsx"), "utf8");
     expect(content).toContain("export function Button");
     expect(content).not.toContain("ButtonProps");
+  });
+
+  it("installs every form component into every framework via the CLI", async () => {
+    const registryRoot = makeTempDir();
+    const manifest = loadManifest(REPO_ROOT);
+    writeRegistry(registryRoot, manifest, buildRegistry(REPO_ROOT, manifest));
+
+    const components = ["input", "textarea", "select", "checkbox", "radio", "label", "field"];
+    const ext = { react: "tsx", svelte: "svelte", astro: "astro", vue: "vue" } as const;
+
+    for (const framework of ["react", "svelte", "astro", "vue"] as const) {
+      const root = createProject({
+        framework,
+        typescript: true,
+        registry: { url: join(registryRoot, "registry") },
+      });
+      // oxlint-disable-next-line no-await-in-loop -- each framework is an isolated project.
+      const outcome = await runAdd({ components, cwd: root });
+      expect(outcome.ok).toBe(true);
+      if (!outcome.ok) throw new Error(`expected success for ${framework}`);
+
+      for (const name of components) {
+        const installed = join(root, `src/components/ui/${name}.${ext[framework]}`);
+        const canonical = join(REPO_ROOT, `packages/${framework}/src/${name}.${ext[framework]}`);
+        expect(existsSync(installed)).toBe(true);
+        expect(readFileSync(installed, "utf8")).toBe(readFileSync(canonical, "utf8"));
+      }
+
+      // oxlint-disable-next-line no-await-in-loop -- validation pairs with the install above.
+      const validation = await runValidate({ cwd: root });
+      expect(validation.errors).toEqual([]);
+    }
   });
 });
