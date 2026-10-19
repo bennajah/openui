@@ -10,13 +10,7 @@
       "description": "URL of this schema for editor validation and completion."
     },
     "framework": {
-      "enum": [
-        "react",
-        "svelte",
-        "astro",
-        "vue",
-        "auto"
-      ],
+      "enum": ["react", "svelte", "astro", "vue", "auto"],
       "default": "auto",
       "description": "Target framework. `auto` (default) detects the framework from the project's dependencies and config files. Explicit values skip detection."
     },
