@@ -303,6 +303,34 @@
           }
         ]
       }
+    },
+    "theme": {
+      "title": "Theme",
+      "description": "Light, dark, and system theme state with a no-flash init script and a cycling toggle button.",
+      "frameworks": {
+        "react": {
+          "item": "r/theme-react.json"
+        },
+        "svelte": {
+          "item": "r/theme-svelte.json"
+        },
+        "astro": {
+          "item": "r/theme-astro.json"
+        },
+        "vue": {
+          "item": "r/theme-vue.json"
+        }
+      },
+      "meta": {
+        "props": [
+          {
+            "name": "initialTheme",
+            "type": "'light' | 'dark' | 'system'",
+            "default": "'system'",
+            "description": "Theme used before the stored value is read. Only needed outside a browser."
+          }
+        ]
+      }
     }
   }
 }

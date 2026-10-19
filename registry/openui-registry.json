@@ -448,6 +448,76 @@
           }
         ]
       }
+    },
+    {
+      "name": "theme",
+      "title": "Theme",
+      "description": "Light, dark, and system theme state with a no-flash init script and a cycling toggle button.",
+      "meta": {
+        "props": [
+          {
+            "name": "initialTheme",
+            "type": "'light' | 'dark' | 'system'",
+            "default": "'system'",
+            "description": "Theme used before the stored value is read. Only needed outside a browser."
+          }
+        ]
+      },
+      "sources": {
+        "react": [
+          {
+            "path": "packages/react/src/theme-toggle.tsx",
+            "target": "{ui}/theme-toggle.tsx",
+            "type": "component",
+            "languageVariants": true
+          },
+          {
+            "path": "packages/react/src/theme.ts",
+            "target": "{ui}/theme.ts",
+            "type": "lib",
+            "languageVariants": true
+          }
+        ],
+        "svelte": [
+          {
+            "path": "packages/svelte/src/theme-toggle.svelte",
+            "target": "{ui}/theme-toggle.svelte",
+            "type": "component"
+          },
+          {
+            "path": "packages/svelte/src/theme.ts",
+            "target": "{ui}/theme.ts",
+            "type": "lib",
+            "languageVariants": true
+          }
+        ],
+        "astro": [
+          {
+            "path": "packages/astro/src/theme-toggle.astro",
+            "target": "{ui}/theme-toggle.astro",
+            "type": "component"
+          },
+          {
+            "path": "packages/astro/src/theme.ts",
+            "target": "{ui}/theme.ts",
+            "type": "lib",
+            "languageVariants": true
+          }
+        ],
+        "vue": [
+          {
+            "path": "packages/vue/src/theme-toggle.vue",
+            "target": "{ui}/theme-toggle.vue",
+            "type": "component"
+          },
+          {
+            "path": "packages/vue/src/theme.ts",
+            "target": "{ui}/theme.ts",
+            "type": "lib",
+            "languageVariants": true
+          }
+        ]
+      }
     }
   ]
 }
