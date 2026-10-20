@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/getting-started
 
-# Getting started
-
 OpenUI installs framework-native components as source files. There is no
 runtime package, no provider, and no version lock-in: once a component is in
 your project, it is your code.

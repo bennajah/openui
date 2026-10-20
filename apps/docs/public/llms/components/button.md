@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/button
 
-# Button
-
 The Button renders a real `<button>` with plain Tailwind utilities. Variant and
 size class sets are disjoint, so the component joins classes with a local
 helper instead of `clsx` or `tailwind-merge`.

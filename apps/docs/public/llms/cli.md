@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/cli
 
-# CLI
-
 The `openui` CLI initializes projects, installs components, inspects the
 registry, and builds or validates registries.
 

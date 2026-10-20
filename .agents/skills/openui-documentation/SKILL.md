@@ -59,9 +59,9 @@ group: reference
   `apps/docs/src/components/Demo.astro`. Add new previews as
   `apps/docs/src/components/demos/<Name>.astro`, then add the entry to `DEMOS`.
 - Do not use nested YAML; the parser reads `key: scalar` only.
-- Start the body with a single H1 that matches `title`.
-- The parser strips frontmatter and the first H1 stays in output; do not
-  duplicate a title line.
+- Start the body with a single H1 that matches `title`. The generator emits its
+  own title header and strips the body H1, so the generated file has exactly one
+  H1 and one `Source:` line.
 
 Component pages live in `apps/docs/content/docs/components/`. The landing page
 is `components/index.md`, served at `/docs/components`; every other file is

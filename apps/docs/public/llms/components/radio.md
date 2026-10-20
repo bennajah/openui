@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/radio
 
-# Radio
-
 Radio renders a native `<input type="radio">` with Tailwind accents. Group
 radios by giving them the same `name`, then wrap the group in a `<fieldset>`
 with a `<legend>`.

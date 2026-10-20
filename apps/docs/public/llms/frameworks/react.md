@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/frameworks/react
 
-# React
-
 OpenUI ships native React components with typed props. There is no runtime
 package: `openui add` writes the component into your project.
 

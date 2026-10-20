@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/contributing
 
-# Contributing
-
 OpenUI is a Bun monorepo. Component sources are canonical; the registry and
 documentation are generated from them.
 

@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/frameworks/vue
 
-# Vue
-
 OpenUI ships native Vue 3 single-file components. The installed file uses
 `<script setup>` and plain JavaScript with runtime prop validation, so it works
 in both TypeScript and JavaScript projects.

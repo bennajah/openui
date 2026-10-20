@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/registry
 
-# Registry
-
 A registry is a static directory — or an HTTP prefix — with two parts:
 
 ```

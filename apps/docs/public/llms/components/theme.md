@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/theme
 
-# Theme
-
 `Theme` ships the state behind dark mode plus a ready-made toggle. It has two
 parts you install together:
 

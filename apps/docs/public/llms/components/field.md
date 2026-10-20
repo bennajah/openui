@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/field
 
-# Field
-
 Field composes a label, a control, and an optional hint or error message, and
 computes the wiring a control needs: a generated `id`, `aria-describedby` for
 the hint and error text, and `aria-invalid` when there is an error.

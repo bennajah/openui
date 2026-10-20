@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/frameworks/astro
 
-# Astro
-
 OpenUI ships native `.astro` components. They render to static HTML with zero
 client-side JavaScript unless you add interactivity yourself.
 

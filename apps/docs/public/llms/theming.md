@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/theming
 
-# Theming
-
 OpenUI components are styled with plain Tailwind CSS utility classes. There is
 no CSS-in-JS runtime, no theme provider, and no stylesheet shipped by the
 registry. Your Tailwind build already sees the classes because the components

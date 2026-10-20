@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/configuration
 
-# Configuration
-
 OpenUI uses exactly one configuration file: **`openui.json`**. There is no
 `openui.config.ts` and no JavaScript configuration API, so the same file is
 readable by humans, CI, editors, and the JSON Schema at

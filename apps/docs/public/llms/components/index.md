@@ -2,9 +2,7 @@
 
 # Components
 
-Source: https://openuii.vercel.app/docs/components/index
-
-# Components
+Source: https://openuii.vercel.app/docs/components
 
 OpenUI components are source files, not a runtime library. Each one:
 

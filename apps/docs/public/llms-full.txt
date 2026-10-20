@@ -20,9 +20,7 @@
 
 # Components
 
-Source: https://openuii.vercel.app/docs/components/index
-
-# Components
+Source: https://openuii.vercel.app/docs/components
 
 OpenUI components are source files, not a runtime library. Each one:
 
@@ -81,8 +79,6 @@ conflict — so the simple join helper remains correct.
 # Button
 
 Source: https://openuii.vercel.app/docs/components/button
-
-# Button
 
 The Button renders a real `<button>` with plain Tailwind utilities. Variant and
 size class sets are disjoint, so the component joins classes with a local
@@ -149,8 +145,6 @@ the underlying `<button>`.
 # Getting started
 
 Source: https://openuii.vercel.app/docs/getting-started
-
-# Getting started
 
 OpenUI installs framework-native components as source files. There is no
 runtime package, no provider, and no version lock-in: once a component is in
@@ -303,8 +297,6 @@ each install target stays inside your project. Run it in CI.
 
 Source: https://openuii.vercel.app/docs/components/input
 
-# Input
-
 Input wraps a native `<input>` in the shared field treatment: a 40px control
 height (`h-10`), a `zinc` border, a focus ring with offset, and a red border in
 the invalid state. `type` is not set by the component, so the browser default
@@ -341,8 +333,6 @@ Native attributes (`value`, `defaultValue`, `name`, `disabled`, `required`,
 # Configuration
 
 Source: https://openuii.vercel.app/docs/configuration
-
-# Configuration
 
 OpenUI uses exactly one configuration file: **`openui.json`**. There is no
 `openui.config.ts` and no JavaScript configuration API, so the same file is
@@ -481,8 +471,6 @@ invalid file by construction.
 
 Source: https://openuii.vercel.app/docs/cli
 
-# CLI
-
 The `openui` CLI initializes projects, installs components, inspects the
 registry, and builds or validates registries.
 
@@ -617,8 +605,6 @@ replaces an existing file.
 
 Source: https://openuii.vercel.app/docs/components/textarea
 
-# Textarea
-
 Textarea wraps a native `<textarea>` in the same field treatment as
 [Input](https://openuii.vercel.app/docs/components/input), with a minimum height so short values still
 show a comfortable writing area.
@@ -653,8 +639,6 @@ Native attributes are forwarded unchanged.
 # Select
 
 Source: https://openuii.vercel.app/docs/components/select
-
-# Select
 
 Select wraps a native `<select>` with `appearance-none` and a decorative
 chevron. Pass `<option>` elements as children; the component positions the
@@ -694,8 +678,6 @@ Native attributes are forwarded unchanged.
 
 Source: https://openuii.vercel.app/docs/components/checkbox
 
-# Checkbox
-
 Checkbox renders a native `<input type="checkbox">` styled with Tailwind
 accents. Pair it with a [Label](https://openuii.vercel.app/docs/components/label) for an accessible name.
 
@@ -728,8 +710,6 @@ import { Label } from "@/components/ui/label";
 # Registry
 
 Source: https://openuii.vercel.app/docs/registry
-
-# Registry
 
 A registry is a static directory — or an HTTP prefix — with two parts:
 
@@ -899,8 +879,6 @@ the package version you are publishing.
 
 Source: https://openuii.vercel.app/docs/components/radio
 
-# Radio
-
 Radio renders a native `<input type="radio">` with Tailwind accents. Group
 radios by giving them the same `name`, then wrap the group in a `<fieldset>`
 with a `<legend>`.
@@ -933,8 +911,6 @@ Radio uses a `data-invalid` attribute rather than `aria-invalid`, because
 # Theming
 
 Source: https://openuii.vercel.app/docs/theming
-
-# Theming
 
 OpenUI components are styled with plain Tailwind CSS utility classes. There is
 no CSS-in-JS runtime, no theme provider, and no stylesheet shipped by the
@@ -1064,8 +1040,6 @@ them, keep:
 
 Source: https://openuii.vercel.app/docs/components/label
 
-# Label
-
 Label renders a native `<label>` with form typography. Associate it with a
 control with `htmlFor` (React) / `for` (Svelte, Astro, Vue), or wrap the control
 directly.
@@ -1097,8 +1071,6 @@ placed after a `peer` control fades with it.
 # Contributing
 
 Source: https://openuii.vercel.app/docs/contributing
-
-# Contributing
 
 OpenUI is a Bun monorepo. Component sources are canonical; the registry and
 documentation are generated from them.
@@ -1250,8 +1222,6 @@ Keep commits focused. Run `bun run verify` before pushing.
 
 Source: https://openuii.vercel.app/docs/components/field
 
-# Field
-
 Field composes a label, a control, and an optional hint or error message, and
 computes the wiring a control needs: a generated `id`, `aria-describedby` for
 the hint and error text, and `aria-invalid` when there is an error.
@@ -1320,8 +1290,6 @@ In Astro, render the control inside the default slot and pass the same `id` and
 
 Source: https://openuii.vercel.app/docs/components/theme
 
-# Theme
-
 `Theme` ships the state behind dark mode plus a ready-made toggle. It has two
 parts you install together:
 
@@ -1388,8 +1356,6 @@ Tailwind CSS v4 needs the variant declared once in your stylesheet:
 # React
 
 Source: https://openuii.vercel.app/docs/frameworks/react
-
-# React
 
 OpenUI ships native React components with typed props. There is no runtime
 package: `openui add` writes the component into your project.
@@ -1509,8 +1475,6 @@ expect(screen.getByRole("button", { name: "Delete" })).toHaveClass("bg-red-600")
 
 Source: https://openuii.vercel.app/docs/frameworks/svelte
 
-# Svelte
-
 OpenUI ships native Svelte 5 components. The installed file uses runes and
 snippets — no legacy slots, stores, or runtime package.
 
@@ -1624,8 +1588,6 @@ component still compiles.
 # Astro
 
 Source: https://openuii.vercel.app/docs/frameworks/astro
-
-# Astro
 
 OpenUI ships native `.astro` components. They render to static HTML with zero
 client-side JavaScript unless you add interactivity yourself.
@@ -1746,8 +1708,6 @@ end-to-end check for a customized component.
 # Vue
 
 Source: https://openuii.vercel.app/docs/frameworks/vue
-
-# Vue
 
 OpenUI ships native Vue 3 single-file components. The installed file uses
 `<script setup>` and plain JavaScript with runtime prop validation, so it works

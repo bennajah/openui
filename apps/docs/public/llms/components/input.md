@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/input
 
-# Input
-
 Input wraps a native `<input>` in the shared field treatment: a 40px control
 height (`h-10`), a `zinc` border, a focus ring with offset, and a red border in
 the invalid state. `type` is not set by the component, so the browser default

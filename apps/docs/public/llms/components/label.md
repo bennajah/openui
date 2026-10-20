@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/label
 
-# Label
-
 Label renders a native `<label>` with form typography. Associate it with a
 control with `htmlFor` (React) / `for` (Svelte, Astro, Vue), or wrap the control
 directly.

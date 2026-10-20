@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/checkbox
 
-# Checkbox
-
 Checkbox renders a native `<input type="checkbox">` styled with Tailwind
 accents. Pair it with a [Label](https://openuii.vercel.app/docs/components/label) for an accessible name.
 

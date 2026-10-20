@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/select
 
-# Select
-
 Select wraps a native `<select>` with `appearance-none` and a decorative
 chevron. Pass `<option>` elements as children; the component positions the
 chevron for you.

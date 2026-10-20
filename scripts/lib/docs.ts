@@ -156,7 +156,7 @@ export function readDocPages(root: string): DocPage[] {
 }
 
 export function docUrl(slug: string): string {
-  return `${SITE_URL}/docs/${slug}`;
+  return `${SITE_URL}/docs/${slug.replace(/\/index$/, "")}`;
 }
 
 /** Rewrite site-absolute links to absolute URLs so raw LLM files are portable. */
@@ -171,6 +171,11 @@ function pageHeader(page: DocPage): string {
   return `${GENERATED_NOTE}\n\n# ${page.title}\n\nSource: ${docUrl(page.slug)}\n`;
 }
 
+/** Strip the leading H1, which `pageHeader` already emitted. */
+function stripLeadingTitle(body: string): string {
+  return body.replace(/^#\s+.*(?:\r?\n)+/, "");
+}
+
 export function buildLlms(root: string): LlmsOutput[] {
   const pages = readDocPages(root);
   const outputs: LlmsOutput[] = [];
@@ -178,13 +183,13 @@ export function buildLlms(root: string): LlmsOutput[] {
   for (const page of pages) {
     outputs.push({
       path: `llms/${page.slug}.md`,
-      content: `${pageHeader(page)}\n${rewriteLinks(page.body).trim()}\n`,
+      content: `${pageHeader(page)}\n${rewriteLinks(stripLeadingTitle(page.body)).trim()}\n`,
     });
   }
   const isFramework = (slug: string): boolean => slug.startsWith("frameworks/");
   const isComponent = (slug: string): boolean => slug.startsWith("components/");
   const link = (page: DocPage): string =>
-    `- [${page.title}](${docUrl(page.slug.replace(/\/index$/, ""))}): ${page.description}`;
+    `- [${page.title}](${docUrl(page.slug)}): ${page.description}`;
 
   const indexLines = [
     "# OpenUI",
@@ -230,7 +235,7 @@ export function buildLlms(root: string): LlmsOutput[] {
     "",
     ...pages.map(
       (page) =>
-        `<!-- ${page.slug} -->\n\n# ${page.title}\n\nSource: ${docUrl(page.slug)}\n\n${rewriteLinks(page.body).trim()}`,
+        `<!-- ${page.slug} -->\n\n# ${page.title}\n\nSource: ${docUrl(page.slug)}\n\n${rewriteLinks(stripLeadingTitle(page.body)).trim()}`,
     ),
   ];
   outputs.push({ path: "llms-full.txt", content: `${full.join("\n\n---\n\n")}\n` });

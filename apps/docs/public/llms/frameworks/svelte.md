@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/frameworks/svelte
 
-# Svelte
-
 OpenUI ships native Svelte 5 components. The installed file uses runes and
 snippets — no legacy slots, stores, or runtime package.
 

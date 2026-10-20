@@ -4,8 +4,6 @@
 
 Source: https://openuii.vercel.app/docs/components/textarea
 
-# Textarea
-
 Textarea wraps a native `<textarea>` in the same field treatment as
 [Input](https://openuii.vercel.app/docs/components/input), with a minimum height so short values still
 show a comfortable writing area.
