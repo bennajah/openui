@@ -2,23 +2,145 @@
 
 ---
 
-
-
 ---
 
 # OpenUI — full documentation
 
 ---
 
+---
 
+> 20 pages, generated from apps/docs/content/docs.
 
 ---
 
-> 11 pages, generated from apps/docs/content/docs.
+---
+
+<!-- components/index -->
+
+# Components
+
+Source: https://openuii.vercel.app/docs/components/index
+
+# Components
+
+OpenUI components are source files, not a runtime library. Each one:
+
+- uses only framework primitives and Tailwind CSS utilities;
+- has **no OpenUI runtime dependency** and no third-party runtime dependency;
+- ships a plain class-joining helper instead of `clsx` or `tailwind-merge`
+  (variants are disjoint, so class conflicts do not arise);
+- forwards every native attribute to the underlying element.
+
+The beta ships nine components, each implemented natively for React, Svelte,
+Astro, and Vue.
+
+## Browse
+
+| Component                                                       | Purpose                                                         |
+| --------------------------------------------------------------- | --------------------------------------------------------------- |
+| [Button](https://openuii.vercel.app/docs/components/button)     | Actions with six variants, four sizes, and a full-width option. |
+| [Input](https://openuii.vercel.app/docs/components/input)       | Single-line text entry with an invalid state.                   |
+| [Textarea](https://openuii.vercel.app/docs/components/textarea) | Multi-line text entry that shares the Input treatment.          |
+| [Select](https://openuii.vercel.app/docs/components/select)     | Native dropdown with a decorative chevron.                      |
+| [Checkbox](https://openuii.vercel.app/docs/components/checkbox) | Native checkbox styled with Tailwind accents.                   |
+| [Radio](https://openuii.vercel.app/docs/components/radio)       | Native radio, grouped by a shared `name`.                       |
+| [Label](https://openuii.vercel.app/docs/components/label)       | Form typography bound to a control.                             |
+| [Field](https://openuii.vercel.app/docs/components/field)       | Label, control, hint, and error with the wiring handled.        |
+| [Theme](https://openuii.vercel.app/docs/components/theme)       | Dark mode state, a no-flash script, and a cycling toggle.       |
+
+## Shared conventions
+
+All nine components follow the same rules, so the API is predictable as the
+registry grows:
+
+- **Native elements.** Every component renders the real HTML element and
+  forwards unknown attributes, so `aria-*`, `name`, `required`, and event
+  handlers keep working.
+- **`invalid` for error state.** Form controls accept an `invalid` boolean that
+  adds the error treatment and, where the ARIA spec allows it, `aria-invalid`.
+- **A single `class` prop.** Pass Tailwind utilities to merge with the
+  component's own classes.
+- **Field wiring through `controlProps`.** `Field` hands its control an object
+  with `id`, `aria-describedby`, and `aria-invalid`, so messages stay linked.
+
+## Customizing
+
+Components live in your project after installation. Edit them directly. Use
+`openui diff button` to see what changed before pulling a registry update, and
+`openui add button --overwrite` only when you intend to replace local edits.
+
+Add new variants or sizes by editing the component's class maps. Keep variants
+disjoint — for example, do not give two variants background utilities that can
+conflict — so the simple join helper remains correct.
 
 ---
 
+<!-- components/button -->
 
+# Button
+
+Source: https://openuii.vercel.app/docs/components/button
+
+# Button
+
+The Button renders a real `<button>` with plain Tailwind utilities. Variant and
+size class sets are disjoint, so the component joins classes with a local
+helper instead of `clsx` or `tailwind-merge`.
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button variant="danger" size="lg" onClick={remove}>
+  Delete project
+</Button>;
+```
+
+Every other native attribute (`aria-*`, `onClick`, `form`, …) is forwarded to
+the underlying `<button>`.
+
+## Props
+
+| Prop        | Type                                                         | Default   | Description                            |
+| ----------- | ------------------------------------------------------------ | --------- | -------------------------------------- |
+| `variant`   | `primary \| secondary \| outline \| ghost \| danger \| link` | `primary` | Visual emphasis.                       |
+| `size`      | `sm \| md \| lg \| icon`                                     | `md`      | Control height and horizontal padding. |
+| `fullWidth` | `boolean`                                                    | `false`   | Stretch to the container width.        |
+| `type`      | `button \| submit \| reset`                                  | `button`  | Native button type.                    |
+| `disabled`  | `boolean`                                                    | `false`   | Native disabled state.                 |
+
+## Variants
+
+| Variant     | Use                                             |
+| ----------- | ----------------------------------------------- |
+| `primary`   | The single highest-emphasis action on a screen. |
+| `secondary` | Supporting action on a subtle surface.          |
+| `outline`   | Bordered action in dense or neutral layouts.    |
+| `ghost`     | Borderless action in toolbars.                  |
+| `danger`    | Destructive or irreversible action.             |
+| `link`      | Inline action styled like a link.               |
+
+## Sizes
+
+`sm` is 32px tall, `md` is 40px, `lg` is 48px, and `icon` is a 40×40 square.
+
+## Accessibility
+
+- Uses a real `<button>` element, so keyboard and screen-reader behavior is
+  native.
+- Includes a visible `focus-visible` ring with offset.
+- Disabled buttons use both `disabled` and `pointer-events-none` plus reduced
+  opacity.
+- `type` defaults to `button` to avoid accidental form submission.
+- For icon-only buttons, pass an accessible name:
+
+```tsx
+<Button size="icon" aria-label="Close dialog">
+  <CloseIcon aria-hidden="true" />
+</Button>
+```
 
 ---
 
@@ -172,6 +294,45 @@ each install target stays inside your project. Run it in CI.
 - Learn the [CLI](https://openuii.vercel.app/docs/cli) and its safety guarantees.
 - Browse the [Components](https://openuii.vercel.app/docs/components) reference.
 - Set up [theming](https://openuii.vercel.app/docs/theming) with Tailwind CSS v4.
+
+---
+
+<!-- components/input -->
+
+# Input
+
+Source: https://openuii.vercel.app/docs/components/input
+
+# Input
+
+Input wraps a native `<input>` in the shared field treatment: a 40px control
+height (`h-10`), a `zinc` border, a focus ring with offset, and a red border in
+the invalid state. `type` is not set by the component, so the browser default
+(text) applies and any explicit `type` still works.
+
+## Usage
+
+```tsx
+import { Input } from "@/components/ui/input";
+
+<Input type="email" name="email" placeholder="you@example.com" required />;
+<Input invalid aria-describedby="email-error" />;
+```
+
+## Props
+
+| Prop      | Type      | Default | Description                                      |
+| --------- | --------- | ------- | ------------------------------------------------ |
+| `invalid` | `boolean` | `false` | Adds an error treatment and sets `aria-invalid`. |
+
+Native attributes (`value`, `defaultValue`, `name`, `disabled`, `required`,
+`placeholder`, `onChange`, …) are forwarded unchanged.
+
+## Accessibility
+
+- `invalid` sets `aria-invalid` on the native input.
+- When a control is inside a [Field](https://openuii.vercel.app/docs/components/field), prefer the
+  `controlProps` it provides so `id` and `aria-describedby` stay linked.
 
 ---
 
@@ -450,324 +611,115 @@ replaces an existing file.
 
 ---
 
-<!-- components -->
+<!-- components/textarea -->
 
-# Components
+# Textarea
 
-Source: https://openuii.vercel.app/docs/components
+Source: https://openuii.vercel.app/docs/components/textarea
 
-# Components
+# Textarea
 
-OpenUI components are source files, not a runtime library. Each one:
+Textarea wraps a native `<textarea>` in the same field treatment as
+[Input](https://openuii.vercel.app/docs/components/input), with a minimum height so short values still
+show a comfortable writing area.
 
-- uses only framework primitives and Tailwind CSS utilities;
-- has **no OpenUI runtime dependency** and no third-party runtime dependency;
-- ships a plain class-joining helper instead of `clsx` or `tailwind-merge`
-  (variants are disjoint, so class conflicts do not arise);
-- forwards every native attribute to the underlying element.
-
-The beta ships nine components, each implemented natively for React, Svelte,
-Astro, and Vue: `button`, `input`, `textarea`, `select`, `checkbox`, `radio`,
-`label`, `field`, and `theme`.
-
-## Button
-
-### Props
-
-| Prop        | Type                                                         | Default   | Description                            |
-| ----------- | ------------------------------------------------------------ | --------- | -------------------------------------- |
-| `variant`   | `primary \| secondary \| outline \| ghost \| danger \| link` | `primary` | Visual emphasis.                       |
-| `size`      | `sm \| md \| lg \| icon`                                     | `md`      | Control height and horizontal padding. |
-| `fullWidth` | `boolean`                                                    | `false`   | Stretch to the container width.        |
-| `type`      | `button \| submit \| reset`                                  | `button`  | Native button type.                    |
-| `disabled`  | `boolean`                                                    | `false`   | Native disabled state.                 |
-
-Every other native attribute (`aria-*`, `onClick`, `form`, …) is forwarded to
-the underlying `<button>`.
-
-### Variants
-
-| Variant     | Use                                             |
-| ----------- | ----------------------------------------------- |
-| `primary`   | The single highest-emphasis action on a screen. |
-| `secondary` | Supporting action on a subtle surface.          |
-| `outline`   | Bordered action in dense or neutral layouts.    |
-| `ghost`     | Borderless action in toolbars.                  |
-| `danger`    | Destructive or irreversible action.             |
-| `link`      | Inline action styled like a link.               |
-
-### Sizes
-
-`sm` is 32px tall, `md` is 40px, `lg` is 48px, and `icon` is a 40×40 square.
-
-### Accessibility
-
-- Uses a real `<button>` element, so keyboard and screen-reader behavior is
-  native.
-- Includes a visible `focus-visible` ring with offset.
-- Disabled buttons use both `disabled` and `pointer-events-none` plus reduced
-  opacity.
-- `type` defaults to `button` to avoid accidental form submission.
-- For icon-only buttons, pass an accessible name:
+## Usage
 
 ```tsx
-<Button size="icon" aria-label="Close dialog">
-  <CloseIcon aria-hidden="true" />
-</Button>
+import { Textarea } from "@/components/ui/textarea";
+
+<Textarea name="bio" rows={6} placeholder="Tell us about yourself" />;
 ```
 
-## Form controls
+## Props
 
-`input`, `textarea`, `select`, `checkbox`, and `radio` wrap their native
-elements, so browser behavior and accessibility stay intact. They share one
-field treatment: a 40px control height (`h-10`), a `zinc` border, a focus ring
-with offset, and a red border in the invalid state.
+| Prop      | Type      | Default | Description                 |
+| --------- | --------- | ------- | --------------------------- |
+| `rows`    | `number`  | `4`     | Initial visible line count. |
+| `invalid` | `boolean` | `false` | Adds an error treatment.    |
 
-### Shared props
+Native attributes are forwarded unchanged.
 
-| Prop      | Type      | Default | Description                                               |
-| --------- | --------- | ------- | --------------------------------------------------------- |
-| `invalid` | `boolean` | `false` | Adds an error treatment and, where valid, `aria-invalid`. |
+## Accessibility
 
-Native attributes (`value`, `defaultValue`, `name`, `disabled`, `required`,
-`placeholder`, `onChange`, …) are forwarded unchanged.
+- `invalid` sets `aria-invalid` on the native textarea.
+- Pair with a [Label](https://openuii.vercel.app/docs/components/label) or a
+  [Field](https://openuii.vercel.app/docs/components/field) so the control has an accessible name.
 
-### Input
+---
 
-A native `<input>` with the shared field treatment. `type` is not set, so the
-browser default (text) applies and any explicit `type` still works.
+<!-- components/select -->
 
-```tsx
-<Input type="email" name="email" placeholder="you@example.com" required />
-<Input invalid aria-describedby="email-error" />
-```
+# Select
 
-### Textarea
+Source: https://openuii.vercel.app/docs/components/select
 
-A native `<textarea>` with `rows` defaulting to `4` and a minimum height.
+# Select
 
-| Extra prop | Type     | Default | Description                 |
-| ---------- | -------- | ------- | --------------------------- |
-| `rows`     | `number` | `4`     | Initial visible line count. |
+Select wraps a native `<select>` with `appearance-none` and a decorative
+chevron. Pass `<option>` elements as children; the component positions the
+chevron for you.
+
+## Usage
 
 ```tsx
-<Textarea name="bio" rows={6} placeholder="Tell us about yourself" />
-```
+import { Select } from "@/components/ui/select";
 
-### Select
-
-A native `<select>` with `appearance-none` and a decorative chevron. Pass
-`<option>` elements as children; the component positions the chevron for you.
-
-```tsx
 <Select name="role" defaultValue="dev">
   <option value="dev">Developer</option>
   <option value="ops">Operations</option>
-</Select>
+</Select>;
 ```
 
-### Checkbox and Radio
+## Props
 
-Native `<input type="checkbox">` and `<input type="radio">` styled with Tailwind
-accents. Group radios by giving them the same `name`. Both accept an `invalid`
-prop that adds an error outline — Radio uses a `data-invalid` attribute rather
-than `aria-invalid`, because `aria-invalid` is not valid on `role="radio"`.
+| Prop      | Type      | Default | Description              |
+| --------- | --------- | ------- | ------------------------ |
+| `invalid` | `boolean` | `false` | Adds an error treatment. |
 
-```tsx
-<Checkbox name="terms" value="accepted" />
-<Radio name="plan" value="pro" />
-<Radio name="plan" value="team" />
-```
+Native attributes are forwarded unchanged.
 
-### Label
+## Accessibility
 
-A native `<label>` with form typography. Associate it with a control with
-`htmlFor` (React) / `for` (Svelte, Astro, Vue), or wrap the control directly.
+- The chevron is `aria-hidden` and `pointer-events-none`, so it never
+  intercepts a click or reads to a screen reader.
+- The native `<select>` keeps platform keyboard behavior, including type-ahead
+  and arrow-key selection.
 
-```tsx
-<Label htmlFor="email">Email</Label>
-```
-
-## Field
-
-`Field` composes a label, a control, and an optional hint or error message, and
-computes the wiring a control needs: a generated `id`, `aria-describedby` for
-the hint and error text, and `aria-invalid` when there is an error.
-
-| Prop    | Type     | Default   | Description                                  |
-| ------- | -------- | --------- | -------------------------------------------- |
-| `label` | `string` | `""`      | Visible label text.                          |
-| `hint`  | `string` | `""`      | Helper text, linked with `aria-describedby`. |
-| `error` | `string` | `""`      | Error text; also marks the control invalid.  |
-| `id`    | `string` | generated | Control id. Generated when omitted.          |
-
-The component hands the wiring to the control as a **`controlProps`** object.
-Spread it onto any control so the control and the messages stay linked:
-
-```tsx
-<Field label="Email" hint="We never share it." error={message}>
-  {({ controlProps }) => <Input type="email" {...controlProps} />}
-</Field>
-```
-
-```svelte
-<Field label="Email" hint="We never share it." error={message}>
-  {#snippet control({ controlProps })}
-    <Input type="email" {...controlProps} />
-  {/snippet}
-</Field>
-```
-
-```vue
-<Field label="Email" hint="We never share it." :error="message">
-  <template #default="{ controlProps }">
-    <Input type="email" v-bind="controlProps" />
-  </template>
-</Field>
-```
-
-In Astro, render the control inside the default slot and pass the same `id` and
-`aria-describedby` you give the Field. The component also exposes
-`data-control-id`, `data-described-by`, and `data-invalid` on its wrapper:
-
-```astro
-<Field label="Email" id="email" hint="We never share it." error={message}>
-  <Input id="email" type="email" aria-describedby={message ? "email-error" : "email-hint"} />
-</Field>
-```
-
-## Theme
-
-`Theme` ships the state behind dark mode plus a ready-made toggle. It has two
-parts you install together:
-
-- `theme` — a small module (`theme.ts`) with the state API and a no-flash init
-  script.
-- `theme-toggle` — a native icon button that cycles **light → dark → system**.
-
-The theme is a single value, stored under the `openui-theme` key and defaulting
-to `system`. The resolved theme is applied as a `dark` class on `<html>`, which
-is what Tailwind's `dark:` variant targets.
-
-| Export                | Type                            | Description                                       |
-| --------------------- | ------------------------------- | ------------------------------------------------- |
-| `readTheme()`         | `"light" \| "dark" \| "system"` | Reads the stored value, falling back to `system`. |
-| `applyTheme(theme)`   | `void`                          | Applies the theme to `<html>` and persists it.    |
-| `resolveTheme(theme)` | `"light" \| "dark"`             | Resolves `system` against `prefers-color-scheme`. |
-| `initTheme()`         | `() => void`                    | Applies the stored theme and follows OS changes.  |
-| `THEME_INIT_SCRIPT`   | `string`                        | Inline script for `<head>`; prevents a flash.     |
-
-Add the init script to `<head>` so the stored theme applies before first paint,
-call `initTheme()` once, and drop in the toggle:
-
-```tsx
-// app entry
-import { initTheme } from "@/components/ui/theme";
-initTheme();
-
-// <head> — prevents a flash of the wrong theme
-<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />;
-
-// anywhere
-<ThemeToggle />;
-```
-
-Framework notes:
-
-- **React** — also exports `useTheme()` and a `ThemeInitScript` component.
-- **Svelte** — call `initTheme()` in your root layout, then use `<ThemeToggle />`.
-- **Astro** — the component carries its own scoped client script; add
-  `<script is:inline set:html={THEME_INIT_SCRIPT}></script>` in `<head>`.
-- **Vue** — call `initTheme()` in `main.ts`, then register `<ThemeToggle />`.
-
-Tailwind CSS v4 needs the variant declared once in your stylesheet:
-
-```css
-@custom-variant dark (&:where(.dark, .dark *));
-```
-
-## Usage by framework
-
-### React
-
-```tsx
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field } from "@/components/ui/field";
-
-<Button variant="danger" size="lg" onClick={remove}>
-  Delete project
-</Button>;
-
-<Field label="Email" error={message}>
-  {({ controlProps }) => <Input type="email" {...controlProps} />}
-</Field>;
-```
-
-Import paths follow your `openui.json` aliases. The default `{ui}` alias is
-`@/components/ui` for React.
-
-### Svelte
-
-```svelte
-<script>
-  import Button from "$lib/components/ui/button.svelte";
-  import Input from "$lib/components/ui/input.svelte";
-</script>
-
-<Button variant="outline" size="sm" onclick={save}>Save</Button>
-<Input type="email" name="email" invalid={hasError} />
-```
-
-Svelte content is passed as a snippet:
-
-```svelte
-<Button>
-  {#snippet children()}
-    <span>Save</span>
-  {/snippet}
-</Button>
-```
-
-### Astro
-
-```astro
----
-import Button from "../components/ui/button.astro";
-import Input from "../components/ui/input.astro";
 ---
 
-<Button variant="secondary" type="submit">Save</Button>
-<Input type="email" name="email" placeholder="you@example.com" />
+<!-- components/checkbox -->
+
+# Checkbox
+
+Source: https://openuii.vercel.app/docs/components/checkbox
+
+# Checkbox
+
+Checkbox renders a native `<input type="checkbox">` styled with Tailwind
+accents. Pair it with a [Label](https://openuii.vercel.app/docs/components/label) for an accessible name.
+
+## Usage
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+
+<Checkbox id="terms" name="terms" value="accepted" />
+<Label htmlFor="terms">Accept the terms</Label>;
 ```
 
-Astro content goes into the default slot.
+## Props
 
-### Vue
+| Prop      | Type      | Default | Description                                    |
+| --------- | --------- | ------- | ---------------------------------------------- |
+| `invalid` | `boolean` | `false` | Adds an error outline and sets `aria-invalid`. |
 
-```vue
-<script setup>
-import Button from "@/components/ui/button.vue";
-import Input from "@/components/ui/input.vue";
-</script>
+## Accessibility
 
-<template>
-  <Button variant="ghost" @click="close">Close</Button>
-  <Input type="email" name="email" invalid />
-</template>
-```
-
-Vue content goes into the default slot.
-
-## Customizing
-
-Components live in your project after installation. Edit them directly. Use
-`openui diff button` to see what changed before pulling a registry update, and
-`openui add button --overwrite` only when you intend to replace local edits.
-
-Add new variants or sizes by editing the component's class maps. Keep variants
-disjoint — for example, do not give two variants background utilities that can
-conflict — so the simple join helper remains correct.
+- `checked`, `defaultChecked`, and `disabled` are native attributes forwarded
+  to the input.
+- `invalid` sets `aria-invalid`, which is valid on `role="checkbox"`.
 
 ---
 
@@ -941,6 +893,41 @@ the package version you are publishing.
 
 ---
 
+<!-- components/radio -->
+
+# Radio
+
+Source: https://openuii.vercel.app/docs/components/radio
+
+# Radio
+
+Radio renders a native `<input type="radio">` with Tailwind accents. Group
+radios by giving them the same `name`, then wrap the group in a `<fieldset>`
+with a `<legend>`.
+
+## Usage
+
+```tsx
+import { Radio } from "@/components/ui/radio";
+
+<Radio name="plan" value="pro" />
+<Radio name="plan" value="team" />;
+```
+
+## Props
+
+| Prop      | Type      | Default | Description            |
+| --------- | --------- | ------- | ---------------------- |
+| `invalid` | `boolean` | `false` | Adds an error outline. |
+
+## Accessibility
+
+Radio uses a `data-invalid` attribute rather than `aria-invalid`, because
+`aria-invalid` is not valid on `role="radio"`. Style the error state with
+`data-[invalid]:…` utilities or the outline the component already applies.
+
+---
+
 <!-- theming -->
 
 # Theming
@@ -1004,7 +991,7 @@ variant in your global CSS:
 Then toggle a `dark` class on `<html>`. The `theme` component does exactly
 this: install it with `openui add theme` and it ships the state API plus a
 `ThemeToggle` button that cycles light, dark, and system. See
-[Components → Theme](https://openuii.vercel.app/docs/components#theme) for the full API. The short
+[Components → Theme](https://openuii.vercel.app/docs/components/theme) for the full API. The short
 version:
 
 ```bash
@@ -1068,6 +1055,40 @@ them, keep:
 - a visible focus indicator with sufficient contrast;
 - a non-color-only disabled cue where possible;
 - at least a 40×40px target for icon-only buttons (the `icon` size).
+
+---
+
+<!-- components/label -->
+
+# Label
+
+Source: https://openuii.vercel.app/docs/components/label
+
+# Label
+
+Label renders a native `<label>` with form typography. Associate it with a
+control with `htmlFor` (React) / `for` (Svelte, Astro, Vue), or wrap the control
+directly.
+
+## Usage
+
+```tsx
+import { Label } from "@/components/ui/label";
+
+<Label htmlFor="email">Email</Label>;
+```
+
+## Props
+
+Label takes no component-specific props. Every native attribute is forwarded,
+and `peer-disabled:cursor-not-allowed peer-disabled:opacity-70` means a label
+placed after a `peer` control fades with it.
+
+## Accessibility
+
+- A label bound with `htmlFor`/`for` gives its control an accessible name and
+  makes clicking the text focus the control.
+- Both patterns work: explicit association (`htmlFor`) and implicit wrapping.
 
 ---
 
@@ -1220,6 +1241,145 @@ Keep commits focused. Run `bun run verify` before pushing.
 - Tailwind class prefixes are configured but not rewritten in component
   sources.
 - The registry is committed and served statically from the docs deployment.
+
+---
+
+<!-- components/field -->
+
+# Field
+
+Source: https://openuii.vercel.app/docs/components/field
+
+# Field
+
+Field composes a label, a control, and an optional hint or error message, and
+computes the wiring a control needs: a generated `id`, `aria-describedby` for
+the hint and error text, and `aria-invalid` when there is an error.
+
+## Props
+
+| Prop    | Type     | Default   | Description                                  |
+| ------- | -------- | --------- | -------------------------------------------- |
+| `label` | `string` | `""`      | Visible label text.                          |
+| `hint`  | `string` | `""`      | Helper text, linked with `aria-describedby`. |
+| `error` | `string` | `""`      | Error text; also marks the control invalid.  |
+| `id`    | `string` | generated | Control id. Generated when omitted.          |
+
+## Wiring a control
+
+The component hands the wiring to the control as a **`controlProps`** object.
+Spread it onto any control so the control and the messages stay linked.
+
+```tsx
+import { Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+<Field label="Email" hint="We never share it." error={message}>
+  {({ controlProps }) => <Input type="email" {...controlProps} />}
+</Field>;
+```
+
+```svelte
+<Field label="Email" hint="We never share it." error={message}>
+  {#snippet control({ controlProps })}
+    <Input type="email" {...controlProps} />
+  {/snippet}
+</Field>
+```
+
+```vue
+<Field label="Email" hint="We never share it." :error="message">
+  <template #default="{ controlProps }">
+    <Input type="email" v-bind="controlProps" />
+  </template>
+</Field>
+```
+
+In Astro, render the control inside the default slot and pass the same `id` and
+`aria-describedby` you give the Field. The component also exposes
+`data-control-id`, `data-described-by`, and `data-invalid` on its wrapper:
+
+```astro
+<Field label="Email" id="email" hint="We never share it." error={message}>
+  <Input id="email" type="email" aria-describedby={message ? "email-error" : "email-hint"} />
+</Field>
+```
+
+## Accessibility
+
+- The label is bound to the control with `for`/`id`.
+- `aria-describedby` lists the hint and error ids, so a screen reader announces
+  both.
+- `aria-invalid` is set on the control only when `error` is present.
+
+---
+
+<!-- components/theme -->
+
+# Theme
+
+Source: https://openuii.vercel.app/docs/components/theme
+
+# Theme
+
+`Theme` ships the state behind dark mode plus a ready-made toggle. It has two
+parts you install together:
+
+- `theme` — a small module (`theme.ts`) with the state API and a no-flash init
+  script.
+- `theme-toggle` — a native icon button that cycles **light → dark → system**.
+
+The theme is a single value, stored under the `openui-theme` key and defaulting
+to `system`. The resolved theme is applied as a `dark` class on `<html>`, which
+is what Tailwind's `dark:` variant targets.
+
+## Exports
+
+| Export                | Type                            | Description                                       |
+| --------------------- | ------------------------------- | ------------------------------------------------- |
+| `readTheme()`         | `"light" \| "dark" \| "system"` | Reads the stored value, falling back to `system`. |
+| `applyTheme(theme)`   | `void`                          | Applies the theme to `<html>` and persists it.    |
+| `resolveTheme(theme)` | `"light" \| "dark"`             | Resolves `system` against `prefers-color-scheme`. |
+| `initTheme()`         | `() => void`                    | Applies the stored theme and follows OS changes.  |
+| `THEME_INIT_SCRIPT`   | `string`                        | Inline script for `<head>`; prevents a flash.     |
+
+## Setup
+
+Add the init script to `<head>` so the stored theme applies before first paint,
+call `initTheme()` once, and drop in the toggle:
+
+```tsx
+// app entry
+import { initTheme } from "@/components/ui/theme";
+initTheme();
+
+// <head> — prevents a flash of the wrong theme
+<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />;
+
+// anywhere
+<ThemeToggle />;
+```
+
+Tailwind CSS v4 needs the variant declared once in your stylesheet:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+## Framework notes
+
+- **React** — also exports `useTheme()` and a `ThemeInitScript` component.
+- **Svelte** — call `initTheme()` in your root layout, then use `<ThemeToggle />`.
+- **Astro** — the component carries its own scoped client script; add
+  `<script is:inline set:html={THEME_INIT_SCRIPT}></script>` in `<head>`.
+- **Vue** — call `initTheme()` in `main.ts`, then register `<ThemeToggle />`.
+
+## Accessibility
+
+- The toggle is a real `<button>` with a dynamic `aria-label` that names the
+  current theme.
+- Each state has its own icon; the inactive icons are `hidden` from the
+  accessibility tree, so the button never reads three labels.
 
 ---
 

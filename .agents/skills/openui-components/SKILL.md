@@ -68,12 +68,21 @@ registry/openui-registry.json        # source mapping + docs metadata
    - Svelte: compile with `svelte/compiler` and render with `svelte/server`.
    - Astro: `transform` from `@astrojs/compiler-rs`.
    - Vue: `parse`/`compileScript` from `vue/compiler-sfc`, then SSR render.
-6. Document it in `apps/docs/content/docs/components.md`.
+6. Document it:
+   - Add `apps/docs/content/docs/components/<name>.md` with
+     `group: components` and `component: <name>`; the Source panel is rendered
+     from the registry, so never paste component code into the page.
+   - Add a live preview as `apps/docs/src/components/demos/<Name>.astro`
+     importing the `@openui/astro` component, register it in the `DEMOS` map in
+     `apps/docs/src/components/Demo.astro`, and reference it with `demo:`.
+   - Add the slug to `REQUIRED_SLUGS` in `scripts/lib/docs.ts`, and add the
+     component to the browse table in `components/index.md`.
 7. Rebuild and verify:
 
    ```bash
    bun run registry:build
    bun run registry:validate
+   bun run llms:generate
    bun test
    bun run verify
    ```

@@ -1,0 +1,13 @@
+---
+import Textarea from "@openui/astro/textarea.astro";
+---
+
+<div class="grid w-full max-w-sm gap-3">
+  <Textarea name="bio" placeholder="Tell us about yourself" aria-label="Bio"></Textarea>
+  <Textarea
+    name="invalid"
+    invalid
+    rows={3}
+    placeholder="Invalid value"
+    aria-label="Invalid textarea"></Textarea>
+</div>

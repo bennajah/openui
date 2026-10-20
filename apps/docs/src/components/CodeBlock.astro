@@ -1,0 +1,74 @@
+---
+/**
+ * A labelled code block with copy-to-clipboard.
+ *
+ * Used for both framework tabs and multi-file source listings. The content is
+ * passed already-trimmed so no template whitespace leaks into the snippet.
+ */
+interface Props {
+  code: string;
+  language?: string;
+  /** Optional filename or identifier shown in the header. */
+  label?: string;
+  /** Rendered watchers should not add a copy button on grouped tabs. */
+  showCopy?: boolean;
+}
+
+const { code, language = "text", label, showCopy = true } = Astro.props;
+---
+
+<figure
+  class="docs-code group relative my-5 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-950 dark:border-zinc-800"
+  data-language={language}
+>
+  {
+    label !== undefined && (
+      <figcaption
+        class="flex items-center gap-2 border-b border-white/10 px-4 py-2 font-mono text-xs text-zinc-400"
+      >
+        <span class="text-zinc-500">{language}</span>
+        <span class="truncate text-zinc-300">{label}</span>
+      </figcaption>
+    )
+  }
+  {
+    showCopy && (
+      <button
+        type="button"
+        data-copy={code}
+        aria-label={label === undefined ? "Copy code" : `Copy ${label}`}
+        class="absolute top-2 right-2 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs font-medium text-zinc-300 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500"
+      >
+        Copy
+      </button>
+    )
+  }
+  <pre class="overflow-x-auto p-4 text-sm leading-6 text-zinc-100"><code
+      class={`language-${language}`}>{code}</code></pre>
+</figure>
+
+<script>
+  function wire(): void {
+    for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+      if (button.dataset.bound === "true") continue;
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const value = button.dataset.copy ?? "";
+        navigator.clipboard?.writeText(value).then(
+          () => {
+            button.textContent = "Copied";
+            setTimeout(() => {
+              button.textContent = "Copy";
+            }, 1200);
+          },
+          () => {
+            button.textContent = "Press ⌘C";
+          },
+        );
+      });
+    }
+  }
+
+  wire();
+  document.addEventListener("astro:after-swap", wire);
+</script>

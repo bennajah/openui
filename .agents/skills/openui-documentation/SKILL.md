@@ -36,6 +36,7 @@ Every page starts with YAML frontmatter containing scalar values:
 title: Configuration
 description: How openui.json is discovered, validated, and resolved.
 order: 2
+group: reference
 ---
 
 # Configuration
@@ -46,12 +47,26 @@ order: 2
 - `title` is used in the site and in the LLM index.
 - `description` becomes the one-line LLM index entry; write it as a complete
   sentence.
-- `order` sorts root pages. Framework pages always sort after root pages and are
-  ordered among themselves.
+- `order` sorts pages within a group.
+- `group` places the page in the sidebar: `reference` (default), `components`,
+  or `frameworks`. Framework pages must also live under `frameworks/` so
+  ordering and links stay consistent.
+- `component` (components group only) names a registry component. The site then
+  renders a framework-tabbed **Source** section from `registry/r/*.json`, so the
+  snippet is byte-identical to what the CLI installs. Never hand-copy component
+  source into a page.
+- `demo` (components group only) names a live preview registered in
+  `apps/docs/src/components/Demo.astro`. Add new previews as
+  `apps/docs/src/components/demos/<Name>.astro`, then add the entry to `DEMOS`.
 - Do not use nested YAML; the parser reads `key: scalar` only.
 - Start the body with a single H1 that matches `title`.
 - The parser strips frontmatter and the first H1 stays in output; do not
   duplicate a title line.
+
+Component pages live in `apps/docs/content/docs/components/`. The landing page
+is `components/index.md`, served at `/docs/components`; every other file is
+served at `/docs/components/<name>` because the route strips an `/index`
+suffix.
 
 ## Writing style
 
@@ -66,9 +81,10 @@ order: 2
 ## Required pages
 
 `REQUIRED_SLUGS` in `scripts/lib/docs.ts` lists pages that must always exist:
-getting-started, configuration, cli, components, registry, theming,
-contributing, and the four framework guides. `validateLlms` fails if one is
-missing, and `apps/docs/test/llms.test.ts` asserts the list.
+getting-started, configuration, cli, `components/index`, every
+`components/<name>` page, registry, theming, contributing, and the four
+framework guides. `validateLlms` fails if one is missing, and
+`apps/docs/test/llms.test.ts` asserts the list.
 
 When adding a page:
 
@@ -142,6 +158,7 @@ After a deploy, these must resolve:
 - `/docs/configuration`
 - `/docs/cli`
 - `/docs/components`
+- `/docs/components/{button,input,textarea,select,checkbox,radio,label,field,theme}`
 - `/docs/registry`
 - `/docs/theming`
 - `/docs/contributing`

@@ -11,10 +11,22 @@ and Vue. Components are plain framework code styled with Tailwind CSS v4; the
 - [Getting started](https://openuii.vercel.app/docs/getting-started): Install OpenUI, initialize a project, and add your first component.
 - [Configuration](https://openuii.vercel.app/docs/configuration): Every field in openui.json, how discovery works, and how CLI flags interact with the file.
 - [CLI](https://openuii.vercel.app/docs/cli): Commands, flags, exit codes, and the safety model behind file writes.
-- [Components](https://openuii.vercel.app/docs/components): The Button, form control, Field, and Theme APIs, accessibility behavior, and framework-specific usage.
 - [Registry](https://openuii.vercel.app/docs/registry): How the OpenUI registry is laid out, generated, served, and validated.
 - [Theming](https://openuii.vercel.app/docs/theming): Style OpenUI components with Tailwind CSS v4 utilities, dark mode, and local overrides.
 - [Contributing](https://openuii.vercel.app/docs/contributing): Repository layout, local workflow, verification, changesets, and known beta limitations.
+
+## Components
+
+- [Components](https://openuii.vercel.app/docs/components): Nine framework-native components, each rendered natively for React, Svelte, Astro, and Vue.
+- [Button](https://openuii.vercel.app/docs/components/button): A framework-native button with six disjoint variants, four sizes, and a full-width option.
+- [Input](https://openuii.vercel.app/docs/components/input): A native text input with the shared h-10 field treatment and an invalid state.
+- [Textarea](https://openuii.vercel.app/docs/components/textarea): A native multi-line input that shares the Input field treatment.
+- [Select](https://openuii.vercel.app/docs/components/select): A native select element with shared field styling and a decorative chevron.
+- [Checkbox](https://openuii.vercel.app/docs/components/checkbox): A native checkbox input styled with Tailwind accents and an invalid state.
+- [Radio](https://openuii.vercel.app/docs/components/radio): A native radio input. Group inputs by sharing a name and pair them with Label.
+- [Label](https://openuii.vercel.app/docs/components/label): A native label with form typography and peer-disabled styling.
+- [Field](https://openuii.vercel.app/docs/components/field): Composes a label, control, and hint or error message with for/id and aria-describedby wiring.
+- [Theme](https://openuii.vercel.app/docs/components/theme): Light, dark, and system theme state with a no-flash init script and a cycling toggle.
 
 ## Frameworks
 

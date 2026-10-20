@@ -1,6 +1,10 @@
 /**
  * Generate `apps/docs/public/llms.txt`, `llms-full.txt`, and the per-page `llms/` files
  * from the canonical Markdown in `apps/docs/content/docs`.
+ *
+ * `buildLlms` already normalizes output through the repository formatter, so the
+ * committed files match what `bun run format:check` expects and
+ * `bun run llms:validate` compares identical bytes.
  */
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

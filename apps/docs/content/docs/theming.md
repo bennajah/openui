@@ -61,7 +61,7 @@ variant in your global CSS:
 Then toggle a `dark` class on `<html>`. The `theme` component does exactly
 this: install it with `openui add theme` and it ships the state API plus a
 `ThemeToggle` button that cycles light, dark, and system. See
-[Components → Theme](/docs/components#theme) for the full API. The short
+[Components → Theme](/docs/components/theme) for the full API. The short
 version:
 
 ```bash

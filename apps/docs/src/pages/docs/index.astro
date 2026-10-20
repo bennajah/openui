@@ -3,13 +3,38 @@ import { getCollection } from "astro:content";
 import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const entries = await getCollection("docs");
+
+const rank = (id: string): number => {
+  if (id.startsWith("frameworks/")) return 2;
+  if (id.startsWith("components/")) return 1;
+  return 0;
+};
+
 const sorted = entries.toSorted((a, b) => {
-  const aFramework = a.id.startsWith("frameworks/");
-  const bFramework = b.id.startsWith("frameworks/");
-  if (aFramework !== bFramework) return aFramework ? 1 : -1;
+  if (rank(a.id) !== rank(b.id)) return rank(a.id) - rank(b.id);
   if (a.data.order !== b.data.order) return a.data.order - b.data.order;
   return a.id.localeCompare(b.id);
 });
+
+const href = (id: string): string => `/docs/${id.replace(/\/index$/, "")}`;
+
+const groups = [
+  {
+    label: "Guides",
+    blurb: "Install the CLI, configure a project, and understand the registry.",
+    entries: sorted.filter((entry) => rank(entry.id) === 0),
+  },
+  {
+    label: "Components",
+    blurb: "Nine components, each rendered natively for four frameworks.",
+    entries: sorted.filter((entry) => rank(entry.id) === 1),
+  },
+  {
+    label: "Frameworks",
+    blurb: "Framework-specific setup, conventions, and caveats.",
+    entries: sorted.filter((entry) => rank(entry.id) === 2),
+  },
+].filter((group) => group.entries.length > 0);
 ---
 
 <DocsLayout
@@ -22,21 +47,33 @@ const sorted = entries.toSorted((a, b) => {
     repository.
   </p>
 
-  <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+  <div class="mt-10 space-y-12">
     {
-      sorted.map((entry) => (
-        <li>
-          <a
-            class="block h-full rounded-xl border border-zinc-200 p-5 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
-            href={`/docs/${entry.id}`}
-          >
-            <h2 class="font-semibold text-zinc-950 dark:text-white">{entry.data.title}</h2>
-            <p class="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-              {entry.data.description}
-            </p>
-          </a>
-        </li>
+      groups.map((group) => (
+        <section>
+          <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h2 class="text-lg font-semibold tracking-tight text-zinc-950 dark:text-white">
+              {group.label}
+            </h2>
+            <p class="text-sm text-zinc-500 dark:text-zinc-500">{group.blurb}</p>
+          </div>
+          <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {group.entries.map((entry) => (
+              <li>
+                <a
+                  class="flex h-full flex-col rounded-xl border border-zinc-200 p-4 transition-colors hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
+                  href={href(entry.id)}
+                >
+                  <span class="font-medium text-zinc-950 dark:text-white">{entry.data.title}</span>
+                  <span class="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                    {entry.data.description}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       ))
     }
-  </ul>
+  </div>
 </DocsLayout>

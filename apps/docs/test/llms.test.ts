@@ -54,6 +54,8 @@ describe("LLM documentation", () => {
 
   it("flags missing canonical pages", () => {
     expect(REQUIRED_SLUGS).toContain("getting-started");
+    expect(REQUIRED_SLUGS).toContain("components/index");
+    expect(REQUIRED_SLUGS).toContain("components/button");
     expect(REQUIRED_SLUGS).toContain("frameworks/react");
   });
 });

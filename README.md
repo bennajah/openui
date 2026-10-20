@@ -207,6 +207,22 @@ Canonical pages live in `apps/docs/content/docs/**/*.md`. The LLM-friendly
 files under `apps/docs/public/llms*` and the JSON Schema are generated — never
 edit them by hand.
 
+Component pages live under `apps/docs/content/docs/components/` (the landing
+page is `components/index.md`). A component page can declare two frontmatter
+fields that the Astro site renders:
+
+- `component: button` — adds a framework-tabbed **Source** panel built from
+  `registry/r/*.json`, so the displayed code is byte-identical to what the CLI
+  installs.
+- `demo: button-variants` — renders a live preview from
+  `apps/docs/src/components/demos/`. Register new demos in
+  `apps/docs/src/components/Demo.astro`.
+
+The docs site is Astro + Tailwind and renders Markdown through
+`apps/docs/src/pages/docs/[...slug].astro` with a grouped sidebar, on-this-page
+table of contents, and prev/next navigation from
+`apps/docs/src/layouts/DocsLayout.astro`.
+
 ```bash
 bun run llms:generate    # rebuild llms.txt, llms-full.txt, llms/**
 bun run llms:validate    # completeness, staleness, links, secrets
@@ -214,10 +230,13 @@ bun run schema:generate
 bun run registry:public  # copy registry/ into the docs site
 ```
 
-When adding a page, add it to `REQUIRED_SLUGS` in `scripts/lib/docs.ts` if it
-must always exist, regenerate, and commit the canonical and generated files
-together. The docs site serves:
+When adding a page, add its slug to `REQUIRED_SLUGS` in `scripts/lib/docs.ts`
+if it must always exist, regenerate, and commit the canonical and generated
+files together. `apps/docs/test/components.test.ts` checks that every registry
+component has a docs page, a registered demo, and canonical source in all four
+frameworks. The docs site serves:
 
+- `/docs/components/<name>` — one page per component, with preview and source
 - `/llms.txt` — compact index for agents
 - `/llms-full.txt` — every page in one file
 - `/llms/<slug>.md` — one file per page

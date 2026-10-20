@@ -1,0 +1,19 @@
+---
+import Checkbox from "@openui/astro/checkbox.astro";
+import Label from "@openui/astro/label.astro";
+---
+
+<div class="grid gap-3">
+  <div class="flex items-center gap-2">
+    <Checkbox id="demo-terms" name="terms" value="accepted"></Checkbox>
+    <Label for="demo-terms">Accept the terms</Label>
+  </div>
+  <div class="flex items-center gap-2">
+    <Checkbox id="demo-news" name="news" value="yes" checked></Checkbox>
+    <Label for="demo-news">Send me product updates</Label>
+  </div>
+  <div class="flex items-center gap-2">
+    <Checkbox id="demo-invalid" name="invalid" invalid></Checkbox>
+    <Label for="demo-invalid">Invalid checkbox</Label>
+  </div>
+</div>

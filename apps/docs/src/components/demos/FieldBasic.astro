@@ -1,0 +1,24 @@
+---
+import Field from "@openui/astro/field.astro";
+import Input from "@openui/astro/input.astro";
+---
+
+<div class="grid w-full max-w-sm gap-6">
+  <Field label="Email" id="demo-field-email" hint="We never share it.">
+    <Input
+      id="demo-field-email"
+      type="email"
+      name="email"
+      aria-describedby="demo-field-email-hint"
+      placeholder="you@example.com"></Input>
+  </Field>
+  <Field label="Password" id="demo-field-password" error="Must be at least 8 characters.">
+    <Input
+      id="demo-field-password"
+      type="password"
+      name="password"
+      aria-describedby="demo-field-password-error"
+      invalid
+      value="short"></Input>
+  </Field>
+</div>

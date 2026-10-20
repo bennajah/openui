@@ -1,0 +1,68 @@
+---
+title: Button
+description: A framework-native button with six disjoint variants, four sizes, and a full-width option.
+order: 1
+group: components
+component: button
+demo: button-variants
+---
+
+# Button
+
+The Button renders a real `<button>` with plain Tailwind utilities. Variant and
+size class sets are disjoint, so the component joins classes with a local
+helper instead of `clsx` or `tailwind-merge`.
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button variant="danger" size="lg" onClick={remove}>
+  Delete project
+</Button>;
+```
+
+Every other native attribute (`aria-*`, `onClick`, `form`, …) is forwarded to
+the underlying `<button>`.
+
+## Props
+
+| Prop        | Type                                                         | Default   | Description                            |
+| ----------- | ------------------------------------------------------------ | --------- | -------------------------------------- |
+| `variant`   | `primary \| secondary \| outline \| ghost \| danger \| link` | `primary` | Visual emphasis.                       |
+| `size`      | `sm \| md \| lg \| icon`                                     | `md`      | Control height and horizontal padding. |
+| `fullWidth` | `boolean`                                                    | `false`   | Stretch to the container width.        |
+| `type`      | `button \| submit \| reset`                                  | `button`  | Native button type.                    |
+| `disabled`  | `boolean`                                                    | `false`   | Native disabled state.                 |
+
+## Variants
+
+| Variant     | Use                                             |
+| ----------- | ----------------------------------------------- |
+| `primary`   | The single highest-emphasis action on a screen. |
+| `secondary` | Supporting action on a subtle surface.          |
+| `outline`   | Bordered action in dense or neutral layouts.    |
+| `ghost`     | Borderless action in toolbars.                  |
+| `danger`    | Destructive or irreversible action.             |
+| `link`      | Inline action styled like a link.               |
+
+## Sizes
+
+`sm` is 32px tall, `md` is 40px, `lg` is 48px, and `icon` is a 40×40 square.
+
+## Accessibility
+
+- Uses a real `<button>` element, so keyboard and screen-reader behavior is
+  native.
+- Includes a visible `focus-visible` ring with offset.
+- Disabled buttons use both `disabled` and `pointer-events-none` plus reduced
+  opacity.
+- `type` defaults to `button` to avoid accidental form submission.
+- For icon-only buttons, pass an accessible name:
+
+```tsx
+<Button size="icon" aria-label="Close dialog">
+  <CloseIcon aria-hidden="true" />
+</Button>
+```

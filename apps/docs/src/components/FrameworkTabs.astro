@@ -1,0 +1,139 @@
+---
+import CodeBlock from "./CodeBlock.astro";
+import { FRAMEWORKS, readMainSource, readSources, type Framework } from "../lib/registry.ts";
+
+/**
+ * Canonical source for one component across every framework, rendered as tabs.
+ *
+ * Content comes from `registry/r/*.json`, i.e. the exact bytes the CLI
+ * installs. Nothing here is hand-written, so the docs cannot drift from the
+ * shipped components.
+ */
+interface Props {
+  component: string;
+  /** Show every file (component + helper libs) instead of just the entry file. */
+  allFiles?: boolean;
+  /** Preselect a framework tab. */
+  defaultFramework?: Framework;
+}
+
+const { component, allFiles = false, defaultFramework = "react" } = Astro.props;
+
+interface FrameworkPanel {
+  framework: Framework;
+  label: string;
+  files: { label: string; language: string; content: string }[];
+}
+
+const panels: FrameworkPanel[] = FRAMEWORKS.map((framework) => {
+  const sources = allFiles
+    ? readSources(component, framework)
+    : [readMainSource(component, framework)];
+  return {
+    framework,
+    label: framework.charAt(0).toUpperCase() + framework.slice(1),
+    files: sources.map((source) => ({
+      // `{ui}/button.tsx` → `button.tsx`
+      label: source.target.replace("{ui}/", "").replace("{components}/", ""),
+      language: source.language,
+      content: source.content,
+    })),
+  };
+});
+
+const active = panels.find((panel) => panel.framework === defaultFramework) ?? panels[0]!;
+const panelId = `${component}-framework-source`;
+---
+
+<div class="docs-tabs my-5" data-tabs={panelId}>
+  <div
+    role="tablist"
+    aria-label={`${component} source by framework`}
+    class="flex flex-wrap gap-1 rounded-t-xl border border-b-0 border-zinc-200 bg-zinc-50 p-1 dark:border-zinc-800 dark:bg-zinc-900"
+  >
+    {
+      panels.map((panel, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`${panelId}-tab-${panel.framework}`}
+          aria-controls={`${panelId}-panel-${panel.framework}`}
+          aria-selected={panel.framework === active.framework}
+          tabindex={panel.framework === active.framework ? 0 : -1}
+          data-tab={panel.framework}
+          class:list={[
+            "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400",
+            panel.framework === active.framework
+              ? "bg-white text-zinc-950 shadow-sm dark:bg-zinc-800 dark:text-white"
+              : "text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white",
+          ]}
+        >
+          {panel.label}
+          <span class="sr-only"> ({index + 1} of {panels.length})</span>
+        </button>
+      ))
+    }
+  </div>
+  <div>
+    {
+      panels.map((panel) => (
+        <section
+          id={`${panelId}-panel-${panel.framework}`}
+          role="tabpanel"
+          aria-labelledby={`${panelId}-tab-${panel.framework}`}
+          hidden={panel.framework !== active.framework}
+          data-panel={panel.framework}
+          class="[&_figure]:mt-0 [&_figure]:rounded-t-none [&_figure]:border-t-0"
+        >
+          {panel.files.map((file) => (
+            <CodeBlock code={file.content} language={file.language} label={file.label} />
+          ))}
+        </section>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  function wireTabs(): void {
+    for (const root of document.querySelectorAll<HTMLElement>("[data-tabs]")) {
+      if (root.dataset.bound === "true") continue;
+      root.dataset.bound = "true";
+      const tabs = [...root.querySelectorAll<HTMLButtonElement>("[data-tab]")];
+      const panels = [...root.querySelectorAll<HTMLElement>("[data-panel]")];
+
+      const select = (name: string, focus: boolean): void => {
+        for (const tab of tabs) {
+          const on = tab.dataset.tab === name;
+          tab.setAttribute("aria-selected", String(on));
+          tab.tabIndex = on ? 0 : -1;
+          tab.classList.toggle("bg-white", on);
+          tab.classList.toggle("shadow-sm", on);
+          tab.classList.toggle("text-zinc-950", on);
+          tab.classList.toggle("dark:bg-zinc-800", on);
+          tab.classList.toggle("dark:text-white", on);
+          tab.classList.toggle("text-zinc-600", !on);
+          tab.classList.toggle("dark:text-zinc-400", !on);
+          if (on && focus) tab.focus();
+        }
+        for (const panel of panels) {
+          panel.hidden = panel.dataset.panel !== name;
+        }
+      };
+
+      for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener("click", () => select(tab.dataset.tab ?? "", false));
+        tab.addEventListener("keydown", (event) => {
+          if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+          event.preventDefault();
+          const offset = event.key === "ArrowRight" ? 1 : -1;
+          const next = tabs[(index + offset + tabs.length) % tabs.length]!;
+          select(next.dataset.tab ?? "", true);
+        });
+      }
+    }
+  }
+
+  wireTabs();
+  document.addEventListener("astro:after-swap", wireTabs);
+</script>

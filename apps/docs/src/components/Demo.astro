@@ -1,0 +1,67 @@
+---
+/**
+ * Live preview dispatcher.
+ *
+ * Demos are real renders of the `@openui/astro` components — the same source
+ * the CLI installs. A Markdown page opts into a preview with
+ * `demo: button-variants` in frontmatter, so canonical docs stay Markdown (and
+ * the LLM pipeline keeps working) while the site still shows live UI.
+ */
+import ButtonVariants from "./demos/ButtonVariants.astro";
+import ButtonSizes from "./demos/ButtonSizes.astro";
+import ButtonStates from "./demos/ButtonStates.astro";
+import InputBasic from "./demos/InputBasic.astro";
+import TextareaBasic from "./demos/TextareaBasic.astro";
+import SelectBasic from "./demos/SelectBasic.astro";
+import CheckboxBasic from "./demos/CheckboxBasic.astro";
+import RadioBasic from "./demos/RadioBasic.astro";
+import LabelBasic from "./demos/LabelBasic.astro";
+import FieldBasic from "./demos/FieldBasic.astro";
+import ThemeToggleDemo from "./demos/ThemeToggleDemo.astro";
+
+interface Props {
+  name: string;
+  title?: string;
+}
+
+const { name, title } = Astro.props;
+
+const DEMOS = {
+  "button-variants": { Component: ButtonVariants, title: "Variants" },
+  "button-sizes": { Component: ButtonSizes, title: "Sizes" },
+  "button-states": { Component: ButtonStates, title: "States" },
+  "input-basic": { Component: InputBasic, title: "Input" },
+  "textarea-basic": { Component: TextareaBasic, title: "Textarea" },
+  "select-basic": { Component: SelectBasic, title: "Select" },
+  "checkbox-basic": { Component: CheckboxBasic, title: "Checkbox" },
+  "radio-basic": { Component: RadioBasic, title: "Radio group" },
+  "label-basic": { Component: LabelBasic, title: "Label" },
+  "field-basic": { Component: FieldBasic, title: "Field" },
+  "theme-toggle": { Component: ThemeToggleDemo, title: "Theme toggle" },
+} as const;
+
+const demo = DEMOS[name as keyof typeof DEMOS];
+const heading = title ?? demo?.title ?? name;
+const { Component } = demo ?? {};
+---
+
+{
+  Component === undefined ? (
+    <div class="not-prose my-6 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-400">
+      Unknown demo "{name}". Add it to <code>apps/docs/src/components/Demo.astro</code>.
+    </div>
+  ) : (
+    <div
+      class="not-prose my-6 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800"
+      data-demo={name}
+    >
+      <div class="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-900">
+        <span class="text-xs font-semibold tracking-wider text-zinc-500 uppercase">Preview</span>
+        <span class="truncate text-xs text-zinc-400">{heading}</span>
+      </div>
+      <div class="grid place-items-center bg-white px-6 py-10 dark:bg-zinc-950">
+        <Component />
+      </div>
+    </div>
+  )
+}

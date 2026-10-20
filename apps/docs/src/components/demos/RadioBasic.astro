@@ -1,0 +1,20 @@
+---
+import Label from "@openui/astro/label.astro";
+import Radio from "@openui/astro/radio.astro";
+---
+
+<fieldset class="grid gap-3">
+  <legend class="mb-1 text-sm font-medium text-zinc-900 dark:text-zinc-50">Plan</legend>
+  <div class="flex items-center gap-2">
+    <Radio id="demo-plan-hobby" name="demo-plan" value="hobby" checked></Radio>
+    <Label for="demo-plan-hobby">Hobby</Label>
+  </div>
+  <div class="flex items-center gap-2">
+    <Radio id="demo-plan-pro" name="demo-plan" value="pro"></Radio>
+    <Label for="demo-plan-pro">Pro</Label>
+  </div>
+  <div class="flex items-center gap-2">
+    <Radio id="demo-plan-team" name="demo-plan" value="team"></Radio>
+    <Label for="demo-plan-team">Team</Label>
+  </div>
+</fieldset>

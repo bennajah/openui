@@ -1,0 +1,14 @@
+---
+import Select from "@openui/astro/select.astro";
+---
+
+<div class="grid w-full max-w-sm gap-3">
+  <Select name="role" aria-label="Role">
+    <option value="dev">Developer</option>
+    <option value="ops">Operations</option>
+    <option value="design">Design</option>
+  </Select>
+  <Select name="invalid" invalid aria-label="Invalid select">
+    <option value="">Choose a plan</option>
+  </Select>
+</div>

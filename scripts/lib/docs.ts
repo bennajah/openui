@@ -1,4 +1,6 @@
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 
 /**
@@ -13,12 +15,33 @@ export const DOCS_DIR = "apps/docs/content/docs";
 export const PUBLIC_DIR = "apps/docs/public";
 export const SITE_URL = "https://openuii.vercel.app";
 
+/**
+ * Absolute path to the workspace `oxfmt` binary.
+ *
+ * `node_modules/.bin` is not on PATH for these scripts, and the docs build
+ * bundles this module (so `import.meta.dir` is unreliable), hence the walk up
+ * from the current working directory.
+ */
+function findOxfmt(): string {
+  let dir = process.cwd();
+  for (let depth = 0; depth < 6; depth++) {
+    const candidate = join(dir, "node_modules", ".bin", "oxfmt");
+    if (existsSync(candidate)) return candidate;
+    const parent = dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  throw new Error("Could not locate the workspace oxfmt binary.");
+}
+
+const oxfmtBinary = findOxfmt();
+
 /** Pages that must always exist (also used by tests and CI). */
 export const REQUIRED_SLUGS = [
   "getting-started",
   "configuration",
   "cli",
-  "components",
+  "components/index",
   "registry",
   "theming",
   "contributing",
@@ -26,6 +49,15 @@ export const REQUIRED_SLUGS = [
   "frameworks/svelte",
   "frameworks/astro",
   "frameworks/vue",
+  "components/button",
+  "components/input",
+  "components/textarea",
+  "components/select",
+  "components/checkbox",
+  "components/radio",
+  "components/label",
+  "components/field",
+  "components/theme",
 ] as const;
 
 export interface DocPage {
@@ -149,6 +181,10 @@ export function buildLlms(root: string): LlmsOutput[] {
       content: `${pageHeader(page)}\n${rewriteLinks(page.body).trim()}\n`,
     });
   }
+  const isFramework = (slug: string): boolean => slug.startsWith("frameworks/");
+  const isComponent = (slug: string): boolean => slug.startsWith("components/");
+  const link = (page: DocPage): string =>
+    `- [${page.title}](${docUrl(page.slug.replace(/\/index$/, ""))}): ${page.description}`;
 
   const indexLines = [
     "# OpenUI",
@@ -161,15 +197,15 @@ export function buildLlms(root: string): LlmsOutput[] {
     "",
     "## Documentation",
     "",
-    ...pages
-      .filter((page) => !page.slug.startsWith("frameworks/"))
-      .map((page) => `- [${page.title}](${docUrl(page.slug)}): ${page.description}`),
+    ...pages.filter((page) => !isFramework(page.slug) && !isComponent(page.slug)).map(link),
+    "",
+    "## Components",
+    "",
+    ...pages.filter((page) => isComponent(page.slug)).map(link),
     "",
     "## Frameworks",
     "",
-    ...pages
-      .filter((page) => page.slug.startsWith("frameworks/"))
-      .map((page) => `- [${page.title}](${docUrl(page.slug)}): ${page.description}`),
+    ...pages.filter((page) => isFramework(page.slug)).map(link),
     "",
     "## Machine-readable",
     "",
@@ -199,7 +235,41 @@ export function buildLlms(root: string): LlmsOutput[] {
   ];
   outputs.push({ path: "llms-full.txt", content: `${full.join("\n\n---\n\n")}\n` });
 
-  return outputs;
+  return outputs.map((output) => ({ ...output, content: formatGenerated(output.content) }));
+}
+
+/**
+ * Normalize generated Markdown with the repository formatter.
+ *
+ * `oxfmt` rewraps Markdown tables and prose, so raw generator output would
+ * disagree with the committed (formatted) files. Formatting here means
+ * generation and validation compare identical bytes — one source of truth.
+ * Results are memoized because validation rebuilds every page.
+ */
+export function formatGenerated(content: string): string {
+  const cached = formatCache.get(content);
+  if (cached !== undefined) return cached;
+  const temporary = join(tmpdir(), `openui-llms-${hashString(content)}.md`);
+  writeFileSync(temporary, content);
+  try {
+    execFileSync(oxfmtBinary, [temporary], { stdio: "ignore" });
+    const formatted = readFileSync(temporary, "utf8");
+    formatCache.set(content, formatted);
+    return formatted;
+  } finally {
+    rmSync(temporary, { force: true });
+  }
+}
+
+const formatCache = new Map<string, string>();
+
+function hashString(value: string): string {
+  let hash = 2_166_136_261;
+  for (let index = 0; index < value.length; index++) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16_777_619);
+  }
+  return (hash >>> 0).toString(36);
 }
 
 const LINK_PATTERN = /\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
@@ -223,8 +293,13 @@ export function checkLinks(
     if (target.startsWith("#") || target.startsWith("mailto:")) continue;
 
     if (target.startsWith(`${SITE_URL}/docs/`)) {
-      // Fragments (`#theme`) select a heading, not a page; strip them first.
-      const slug = target.slice(`${SITE_URL}/docs/`.length).replace(/\/$/, "").replace(/#.*$/, "");
+      const rest = target.slice(`${SITE_URL}/docs/`.length).replace(/\/$/, "").replace(/#.*$/, "");
+      // A link to a directory (`/docs/components`) resolves to its index page.
+      const slug = knownSlugs.has(rest)
+        ? rest
+        : knownSlugs.has(`${rest}/index`)
+          ? `${rest}/index`
+          : rest;
       if (!knownSlugs.has(slug)) {
         errors.push(`${label}: link to unknown docs page "${target}".`);
       }

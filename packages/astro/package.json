@@ -24,7 +24,15 @@
   "exports": {
     ".": "./src/index.ts",
     "./theme": "./src/theme.ts",
-    "./theme-toggle.astro": "./src/theme-toggle.astro"
+    "./theme-toggle.astro": "./src/theme-toggle.astro",
+    "./button.astro": "./src/button.astro",
+    "./checkbox.astro": "./src/checkbox.astro",
+    "./field.astro": "./src/field.astro",
+    "./input.astro": "./src/input.astro",
+    "./label.astro": "./src/label.astro",
+    "./radio.astro": "./src/radio.astro",
+    "./select.astro": "./src/select.astro",
+    "./textarea.astro": "./src/textarea.astro"
   },
   "publishConfig": {
     "access": "public"

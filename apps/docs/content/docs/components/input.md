@@ -1,0 +1,39 @@
+---
+title: Input
+description: A native text input with the shared h-10 field treatment and an invalid state.
+order: 2
+group: components
+component: input
+demo: input-basic
+---
+
+# Input
+
+Input wraps a native `<input>` in the shared field treatment: a 40px control
+height (`h-10`), a `zinc` border, a focus ring with offset, and a red border in
+the invalid state. `type` is not set by the component, so the browser default
+(text) applies and any explicit `type` still works.
+
+## Usage
+
+```tsx
+import { Input } from "@/components/ui/input";
+
+<Input type="email" name="email" placeholder="you@example.com" required />;
+<Input invalid aria-describedby="email-error" />;
+```
+
+## Props
+
+| Prop      | Type      | Default | Description                                      |
+| --------- | --------- | ------- | ------------------------------------------------ |
+| `invalid` | `boolean` | `false` | Adds an error treatment and sets `aria-invalid`. |
+
+Native attributes (`value`, `defaultValue`, `name`, `disabled`, `required`,
+`placeholder`, `onChange`, …) are forwarded unchanged.
+
+## Accessibility
+
+- `invalid` sets `aria-invalid` on the native input.
+- When a control is inside a [Field](/docs/components/field), prefer the
+  `controlProps` it provides so `id` and `aria-describedby` stay linked.

@@ -1,0 +1,58 @@
+---
+title: Components
+description: Nine framework-native components, each rendered natively for React, Svelte, Astro, and Vue.
+order: 0
+group: components
+---
+
+# Components
+
+OpenUI components are source files, not a runtime library. Each one:
+
+- uses only framework primitives and Tailwind CSS utilities;
+- has **no OpenUI runtime dependency** and no third-party runtime dependency;
+- ships a plain class-joining helper instead of `clsx` or `tailwind-merge`
+  (variants are disjoint, so class conflicts do not arise);
+- forwards every native attribute to the underlying element.
+
+The beta ships nine components, each implemented natively for React, Svelte,
+Astro, and Vue.
+
+## Browse
+
+| Component                             | Purpose                                                         |
+| ------------------------------------- | --------------------------------------------------------------- |
+| [Button](/docs/components/button)     | Actions with six variants, four sizes, and a full-width option. |
+| [Input](/docs/components/input)       | Single-line text entry with an invalid state.                   |
+| [Textarea](/docs/components/textarea) | Multi-line text entry that shares the Input treatment.          |
+| [Select](/docs/components/select)     | Native dropdown with a decorative chevron.                      |
+| [Checkbox](/docs/components/checkbox) | Native checkbox styled with Tailwind accents.                   |
+| [Radio](/docs/components/radio)       | Native radio, grouped by a shared `name`.                       |
+| [Label](/docs/components/label)       | Form typography bound to a control.                             |
+| [Field](/docs/components/field)       | Label, control, hint, and error with the wiring handled.        |
+| [Theme](/docs/components/theme)       | Dark mode state, a no-flash script, and a cycling toggle.       |
+
+## Shared conventions
+
+All nine components follow the same rules, so the API is predictable as the
+registry grows:
+
+- **Native elements.** Every component renders the real HTML element and
+  forwards unknown attributes, so `aria-*`, `name`, `required`, and event
+  handlers keep working.
+- **`invalid` for error state.** Form controls accept an `invalid` boolean that
+  adds the error treatment and, where the ARIA spec allows it, `aria-invalid`.
+- **A single `class` prop.** Pass Tailwind utilities to merge with the
+  component's own classes.
+- **Field wiring through `controlProps`.** `Field` hands its control an object
+  with `id`, `aria-describedby`, and `aria-invalid`, so messages stay linked.
+
+## Customizing
+
+Components live in your project after installation. Edit them directly. Use
+`openui diff button` to see what changed before pulling a registry update, and
+`openui add button --overwrite` only when you intend to replace local edits.
+
+Add new variants or sizes by editing the component's class maps. Keep variants
+disjoint — for example, do not give two variants background utilities that can
+conflict — so the simple join helper remains correct.
